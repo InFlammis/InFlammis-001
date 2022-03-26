@@ -1,4 +1,5 @@
 ﻿using FightShipArena.Assets.Scripts.Managers.Levels.StateMachine;
+using FightShipArena.Assets.Scripts.MessageBroker;
 using FightShipArena.Assets.Scripts.Player;
 using UnityEngine.InputSystem;
 
@@ -9,6 +10,8 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
     /// </summary>
     public interface ILevelManagerCore
     {
+        Messenger Messenger { get; }
+
         /// <summary>
         /// Current state of the levelManagerCore
         /// </summary>

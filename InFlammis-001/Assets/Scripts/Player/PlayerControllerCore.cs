@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using FightShipArena.Assets.Scripts.Enemies;
 using FightShipArena.Assets.Scripts.Managers.HealthManagement;
+using FightShipArena.Assets.Scripts.MessageBroker;
+using FightShipArena.Assets.Scripts.MessageBroker.Player;
 using FightShipArena.Assets.Scripts.Weapons;
 using UnityEngine;
 
@@ -13,9 +15,6 @@ namespace FightShipArena.Assets.Scripts.Player
 {
     public class PlayerControllerCore : IPlayerControllerCore
     {
-        /// <inheritdoc/>
-        public event Action<int> ScoreMultiplierCollected;
-
         /// <inheritdoc/>
         public IPlayerController Parent { get; protected set; }
 
@@ -40,6 +39,8 @@ namespace FightShipArena.Assets.Scripts.Player
         /// <inheritdoc/>
         public WeaponBase CurrentWeapon { get; set; }
 
+        public Messenger Messenger { get; set; }
+
         /// <summary>
         /// Create a new instance of the PlayerController Core
         /// </summary>
@@ -49,28 +50,16 @@ namespace FightShipArena.Assets.Scripts.Player
             Parent = parent;
             Transform = parent.GameObject.transform;
             RigidBody = parent.GameObject.GetComponent<Rigidbody2D>();
+            Messenger = GameObject.FindObjectOfType<Messenger>();
+
             HealthManager = parent.HealthManager;
-            HealthManager.HasDied += HealthManager_HasDied;
-            HealthManager.HealthLevelChanged += HealthManager_HealthLevelChanged;
+
             InitSettings = parent.InitSettings;
             Weapons = parent.Weapons.Select(x=>x.GetComponent<WeaponBase>()).ToArray();
             CurrentWeapon = Weapons[0];
         }
 
-        /// <summary>
-        /// EventHandler for the HealthLevelChanged event of the HealthManager
-        /// </summary>
-        /// <param name="value">The new health level</param>
-        /// <param name="maxValue">The maximum health level</param>
-        private void HealthManager_HealthLevelChanged(int value, int maxValue) { }
 
-        /// <summary>
-        /// EventHandler for the HasDied event of the HealthManager
-        /// </summary>
-        private void HealthManager_HasDied()
-        {
-
-        }
 
         /// <inheritdoc/>
         public void SetPlayerInput(Vector2 playerInput)
@@ -178,7 +167,8 @@ namespace FightShipArena.Assets.Scripts.Player
         /// <inheritdoc/>
         public void AddMultiplier(int multiplier)
         {
-            ScoreMultiplierCollected?.Invoke(multiplier);
+            //ScoreMultiplierCollected?.Invoke(multiplier);
+            (Messenger as IPlayerEventsMessenger).ScoreMultiplierCollected?.Invoke(this, null, multiplier);
         }
 
         /// <summary>

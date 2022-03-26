@@ -1,6 +1,7 @@
 ﻿using FightShipArena.Assets.Scripts.Enemies;
 using FightShipArena.Assets.Scripts.Managers.HealthManagement;
 using UnityEngine;
+using FightShipArena.Assets.Scripts.MessageBroker;
 
 namespace FightShipArena.Assets.Scripts.Player
 {
@@ -9,10 +10,12 @@ namespace FightShipArena.Assets.Scripts.Player
     /// </summary>
     public interface IPlayerControllerCore
     {
-        /// <summary>
-        /// Event raised when a score multiplier power-up is collected
-        /// </summary>
-        event System.Action<int> ScoreMultiplierCollected;
+        ///// <summary>
+        ///// Event raised when a score multiplier power-up is collected
+        ///// </summary>
+        //event System.Action<int> ScoreMultiplierCollected;
+
+        Messenger Messenger { get; }
 
         /// <summary>
         /// Reference to the IPlayerController parent instance

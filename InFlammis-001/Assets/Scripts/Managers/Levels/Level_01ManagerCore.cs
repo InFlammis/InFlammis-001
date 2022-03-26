@@ -4,13 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FightShipArena.Assets.Scripts.Managers.Levels.StateMachine;
+using FightShipArena.Assets.Scripts.MessageBroker;
+using FightShipArena.Assets.Scripts.MessageBroker.Player;
 using FightShipArena.Assets.Scripts.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace FightShipArena.Assets.Scripts.Managers.Levels
 {
-    public class Level_01ManagerCore : ILevelManagerCore
+    public class Level_01ManagerCore : 
+        ILevelManagerCore,
+        IPlayerEventsSubscriber
     {
         /// <inheritdoc/>
         public IPlayerControllerCore PlayerControllerCore { get; set; }
@@ -19,6 +23,8 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         public State CurrentState { get; private set; }
         /// <inheritdoc/>
         public ILevelManager LevelManager { get; set; }
+
+        public Messenger Messenger { get; private set; }
 
         public bool SpawnEnemiesEnabled = true;
 
@@ -39,9 +45,12 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         /// <inheritdoc/>
         public void OnStart()
         {
+            Messenger = GameObject.FindObjectOfType<Messenger>();
+
+            (Messenger as IPlayerEventsMessenger).ScoreMultiplierCollected.AddListener((this as IPlayerEventsSubscriber).ScoreMultiplierCollected);
+            (Messenger as IPlayerEventsMessenger).HasDied.AddListener((this as IPlayerEventsSubscriber).HasDied);
+
             this.PlayerControllerCore = LevelManager.PlayerControllerCore;
-            this.PlayerControllerCore.HealthManager.HasDied += PlayerHasDied;
-            this.PlayerControllerCore.ScoreMultiplierCollected += PlayerControllerCore_ScoreMultiplierCollected;
 
             Debug.Log($"Level started");
 
@@ -55,15 +64,6 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
             );
 
             ChangeStateRequestEventHandler(this, new WaitForStart(_stateConfiguration));
-        }
-
-        /// <summary>
-        /// EventHandler for the ScoreMultiplierCollected event of the PlayerControllerCore
-        /// </summary>
-        /// <param name="value"></param>
-        private void PlayerControllerCore_ScoreMultiplierCollected(int value)
-        {
-            LevelManager.ScoreManager.AddToMultiplier(value);
         }
 
         /// <summary>
@@ -82,12 +82,6 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
             CurrentState = e;
             CurrentState.ChangeStateRequestEvent += ChangeStateRequestEventHandler;
             CurrentState.OnEnter();
-        }
-
-        /// <inheritdoc/>
-        private void PlayerHasDied()
-        {
-            ChangeStateRequestEventHandler(this, new GameOver(_stateConfiguration));
         }
 
         /// <inheritdoc/>
@@ -146,6 +140,20 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         public void EnablePlayerInput()
         {
             _playerInput.enabled = true;
+        }
+
+        void IPlayerEventsSubscriber.HasDied(object publisher, string target)
+        {
+            ChangeStateRequestEventHandler(this, new GameOver(_stateConfiguration));
+        }
+
+        void IPlayerEventsSubscriber.ScoreMultiplierCollected(object publisher, string target, int scoreMultiplier)
+        {
+            LevelManager.ScoreManager.AddToMultiplier(scoreMultiplier);
+        }
+
+        void IPlayerEventsSubscriber.HealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
+        {
         }
     }
 }

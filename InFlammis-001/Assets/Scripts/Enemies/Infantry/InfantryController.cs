@@ -1,6 +1,7 @@
 ﻿using System;
 using FightShipArena.Assets.Scripts.Managers.HealthManagement;
 using FightShipArena.Assets.Scripts.Managers.Levels;
+using FightShipArena.Assets.Scripts.MessageBroker;
 using FightShipArena.Assets.Scripts.Player;
 using FightShipArena.Assets.Scripts.Weapons;
 using UnityEngine;
@@ -10,49 +11,44 @@ namespace FightShipArena.Assets.Scripts.Enemies.Infantry
     /// <summary>
     /// Specialization of a EnemyController for an Infantry enemy type
     /// </summary>
-    public class InfantryController : EnemyController
+    public class InfantryController : 
+        EnemyController,
+        IHealthManagerEventsSubscriber
     {
-        /// <summary>
-        /// Event handler for a HealthLevelChanged event from the HealthManager. Invoked when the enemy loses energy.
-        /// </summary>
-        /// <param name="value">New health level</param>
-        /// <param name="maxValue">Max value of health</param>
-        private void HealthManager_HealthLevelChanged(int value, int maxValue)
-        {
-        }
-
-        /// <summary>
-        /// Event handler for a HasDied event from the HealthManager. Invoked when the enemy dies.
-        /// </summary>
-        private void HealthManager_HasDied()
-        {
-            Debug.Log($"Destroying object {this.gameObject.name}");
-            
-            _SoundManager.PlayExplodeSound();
-
-            var eeInstance = Instantiate(this.ExplosionEffect, this.gameObject.transform);
-            eeInstance.transform.SetParent(null);
-
-            Destroy(eeInstance, 4);
-
-            GameObject.Destroy(this.gameObject);
-            ReleasePowerUp();
-        }
-
+        public Messenger Messenger { get; set; }
 
         #region Unity methods
 
         void Awake()
         {
-            HealthManager = new HealthManager(InitSettings.InitHealth, InitSettings.InitHealth, false);
-            HealthManager.HasDied += HealthManager_HasDied;
-            HealthManager.HealthLevelChanged += HealthManager_HealthLevelChanged;
+            Messenger = GameObject.FindObjectOfType<Messenger>();
+
+            HealthManager = new HealthManager(this.GetInstanceID().ToString(), InitSettings.InitHealth, InitSettings.InitHealth, false);
+
+            SubscribeToHealthManagerEvents();
 
             CheckWeaponsConfiguration();
 
             Core = new InfantryControllerCore(this, HealthManager, InitSettings);
 
         }
+
+        public virtual void SubscribeToHealthManagerEvents()
+        {
+            var messenger = (Messenger as IHealthManagerEventsMessenger);
+            var subscriber = (this as IHealthManagerEventsSubscriber);
+            messenger.HasDied.AddListener(subscriber.HasDied);
+            messenger.HealthLevelChanged.AddListener(subscriber.HealthLevelChanged);
+        }
+
+        public virtual void UnsubscribeToHealthManagerEvents()
+        {
+            var messenger = (Messenger as IHealthManagerEventsMessenger);
+            var subscriber = (this as IHealthManagerEventsSubscriber);
+            messenger.HasDied.RemoveListener(subscriber.HasDied);
+            messenger.HealthLevelChanged.RemoveListener(subscriber.HealthLevelChanged);
+        }
+
 
         void Start()
         {
@@ -138,5 +134,25 @@ namespace FightShipArena.Assets.Scripts.Enemies.Infantry
             }
         }
 
+        void IHealthManagerEventsSubscriber.HasDied(object publisher, string target)
+        {
+            Debug.Log($"Destroying object {this.gameObject.name}");
+
+            _SoundManager.PlayExplodeSound();
+
+            UnsubscribeToHealthManagerEvents();
+
+            var eeInstance = Instantiate(this.ExplosionEffect, this.gameObject.transform);
+            eeInstance.transform.SetParent(null);
+
+            Destroy(eeInstance, 4);
+
+            GameObject.Destroy(this.gameObject);
+            ReleasePowerUp();
+        }
+
+        void IHealthManagerEventsSubscriber.HealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
+        {
+        }
     }
 }

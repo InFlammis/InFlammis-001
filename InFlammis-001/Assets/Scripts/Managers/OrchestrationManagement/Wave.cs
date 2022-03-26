@@ -134,7 +134,9 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
                 UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(nextEnemySpawn, UnityEngine.SceneManagement.SceneManager.GetSceneAt(1));
 
                 var nextEnemyManager = nextEnemySpawn.GetComponent<IEnemyController>();
-                nextEnemyManager.Core.HasDied += Enemy_HasDied;
+
+                //TODO: MESSENGER
+                //nextEnemyManager.Core.HasDied += Enemy_HasDied;
 
                 nextEnemy.TotalSpawned++;
                 nextEnemy.CurrentlySpawned++;
@@ -156,7 +158,8 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
         {
             SendScore?.Invoke(enemyControllerCore.InitSettings.PlayerScoreWhenKilled);
 
-            enemyControllerCore.HasDied -= Enemy_HasDied;
+            //TODO: REVIEW THIS
+            //enemyControllerCore.HasDied -= Enemy_HasDied;
             var enemyType = EnemyTypes.Single(x => x.Settings.EnemyTypeEnum == enemyControllerCore.Parent.InitSettings.EnemyType);
             enemyType.CurrentlySpawned--;
             TotEnemiesKilled++;

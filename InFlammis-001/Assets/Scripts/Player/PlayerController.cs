@@ -4,6 +4,8 @@ using System.Linq;
 using FightShipArena.Assets.Scripts.Enemies;
 using FightShipArena.Assets.Scripts.Managers.HealthManagement;
 using FightShipArena.Assets.Scripts.Managers.Levels;
+using FightShipArena.Assets.Scripts.MessageBroker;
+using FightShipArena.Assets.Scripts.MessageBroker.Player;
 using FightShipArena.Assets.Scripts.Weapons;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,7 +18,11 @@ namespace FightShipArena.Assets.Scripts.Player
     /// Controller for the player.
     /// Implements the Core pattern. The core logic of the Controller is actually contained in the Core instance.
     /// </summary>
-    public class PlayerController : MyMonoBehaviour, IPlayerController
+    public class PlayerController : 
+        MyMonoBehaviour, 
+        IPlayerController,
+        IHealthManagerEventsSubscriber
+
     {
         /// <summary>
         /// Event raised when the player's health level changes
@@ -44,6 +50,10 @@ namespace FightShipArena.Assets.Scripts.Player
 
         /// <inheritdoc/>
         public WeaponBase[] Weapons { get; protected set; }
+
+        public Messenger Messenger { get; private set; }
+
+        //IHealthManagerEventsMessenger IEventSubscriber<IHealthManagerEventsMessenger>.Messenger { get; set; }
 
         [SerializeField]
         private GameObject ExplosionEffect;
@@ -178,14 +188,31 @@ namespace FightShipArena.Assets.Scripts.Player
         #region Unity methods
         void Awake()
         {
-            HealthManager = new HealthManager(initSettings.InitHealth, initSettings.InitHealth, false);
-            HealthManager.HasDied += HealthManager_HasDied;
-            HealthManager.HealthLevelChanged += HealthManager_HealthLevelChanged;
+            Messenger = GameObject.FindObjectOfType<Messenger>();
+            HealthManager = new HealthManager("Player", initSettings.InitHealth, initSettings.InitHealth, false);
 
+            SubscribeToHealthManagerEvents();
             CheckWeaponsConfiguration();
 
             Core = new PlayerControllerCore(this);
         }
+
+        public virtual void SubscribeToHealthManagerEvents()
+        {
+            var messenger = (Messenger as IHealthManagerEventsMessenger);
+            var subscriber = (this as IHealthManagerEventsSubscriber);
+            messenger.HasDied.AddListener(subscriber.HasDied);
+            messenger.HealthLevelChanged.AddListener(subscriber.HealthLevelChanged);
+        }
+
+        public virtual void UnsubscribeToHealthManagerEvents()
+        {
+            var messenger = (Messenger as IHealthManagerEventsMessenger);
+            var subscriber = (this as IHealthManagerEventsSubscriber);
+            messenger.HasDied.RemoveListener(subscriber.HasDied);
+            messenger.HealthLevelChanged.RemoveListener(subscriber.HealthLevelChanged);
+        }
+
 
         void Start()
         {
@@ -278,24 +305,32 @@ namespace FightShipArena.Assets.Scripts.Player
             PlayerHealthLevelChanged?.Invoke(value, maxValue);
         }
 
-        /// <summary>
-        /// EventHandler for a HasDied event raised by the HealthManager
-        /// </summary>
-        private void HealthManager_HasDied()
+        void IHealthManagerEventsSubscriber.HasDied(object publisher, string target)
         {
-            PlayerHasDied?.Invoke();
+            if(target != null && target != "Player")
+            {
+                return;
+            }
+
+            (Messenger as IPlayerEventsPublisher).PublishHasDied(this, null);
 
             _SoundManager.PlayExplodeSound();
 
             Debug.Log($"Destroying object {this.gameObject.name}");
 
+            UnsubscribeToHealthManagerEvents();
+
             var eeInstance = Instantiate(this.ExplosionEffect, this.gameObject.transform);
             eeInstance.transform.SetParent(null);
-            
+
             Destroy(eeInstance, 4);
 
             Destroy(this.gameObject);
+        }
 
+        public void HealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
+        {
+            (Messenger as IPlayerEventsPublisher).PublishHealthLevelChanged(publisher, target, healthLevel, maxHealthLevel);
         }
     }
 }

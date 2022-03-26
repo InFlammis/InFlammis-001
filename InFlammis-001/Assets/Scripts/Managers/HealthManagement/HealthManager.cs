@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FightShipArena.Assets.Scripts.MessageBroker;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +9,10 @@ using UnityEngine;
 
 namespace FightShipArena.Assets.Scripts.Managers.HealthManagement
 {
-    public class HealthManager : IHealthManager
+    public class HealthManager : 
+        IHealthManager,
+        IHealthManagerEventsPublisher
     {
-        /// <inheritdoc/>
-        public event Action<int, int> HealthLevelChanged;
-
-        /// <inheritdoc/>
-        public event Action HasDied;
-
         /// <inheritdoc/>
         public int MaxHealth { get; set; }
 
@@ -28,18 +25,13 @@ namespace FightShipArena.Assets.Scripts.Managers.HealthManagement
             get => _health;
             set
             {
-                //if (value == _health)
-                //{
-                //    return;
-                //}
-
                 _health = value;
 
-                HealthLevelChanged?.Invoke(_health, MaxHealth);
+                PublishHealthLevelChanged(this, _Target, _health, MaxHealth);
 
                 if (_health <= 0)
                 {
-                    HasDied?.Invoke();
+                    PublishHasDied(this, _Target);
                 }
             }
         }
@@ -50,6 +42,8 @@ namespace FightShipArena.Assets.Scripts.Managers.HealthManagement
         /// <inheritdoc/>
         public bool IsDead { get; protected set;
         }
+
+        public Messenger Messenger { get; private set; }
 
         /// <inheritdoc/>
         public void Heal(int byValue)
@@ -91,14 +85,26 @@ namespace FightShipArena.Assets.Scripts.Managers.HealthManagement
             Damage(Health);
         }
 
+        public void PublishHasDied(object publisher, string target)
+        {
+            (Messenger as IHealthManagerEventsMessenger).HasDied?.Invoke(this, target);
+        }
+
+        public void PublishHealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
+        {
+            (Messenger as IHealthManagerEventsMessenger).HealthLevelChanged?.Invoke(this, target, healthLevel, maxHealthLevel);
+        }
+
+        private string _Target;
         /// <summary>
         /// Create an instance of the class
         /// </summary>
         /// <param name="health">Initial health level</param>
         /// <param name="maxHealth">Maximum health level</param>
         /// <param name="isInvulnerable">It is invulnerable at start</param>
-        public HealthManager(int health, int maxHealth, bool isInvulnerable)
+        public HealthManager(string target, int health, int maxHealth, bool isInvulnerable)
         {
+            this._Target = target;
             this.Health = health;
             this.MaxHealth = maxHealth;
             this.IsInvulnerable = isInvulnerable;

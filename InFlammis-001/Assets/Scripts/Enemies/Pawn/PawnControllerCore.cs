@@ -1,6 +1,8 @@
 ﻿using System;
 using FightShipArena.Assets.Scripts.Enemies.Pawn.StateMachine;
 using FightShipArena.Assets.Scripts.Managers.HealthManagement;
+using FightShipArena.Assets.Scripts.MessageBroker;
+using FightShipArena.Assets.Scripts.MessageBroker.Player;
 using FightShipArena.Assets.Scripts.Player;
 using UnityEngine;
 
@@ -9,10 +11,12 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
     /// <summary>
     /// Specialization of a IEnemyControllerCore for a Pawn enemy type
     /// </summary>
-    public class PawnControllerCore : IEnemyControllerCore
+    public class PawnControllerCore : 
+        IEnemyControllerCore,
+        IHealthManagerEventsSubscriber,
+        IPlayerEventsSubscriber
     {
-        /// <inheritdoc/>
-        public event Action<IEnemyControllerCore> HasDied;
+        public Messenger Messenger { get; set; }
 
         /// <inheritdoc/>
         public IPlayerControllerCore PlayerControllerCore { get; set; }
@@ -49,8 +53,10 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
             Transform = parent.GameObject.transform;
             Rigidbody = parent.GameObject.GetComponent<Rigidbody2D>();
             HealthManager = healthManager;
-            HealthManager.HasDied += HealthManager_HasDied;
-            HealthManager.HealthLevelChanged += HealthManager_HealthLevelChanged;
+
+            SubscribeToHealthManagerEvents();
+
+            SubscribeToPlayerEvents();
 
             InitSettings = settings;
 
@@ -58,20 +64,36 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
             CurrentState = _stateFactory.IdleState;
         }
 
-        /// <summary>
-        /// EventHandler for the HealthLevelChanged event of the HealthManager
-        /// </summary>
-        /// <param name="value">The new health level</param>
-        /// <param name="maxValue">The maximum health level</param>
-        private void HealthManager_HealthLevelChanged(int value, int maxValue) { }
-
-        /// <summary>
-        /// EventHandler for the HasDied event of the HealthManager
-        /// </summary>
-        private void HealthManager_HasDied()
+        private void SubscribeToHealthManagerEvents()
         {
-            ChangeState(_stateFactory.IdleState);
-            HasDied?.Invoke(this);
+            var messenger = (Messenger as IHealthManagerEventsMessenger);
+            var subscriber = (this as IHealthManagerEventsSubscriber);
+            messenger.HasDied.AddListener(subscriber.HasDied);
+            messenger.HealthLevelChanged.AddListener(subscriber.HealthLevelChanged);
+        }
+
+        private void UnsubscribeToHealthManagerEvents()
+        {
+            var messenger = (Messenger as IHealthManagerEventsMessenger);
+            var subscriber = (this as IHealthManagerEventsSubscriber);
+            messenger.HasDied.RemoveListener(subscriber.HasDied);
+            messenger.HealthLevelChanged.RemoveListener(subscriber.HealthLevelChanged);
+        }
+
+        private void SubscribeToPlayerEvents()
+        {
+            var messenger = (Messenger as IPlayerEventsMessenger);
+            var subscriber = (this as IPlayerEventsSubscriber);
+
+            messenger.HasDied.AddListener(subscriber.HasDied);
+        }
+
+        private void UnsubscribeToPlayerEvents()
+        {
+            var messenger = (Messenger as IPlayerEventsMessenger);
+            var subscriber = (this as IPlayerEventsSubscriber);
+
+            messenger.HasDied.RemoveListener(subscriber.HasDied);
         }
 
         /// <summary>
@@ -81,7 +103,6 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
         {
             if(PlayerControllerCore != null)
             {
-                PlayerControllerCore.HealthManager.HasDied += Player_HasDied;
                 ChangeState(_stateFactory.SeekState);
             }
             else
@@ -145,6 +166,33 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
         public void HandleCollisionWithPlayer()
         {
             HealthManager.Kill();
+        }
+
+        void IHealthManagerEventsSubscriber.HasDied(object publisher, string target)
+        {
+            ChangeState(_stateFactory.IdleState);
+
+            UnsubscribeToPlayerEvents();
+            UnsubscribeToHealthManagerEvents();
+
+            (Messenger as IEnemyEventsPublisher).PublishHasDied(this.Parent, $"Pawn,{this.Parent.GameObject.GetInstanceID()}");
+        }
+
+        void IHealthManagerEventsSubscriber.HealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
+        {
+        }
+
+        void IPlayerEventsSubscriber.HasDied(object publisher, string target)
+        {
+            ChangeState(_stateFactory.IdleState);
+        }
+
+        void IPlayerEventsSubscriber.ScoreMultiplierCollected(object publisher, string target, int scoreMultiplier)
+        {
+        }
+
+        void IPlayerEventsSubscriber.HealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
+        {
         }
     }
 }
