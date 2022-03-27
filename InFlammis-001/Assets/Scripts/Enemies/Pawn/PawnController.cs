@@ -18,22 +18,6 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
 
         private string _Target;
 
-        ///// <summary>
-        ///// Event handler for a HasDied event from the HealthManager. Invoked when the enemy dies.
-        ///// </summary>
-        //private void HealthManager_HasDied()
-        //{
-        //    Debug.Log($"Destroying object {this.gameObject.name}");
-
-        //    _SoundManager.PlayExplodeSound();
-
-        //    var eeInstance = Instantiate(this.ExplosionEffect, this.gameObject.transform);
-        //    eeInstance.transform.SetParent(null);
-
-        //    GameObject.Destroy(this.gameObject);
-        //    ReleasePowerUp();
-        //}
-
         #region Unity methods
 
         void Awake()
@@ -125,9 +109,6 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
 
         private void FixedUpdate()
         {
-            //if (Time.frameCount % InitSettings.UpdateEveryXFrames != 0)
-            //    return;
-
             Core.Move();
         }
 

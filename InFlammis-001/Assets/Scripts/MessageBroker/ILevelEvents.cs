@@ -1,0 +1,30 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine.Events;
+
+namespace FightShipArena.Assets.Scripts.MessageBroker
+{
+    [Serializable] public class GameOver : UnityEvent<object, string> { }
+    [Serializable] public class GameStarted : UnityEvent<object, string> { }
+
+    public interface ILevelEventsPublisher : IEventPublisher
+    {
+        void PublishGameOver(object publisher, string target);
+        void PublishGameStarted(object publisher, string target);
+    }
+
+    public interface ILevelEventsSubscriber : IEventSubscriber
+    {
+        void GameOver(object publisher, string target);
+        void GameStarted(object publisher, string target);
+    }
+
+    public interface ILevelEventsMessenger
+    {
+        GameOver GameOver { get; }
+        GameStarted GameStarted { get; }
+    }
+}

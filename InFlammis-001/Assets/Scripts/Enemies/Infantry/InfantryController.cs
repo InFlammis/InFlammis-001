@@ -17,11 +17,14 @@ namespace FightShipArena.Assets.Scripts.Enemies.Infantry
     {
         public Messenger Messenger { get; set; }
 
+        private string _Target;
+
         #region Unity methods
 
         void Awake()
         {
             Messenger = GameObject.FindObjectOfType<Messenger>();
+            _Target = GameObject.GetInstanceID().ToString();
 
             HealthManager = new HealthManager(this.GetInstanceID().ToString(), InitSettings.InitHealth, InitSettings.InitHealth, false);
 
@@ -136,6 +139,11 @@ namespace FightShipArena.Assets.Scripts.Enemies.Infantry
 
         void IHealthManagerEventsSubscriber.HasDied(object publisher, string target)
         {
+            if (target != _Target)
+            {
+                return;
+            }
+
             Debug.Log($"Destroying object {this.gameObject.name}");
 
             _SoundManager.PlayExplodeSound();

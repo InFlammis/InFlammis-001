@@ -52,8 +52,12 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
 
             this.PlayerControllerCore = LevelManager.PlayerControllerCore;
 
-            Debug.Log($"Level started");
+            StartGame();
 
+        }
+
+        private void StartGame()
+        {
             this.PlayerControllerCore.HealthManager.Heal();
 
             _stateConfiguration = new StateConfiguration(
@@ -64,6 +68,10 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
             );
 
             ChangeStateRequestEventHandler(this, new WaitForStart(_stateConfiguration));
+            Debug.Log($"Level started");
+
+            (Messenger as ILevelEventsMessenger).GameStarted.Invoke(this, null);
+
         }
 
         /// <summary>
@@ -142,9 +150,15 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
             _playerInput.enabled = true;
         }
 
+        private void GameOver()
+        {
+            (Messenger as ILevelEventsMessenger).GameOver.Invoke(this, null);
+            ChangeStateRequestEventHandler(this, new StateMachine.GameOver(_stateConfiguration));
+
+        }
         void IPlayerEventsSubscriber.HasDied(object publisher, string target)
         {
-            ChangeStateRequestEventHandler(this, new GameOver(_stateConfiguration));
+            GameOver();
         }
 
         void IPlayerEventsSubscriber.ScoreMultiplierCollected(object publisher, string target, int scoreMultiplier)

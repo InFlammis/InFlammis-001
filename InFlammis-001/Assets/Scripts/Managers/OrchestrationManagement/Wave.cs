@@ -1,4 +1,5 @@
 ﻿using FightShipArena.Assets.Scripts.Enemies;
+using FightShipArena.Assets.Scripts.MessageBroker;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,7 +17,8 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
     /// based on the condition sets, until completion or the player's death.
     /// </summary>
     [Serializable]
-    public class Wave
+    public class Wave :
+        IEnemyEventsSubscriber
     {
         /// <summary>
         /// Event raised to notify a change in the player's score is requested
@@ -80,12 +82,17 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
         /// </summary>
         public OrchestrationManager.StatusEnum Status { get; private set; } = OrchestrationManager.StatusEnum.NotStarted;
 
+        public Messenger Messenger { get; private set; }
+
         /// <summary>
         /// Start the execution of the Wave
         /// </summary>
         /// <param name="manager"></param>
         public void Run(OrchestrationManager manager)
         {
+            Messenger = GameObject.FindObjectOfType<Messenger>();
+            (Messenger as IEnemyEventsMessenger).HasDied.AddListener((this as IEnemyEventsSubscriber).HasDied);
+
             RunCancellationToken = new OrchestrationManager.CancellationToken();
             manager.StartCoroutine(CoRun(manager, RunCancellationToken));
         }
@@ -96,7 +103,7 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
         public void Stop()
         {
             RunCancellationToken.Cancel = true;
-
+            (Messenger as IEnemyEventsMessenger).HasDied.RemoveListener((this as IEnemyEventsSubscriber).HasDied);
         }
 
         /// <summary>
@@ -133,11 +140,6 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
                 var nextEnemySpawn = GameObject.Instantiate(nextEnemy.Settings.EnemyType, spawnPoint.transform.position, Quaternion.identity);
                 UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(nextEnemySpawn, UnityEngine.SceneManagement.SceneManager.GetSceneAt(1));
 
-                var nextEnemyManager = nextEnemySpawn.GetComponent<IEnemyController>();
-
-                //TODO: MESSENGER
-                //nextEnemyManager.Core.HasDied += Enemy_HasDied;
-
                 nextEnemy.TotalSpawned++;
                 nextEnemy.CurrentlySpawned++;
                 TotEnemiesSpawned++;
@@ -150,17 +152,12 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
             Status = OrchestrationManager.StatusEnum.Done;
         }
 
-        /// <summary>
-        /// EventHandler invoked when the player has died
-        /// </summary>
-        /// <param name="enemyControllerCore"></param>
-        private void Enemy_HasDied(IEnemyControllerCore enemyControllerCore)
+        void IEnemyEventsSubscriber.HasDied(object publisher, string target)
         {
-            SendScore?.Invoke(enemyControllerCore.InitSettings.PlayerScoreWhenKilled);
+            var enemyController = publisher as IEnemyController;
+            SendScore?.Invoke(enemyController.Core.InitSettings.PlayerScoreWhenKilled);
 
-            //TODO: REVIEW THIS
-            //enemyControllerCore.HasDied -= Enemy_HasDied;
-            var enemyType = EnemyTypes.Single(x => x.Settings.EnemyTypeEnum == enemyControllerCore.Parent.InitSettings.EnemyType);
+            var enemyType = EnemyTypes.Single(x => x.Settings.EnemyTypeEnum == enemyController.InitSettings.EnemyType);
             enemyType.CurrentlySpawned--;
             TotEnemiesKilled++;
         }
