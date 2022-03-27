@@ -14,7 +14,8 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
 {
     public class Level_01ManagerCore : 
         ILevelManagerCore,
-        IPlayerEventsSubscriber
+        IPlayerEventsSubscriber,
+        IOrchestrationEventsSubscriber
     {
         /// <inheritdoc/>
         public IPlayerControllerCore PlayerControllerCore { get; set; }
@@ -47,13 +48,26 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         {
             Messenger = GameObject.FindObjectOfType<Messenger>();
 
+            (Messenger as IOrchestrationEventsMessenger).OrchestrationComplete.AddListener((this as IOrchestrationEventsSubscriber).OrchestrationComplete);
+            (Messenger as IOrchestrationEventsMessenger).OrchestrationStarted.AddListener((this as IOrchestrationEventsSubscriber).OrchestrationStarted);
+            (Messenger as IOrchestrationEventsMessenger).OrchestrationCancelled.AddListener((this as IOrchestrationEventsSubscriber).OrchestrationCancelled);
+
             (Messenger as IPlayerEventsMessenger).ScoreMultiplierCollected.AddListener((this as IPlayerEventsSubscriber).ScoreMultiplierCollected);
             (Messenger as IPlayerEventsMessenger).HasDied.AddListener((this as IPlayerEventsSubscriber).HasDied);
 
             this.PlayerControllerCore = LevelManager.PlayerControllerCore;
 
             StartGame();
+        }
 
+        public void OnDestroy()
+        {
+            (Messenger as IOrchestrationEventsMessenger).OrchestrationComplete.RemoveListener((this as IOrchestrationEventsSubscriber).OrchestrationComplete);
+            (Messenger as IOrchestrationEventsMessenger).OrchestrationStarted.RemoveListener((this as IOrchestrationEventsSubscriber).OrchestrationStarted);
+            (Messenger as IOrchestrationEventsMessenger).OrchestrationCancelled.RemoveListener((this as IOrchestrationEventsSubscriber).OrchestrationCancelled);
+
+            (Messenger as IPlayerEventsMessenger).ScoreMultiplierCollected.RemoveListener((this as IPlayerEventsSubscriber).ScoreMultiplierCollected);
+            (Messenger as IPlayerEventsMessenger).HasDied.RemoveListener((this as IPlayerEventsSubscriber).HasDied);
         }
 
         private void StartGame()
@@ -96,20 +110,10 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         public void OnAwake() 
         {
             LevelManager.OrchestrationManager.SendScore += OrchestrationManager_SendScore;
-            LevelManager.OrchestrationManager.OrchestrationComplete += OrchestrationManager_OrchestrationComplete;
+            //LevelManager.OrchestrationManager.OrchestrationComplete += OrchestrationManager_OrchestrationComplete;
+
 
             _playerInput = LevelManager.GameObject.GetComponent<PlayerInput>();
-        }
-
-        /// <summary>
-        /// EventHandler for the OrchestrationComplete event of the OrchestrationManager
-        /// </summary>
-        private void OrchestrationManager_OrchestrationComplete()
-        {
-            Debug.Log("Orchestration complete");
-            //LevelManager.ScoreManager.AddToHighScore();
-            ChangeStateRequestEventHandler(this, new Win(_stateConfiguration));
-
         }
 
         /// <summary>
@@ -168,6 +172,20 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
 
         void IPlayerEventsSubscriber.HealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
         {
+        }
+
+        void IOrchestrationEventsSubscriber.OrchestrationStarted(object publisher, string target)
+        {
+        }
+
+        void IOrchestrationEventsSubscriber.OrchestrationCancelled(object publisher, string target)
+        {
+        }
+
+        void IOrchestrationEventsSubscriber.OrchestrationComplete(object publisher, string target)
+        {
+            Debug.Log("Orchestration complete");
+            ChangeStateRequestEventHandler(this, new Win(_stateConfiguration));
         }
     }
 }

@@ -75,7 +75,7 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
         /// </summary>
         [HideInInspector] public int TotEnemiesKilled;
 
-        private OrchestrationManager.CancellationToken RunCancellationToken;
+        //private OrchestrationManager.CancellationToken RunCancellationToken;
 
         /// <summary>
         /// Status of the execution
@@ -88,13 +88,13 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
         /// Start the execution of the Wave
         /// </summary>
         /// <param name="manager"></param>
-        public void Run(OrchestrationManager manager)
+        public void Run(OrchestrationManager manager, OrchestrationManager.CancellationToken cancellationToken)
         {
             Messenger = GameObject.FindObjectOfType<Messenger>();
             (Messenger as IEnemyEventsMessenger).HasDied.AddListener((this as IEnemyEventsSubscriber).HasDied);
 
-            RunCancellationToken = new OrchestrationManager.CancellationToken();
-            manager.StartCoroutine(CoRun(manager, RunCancellationToken));
+            //RunCancellationToken = cancellationToken;
+            manager.StartCoroutine(CoRun(manager, cancellationToken));
         }
 
         /// <summary>
@@ -102,7 +102,6 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
         /// </summary>
         public void Stop()
         {
-            RunCancellationToken.Cancel = true;
             (Messenger as IEnemyEventsMessenger).HasDied.RemoveListener((this as IEnemyEventsSubscriber).HasDied);
         }
 
@@ -123,11 +122,11 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
             {
                 yield return new WaitForSeconds(DelayBetweenSpawns);
 
-                yield return new WaitUntil(() => CurrentSimultaneousEnemiesSpawned < MaxSimultaneousEnemiesSpawned);
+                yield return new WaitUntil(() => CurrentSimultaneousEnemiesSpawned < MaxSimultaneousEnemiesSpawned || cancellationToken.Cancel == true);
 
                 if(cancellationToken?.Cancel == true)
                 {
-                    yield break;
+                    break;
                 }
 
                 var nextEnemy = EnemyTypes.Where(x=>x.CurrentlySpawned < x.Settings.MaxNumOfSimultaneousSpawns).OrderBy(x => x.TotalSpawned / (float)x.Settings.NumToSpawn).FirstOrDefault();
@@ -147,7 +146,7 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
 
             yield return new WaitForSeconds(DelayAfterEnd);
 
-            yield return new WaitUntil(() => TotEnemiesKilled == TotEnemiesToSpawn);
+            yield return new WaitUntil(() => TotEnemiesKilled == TotEnemiesToSpawn || cancellationToken.Cancel == true);
 
             Status = OrchestrationManager.StatusEnum.Done;
         }

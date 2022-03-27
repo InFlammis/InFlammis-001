@@ -17,11 +17,6 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
         event Action<int> SendScore;
 
         /// <summary>
-        /// Event raised to notify when the Orchestration is complete
-        /// </summary>
-        event Action OrchestrationComplete;
-
-        /// <summary>
         /// Start the orchestration
         /// </summary>
         void Run();

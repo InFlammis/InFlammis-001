@@ -38,8 +38,6 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         /// <inheritdoc/>
         public IHudManager HudManager { get; set; }
 
-        //public Messenger Messenger { get; private set; }
-
         /// <inheritdoc/>
         public virtual void Move(InputAction.CallbackContext context){}
 
@@ -52,7 +50,6 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         /// <inheritdoc/>
         public virtual void OnStart() 
         {
-            //Messenger = GameObject.FindObjectOfType<Messenger>();
             var player = GameObject.FindWithTag("Player");
             if (player == null)
             {
@@ -60,8 +57,6 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
             }
 
             this.PlayerControllerCore = player.GetComponent<IPlayerController>().Core;
-
-            //(Messenger as IPlayerEventsMessenger).HasDied.AddListener((this as IPlayerEventsSubscriber).HasDied);
 
             this.HudManager = GetComponent<IHudManager>();
             if(HudManager == null)

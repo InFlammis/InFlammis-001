@@ -38,6 +38,11 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
             OnAwake();
         }
 
+        private void OnDestroy()
+        {
+            Core.OnDestroy();
+        }
+
         void Start()
         {
             OnStart();

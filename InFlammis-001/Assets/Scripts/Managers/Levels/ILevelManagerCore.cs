@@ -37,6 +37,8 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         /// </summary>
         void OnAwake();
 
+        void OnDestroy();
+
         /// <summary>
         /// Event Handler for a move action
         /// </summary>
