@@ -71,7 +71,7 @@ namespace FightShipArena.Assets.Scripts.Enemies.Infantry
             Parent = parent;
             Transform = parent.GameObject.transform;
             Rigidbody = parent.GameObject.GetComponent<Rigidbody2D>();
-            _Target = $"{this.GetType().Name}:{ parent.GameObject.GetInstanceID()}";
+            _Target = $"{this.Parent.GetType().Name}:{ parent.GameObject.GetInstanceID() }";
 
             HealthManager = healthManager;
 

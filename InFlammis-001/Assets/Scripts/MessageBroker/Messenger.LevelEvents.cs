@@ -12,6 +12,8 @@ namespace FightShipArena.Assets.Scripts.MessageBroker
 
         GameStarted ILevelEventsMessenger.GameStarted { get; } = new GameStarted();
 
+        PlayerWins ILevelEventsMessenger.PlayerWins { get; } = new PlayerWins();
+
         void ILevelEventsPublisher.PublishGameOver(object publisher, string target)
         {
             (this as ILevelEventsMessenger).GameOver.Invoke(publisher, target);
@@ -20,6 +22,11 @@ namespace FightShipArena.Assets.Scripts.MessageBroker
         void ILevelEventsPublisher.PublishGameStarted(object publisher, string target)
         {
             (this as ILevelEventsMessenger).GameStarted.Invoke(publisher, target);
+        }
+
+        void ILevelEventsPublisher.PublishPlayerWins(object publisher, string target)
+        {
+            (this as ILevelEventsMessenger).PlayerWins.Invoke(publisher, target);
         }
     }
 }

@@ -77,7 +77,7 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
             ChangeStateRequestEventHandler(this, new WaitForStart(_stateConfiguration));
             //Debug.Log($"Level started");
 
-            (Messenger as ILevelEventsMessenger).GameStarted.Invoke(this, null);
+            (Messenger as ILevelEventsPublisher).PublishGameStarted(this, null);
 
         }
 
@@ -102,7 +102,7 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         /// <inheritdoc/>
         public void OnAwake() 
         {
-            LevelManager.OrchestrationManager.SendScore += OrchestrationManager_SendScore;
+            //LevelManager.OrchestrationManager.SendScore += OrchestrationManager_SendScore;
             //LevelManager.OrchestrationManager.OrchestrationComplete += OrchestrationManager_OrchestrationComplete;
 
 
@@ -162,12 +162,6 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         {
             LevelManager.ScoreManager.AddToMultiplier(scoreMultiplier);
         }
-
-        void PlayerHealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
-        {
-        }
-
-
 
         void OrchestrationManagerOrchestrationComplete(object publisher, string target)
         {

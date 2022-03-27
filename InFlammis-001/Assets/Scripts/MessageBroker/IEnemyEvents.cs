@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine.Events;
 
 namespace FightShipArena.Assets.Scripts.MessageBroker
 {
+    [Serializable] public class PlayerScored : UnityEvent<object, string, int> { }
+
     /// <summary>
     /// Interface required for a Enemy Events Publisher.
     /// </summary>
@@ -17,6 +20,8 @@ namespace FightShipArena.Assets.Scripts.MessageBroker
         /// <param name="publisher">Publisher of the message.</param>
         /// <param name="target">Target of the message.</param>
         void PublishHasDied(object publisher, string target);
+
+        void PublishPlayerScored(object publisher, string target, int score);
     }
 
     /// <summary>
@@ -28,5 +33,7 @@ namespace FightShipArena.Assets.Scripts.MessageBroker
         /// Returns a reference to a delegate of type <see cref="HasDied"/>, to subscribe to.
         /// </summary>
         HasDied HasDied { get; }
+
+        PlayerScored PlayerScored { get; }
     }
 }

@@ -89,7 +89,7 @@ namespace FightShipArena.Assets.Scripts.Enemies.Infantry
 
         void OnCollisionEnter2D(Collision2D col)
         {
-            Debug.Log($"Collision detected with {col.gameObject.name}");
+            //Debug.Log($"Collision detected with {col.gameObject.name}");
 
             switch (col.gameObject.tag)
             {

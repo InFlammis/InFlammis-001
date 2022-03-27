@@ -10,9 +10,16 @@ namespace FightShipArena.Assets.Scripts.MessageBroker
     {
         HasDied IEnemyEventsMessenger.HasDied { get; } = new HasDied();
 
+        PlayerScored IEnemyEventsMessenger.PlayerScored { get; } = new PlayerScored();
+
         void IEnemyEventsPublisher.PublishHasDied(object publisher, string target)
         {
             (this as IEnemyEventsMessenger).HasDied.Invoke(publisher, target);
+        }
+
+        void IEnemyEventsPublisher.PublishPlayerScored(object publisher, string target, int score)
+        {
+            (this as IEnemyEventsMessenger).PlayerScored.Invoke(publisher, target, score);
         }
     }
 }

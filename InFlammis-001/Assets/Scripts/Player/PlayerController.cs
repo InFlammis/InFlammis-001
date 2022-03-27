@@ -22,15 +22,15 @@ namespace FightShipArena.Assets.Scripts.Player
         IPlayerController
 
     {
-        /// <summary>
-        /// Event raised when the player's health level changes
-        /// </summary>
-        public UnityEvent<int, int> PlayerHealthLevelChanged;
+        ///// <summary>
+        ///// Event raised when the player's health level changes
+        ///// </summary>
+        //public UnityEvent<int, int> PlayerHealthLevelChanged;
 
-        /// <summary>
-        /// Event raised when the player dies
-        /// </summary>
-        public UnityEvent PlayerHasDied;
+        ///// <summary>
+        ///// Event raised when the player dies
+        ///// </summary>
+        //public UnityEvent PlayerHasDied;
 
         /// <summary>
         /// Reference to the SoundManager instance
@@ -51,7 +51,7 @@ namespace FightShipArena.Assets.Scripts.Player
 
         public Messenger Messenger { get; private set; }
 
-        //IHealthManagerEventsMessenger IEventSubscriber<IHealthManagerEventsMessenger>.Messenger { get; set; }
+        private readonly string _Target = "Player";
 
         [SerializeField]
         private GameObject ExplosionEffect;
@@ -187,7 +187,7 @@ namespace FightShipArena.Assets.Scripts.Player
         void Awake()
         {
             Messenger = GameObject.FindObjectOfType<Messenger>();
-            HealthManager = new HealthManager("Player", initSettings.InitHealth, initSettings.InitHealth, false);
+            HealthManager = new HealthManager(_Target, initSettings.InitHealth, initSettings.InitHealth, false);
 
             SubscribeToHealthManagerEvents();
             CheckWeaponsConfiguration();
@@ -299,7 +299,7 @@ namespace FightShipArena.Assets.Scripts.Player
 
         void HealthManagerHasDied(object publisher, string target)
         {
-            if(target != null && target != "Player")
+            if(target != null && target != _Target)
             {
                 return;
             }
@@ -307,8 +307,6 @@ namespace FightShipArena.Assets.Scripts.Player
             (Messenger as IPlayerEventsPublisher).PublishHasDied(this, null);
 
             _SoundManager.PlayExplodeSound();
-
-            //Debug.Log($"Destroying object {this.gameObject.name}");
 
             UnsubscribeToHealthManagerEvents();
 
@@ -322,6 +320,11 @@ namespace FightShipArena.Assets.Scripts.Player
 
         public void HealthManagerHealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
         {
+            if (target != null && target != _Target)
+            {
+                return;
+            }
+
             (Messenger as IPlayerEventsPublisher).PublishHealthLevelChanged(publisher, target, healthLevel, maxHealthLevel);
         }
     }

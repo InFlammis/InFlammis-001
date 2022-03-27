@@ -106,8 +106,8 @@ namespace FightShipArena.Assets.Scripts.Managers.HealthManagement
         {
             this.Messenger = GameObject.FindObjectOfType<Messenger>();
             this._Target = target;
-            this.Health = health;
             this.MaxHealth = maxHealth;
+            this.Health = health;
             this.IsInvulnerable = isInvulnerable;
         }
 

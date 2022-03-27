@@ -2284,7 +2284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea9db9b4df2a5774e8587e6ead540b46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  messenger: {fileID: 1137661310}
+  _messenger: {fileID: 0}
   _logEnabled: 1
   _filterLevel: 0
 --- !u!4 &1277184057
@@ -2862,54 +2862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a306d30249ad841b069e93c653ffc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScoreChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1455586405}
-        m_TargetAssemblyTypeName: FightShipArena.Assets.Scripts.Managers.HudManagement.HudManager,
-          FightShipArena
-        m_MethodName: SetScore
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  MultiplierChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1455586405}
-        m_TargetAssemblyTypeName: FightShipArena.Assets.Scripts.Managers.HudManagement.HudManager,
-          FightShipArena
-        m_MethodName: SetMultiplier
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  HiScoreChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1455586405}
-        m_TargetAssemblyTypeName: FightShipArena.Assets.Scripts.Managers.HudManagement.HudManager,
-          FightShipArena
-        m_MethodName: SetHiScore
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  _messenger: {fileID: 1137661310}
   HighScores: {fileID: 11400000, guid: 652c9bcc6b14fe54887174de9a619460, type: 2}
 --- !u!114 &1455586408
 MonoBehaviour:
