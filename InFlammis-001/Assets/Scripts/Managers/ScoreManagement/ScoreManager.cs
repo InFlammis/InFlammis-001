@@ -15,22 +15,6 @@ namespace FightShipArena.Assets.Scripts.Managers.ScoreManagement
         [SerializeField] private Messenger _messenger;
         public Messenger Messenger => _messenger;
 
-
-        ///// <summary>
-        ///// Event raised when the current score changes
-        ///// </summary>
-        //public UnityEvent<int> ScoreChanged;
-
-        ///// <summary>
-        ///// Event raised when the current multiplier changes
-        ///// </summary>
-        //public UnityEvent<int> MultiplierChanged;
-
-        ///// <summary>
-        ///// Event raised when the current hi-score changes
-        ///// </summary>
-        //public UnityEvent<int> HiScoreChanged;
-
         /// <summary>
         /// The current score
         /// </summary>
@@ -72,12 +56,6 @@ namespace FightShipArena.Assets.Scripts.Managers.ScoreManagement
 
         void Start()
         {
-            //(Messenger as IPlayerEventsMessenger).ScoreMultiplierCollected.AddListener(PlayerScoreMultiplierCollected);
-            //(Messenger as IEnemyEventsMessenger).PlayerScored.AddListener(EnemyPlayerScored);
-            //(Messenger as ILevelEventsMessenger).GameOver.AddListener(LevelGameOver);
-            //(Messenger as ILevelEventsMessenger).GameStarted.AddListener(LevelGameStarted);
-            //(Messenger as ILevelEventsMessenger).PlayerWins.AddListener(LevelPlayerWins);
-
             NotifyHighScoreValue();
         }
 

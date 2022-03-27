@@ -2015,7 +2015,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1277184056}
         m_TargetAssemblyTypeName: FightShipArena.Assets.Scripts.Managers.LogManagement.Logger,
           FightShipArena
-        m_MethodName: Player_HasDied
+        m_MethodName: PlayerHasDied
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
