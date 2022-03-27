@@ -22,6 +22,8 @@ namespace FightShipArena.Assets.Scripts.Enemies.Infantry
     {
         public Messenger Messenger { get; set; }
 
+        private string _Target;
+
         /// <inheritdoc/>
         public IPlayerControllerCore PlayerControllerCore { get; set; }
 
@@ -68,10 +70,12 @@ namespace FightShipArena.Assets.Scripts.Enemies.Infantry
         /// <param name="settings">The initial settings</param>
         public InfantryControllerCore(IEnemyController parent, IHealthManager healthManager, EnemySettings settings)
         {
-            //State = EnemyState.Idle;
+            this.Messenger = GameObject.FindObjectOfType<Messenger>();
             Parent = parent;
             Transform = parent.GameObject.transform;
             Rigidbody = parent.GameObject.GetComponent<Rigidbody2D>();
+            _Target = parent.GameObject.GetInstanceID().ToString();
+
             HealthManager = healthManager;
 
             SubscribeToHealthManagerEvents();
@@ -184,6 +188,11 @@ namespace FightShipArena.Assets.Scripts.Enemies.Infantry
 
         void IHealthManagerEventsSubscriber.HasDied(object publisher, string target)
         {
+            if (target != _Target)
+            {
+                return;
+            }
+
             ChangeState(_stateFactory.IdleState);
 
             UnsubscribeToPlayerEvents();

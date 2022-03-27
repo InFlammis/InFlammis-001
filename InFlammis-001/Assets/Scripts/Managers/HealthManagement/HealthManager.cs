@@ -104,6 +104,7 @@ namespace FightShipArena.Assets.Scripts.Managers.HealthManagement
         /// <param name="isInvulnerable">It is invulnerable at start</param>
         public HealthManager(string target, int health, int maxHealth, bool isInvulnerable)
         {
+            this.Messenger = GameObject.FindObjectOfType<Messenger>();
             this._Target = target;
             this.Health = health;
             this.MaxHealth = maxHealth;

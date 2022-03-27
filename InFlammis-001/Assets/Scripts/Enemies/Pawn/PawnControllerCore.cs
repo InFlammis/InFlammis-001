@@ -18,6 +18,8 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
     {
         public Messenger Messenger { get; set; }
 
+        private string _Target;
+
         /// <inheritdoc/>
         public IPlayerControllerCore PlayerControllerCore { get; set; }
         /// <inheritdoc/>
@@ -49,9 +51,12 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
         /// <param name="settings">The initial settings</param>
         public PawnControllerCore(IEnemyController parent, IHealthManager healthManager, EnemySettings settings)
         {
+            this.Messenger = GameObject.FindObjectOfType<Messenger>();
             Parent = parent;
             Transform = parent.GameObject.transform;
             Rigidbody = parent.GameObject.GetComponent<Rigidbody2D>();
+            _Target = parent.GameObject.GetInstanceID().ToString();
+
             HealthManager = healthManager;
 
             SubscribeToHealthManagerEvents();
@@ -113,14 +118,6 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
         }
 
         /// <summary>
-        /// EventHandler for the HasDied event of the player
-        /// </summary>
-        private void Player_HasDied()
-        {
-            ChangeState(_stateFactory.IdleState);
-        }
-
-        /// <summary>
         /// EventHandler for the Change state invokation from the current state
         /// </summary>
         /// <param name="newState">The new state to enable</param>
@@ -170,6 +167,10 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
 
         void IHealthManagerEventsSubscriber.HasDied(object publisher, string target)
         {
+            if(target != _Target)
+            {
+                return;
+            }
             ChangeState(_stateFactory.IdleState);
 
             UnsubscribeToPlayerEvents();

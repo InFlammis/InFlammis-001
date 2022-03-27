@@ -16,30 +16,32 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
     {
         public Messenger Messenger { get; set; }
 
+        private string _Target;
 
-        /// <summary>
-        /// Event handler for a HasDied event from the HealthManager. Invoked when the enemy dies.
-        /// </summary>
-        private void HealthManager_HasDied()
-        {
-            Debug.Log($"Destroying object {this.gameObject.name}");
+        ///// <summary>
+        ///// Event handler for a HasDied event from the HealthManager. Invoked when the enemy dies.
+        ///// </summary>
+        //private void HealthManager_HasDied()
+        //{
+        //    Debug.Log($"Destroying object {this.gameObject.name}");
 
-            _SoundManager.PlayExplodeSound();
+        //    _SoundManager.PlayExplodeSound();
 
-            var eeInstance = Instantiate(this.ExplosionEffect, this.gameObject.transform);
-            eeInstance.transform.SetParent(null);
+        //    var eeInstance = Instantiate(this.ExplosionEffect, this.gameObject.transform);
+        //    eeInstance.transform.SetParent(null);
 
-            GameObject.Destroy(this.gameObject);
-            ReleasePowerUp();
-        }
+        //    GameObject.Destroy(this.gameObject);
+        //    ReleasePowerUp();
+        //}
 
         #region Unity methods
 
         void Awake()
         {
             Messenger = GameObject.FindObjectOfType<Messenger>();
+            _Target = GameObject.GetInstanceID().ToString();
 
-            HealthManager = new HealthManager(this.GetInstanceID().ToString(), InitSettings.InitHealth, InitSettings.InitHealth, false);
+            HealthManager = new HealthManager(_Target, InitSettings.InitHealth, InitSettings.InitHealth, false);
 
             SubscribeToHealthManagerEvents();
 
@@ -65,7 +67,6 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
 
         void Start()
         {
-
             var sceneManagerGO = GameObject.FindGameObjectWithTag("SceneManager");
             var sceneManager = sceneManagerGO?.GetComponent<LevelManager>();
 
@@ -132,6 +133,11 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
 
         void IHealthManagerEventsSubscriber.HasDied(object publisher, string target)
         {
+            if (target != _Target)
+            {
+                return;
+            }
+
             Debug.Log($"Destroying object {this.gameObject.name}");
 
             _SoundManager.PlayExplodeSound();
