@@ -52,7 +52,7 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
             Parent = parent;
             Transform = parent.GameObject.transform;
             Rigidbody = parent.GameObject.GetComponent<Rigidbody2D>();
-            _Target = parent.GameObject.GetInstanceID().ToString();
+            _Target = $"{this.GetType().Name}:{ parent.GameObject.GetInstanceID() }";
 
             HealthManager = healthManager;
 

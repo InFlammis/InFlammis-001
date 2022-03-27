@@ -7,7 +7,7 @@ namespace FightShipArena.Assets.Scripts.Weapons.MultiCannon
     {
         void Start()
         {
-            Debug.Log("Start MultiCannon");
+            //Debug.Log("Start MultiCannon");
         }
 
     }

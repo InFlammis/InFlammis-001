@@ -75,7 +75,7 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
             );
 
             ChangeStateRequestEventHandler(this, new WaitForStart(_stateConfiguration));
-            Debug.Log($"Level started");
+            //Debug.Log($"Level started");
 
             (Messenger as ILevelEventsMessenger).GameStarted.Invoke(this, null);
 
@@ -124,13 +124,13 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
             {
 
                 case InputActionPhase.Started:
-                    Debug.Log($"{context.action} Started");
+                    //Debug.Log($"{context.action} Started");
                     break;
                 case InputActionPhase.Performed:
-                    Debug.Log($"{context.action} Performed");
+                    //Debug.Log($"{context.action} Performed");
                     break;
                 case InputActionPhase.Canceled:
-                    Debug.Log($"{context.action} Cancelled");
+                    //Debug.Log($"{context.action} Cancelled");
                     break;
             }
         }
@@ -171,7 +171,7 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
 
         void OrchestrationManagerOrchestrationComplete(object publisher, string target)
         {
-            Debug.Log("Orchestration complete");
+            //Debug.Log("Orchestration complete");
             ChangeStateRequestEventHandler(this, new Win(_stateConfiguration));
         }
     }

@@ -211,7 +211,7 @@ namespace FightShipArena.Assets.Scripts.Managers.GameManagement
             switch (context.phase)
             {
                 case InputActionPhase.Performed:
-                    Debug.Log($"{context.action} Performed");
+                    //Debug.Log($"{context.action} Performed");
 
                     _stateStack.Peek()?.PauseResumeGame();
                     break;

@@ -137,7 +137,7 @@ namespace FightShipArena.Assets.Scripts.Player
             if (context.performed)
             {
                 Core.TurnLeft();
-                Debug.Log($"Turning {Core.PlayerInput}");
+                //Debug.Log($"Turning {Core.PlayerInput}");
             }
             else if (context.canceled)
             {
@@ -150,7 +150,7 @@ namespace FightShipArena.Assets.Scripts.Player
             if (context.performed)
             {
                 Core.TurnRight();
-                Debug.Log($"Turning {Core.PlayerInput}");
+                //Debug.Log($"Turning {Core.PlayerInput}");
             }
             else if (context.canceled)
             {
@@ -163,7 +163,7 @@ namespace FightShipArena.Assets.Scripts.Player
             if (context.performed)
             {
                 Core.TurnUp();
-                Debug.Log($"Turning {Core.PlayerInput}");
+                //Debug.Log($"Turning {Core.PlayerInput}");
             }
             else if (context.canceled)
             {
@@ -176,7 +176,7 @@ namespace FightShipArena.Assets.Scripts.Player
             if (context.performed)
             {
                 Core.TurnDown();
-                Debug.Log($"Turning {Core.PlayerInput}");
+                //Debug.Log($"Turning {Core.PlayerInput}");
             }
             else if (context.canceled)
             {
@@ -239,7 +239,7 @@ namespace FightShipArena.Assets.Scripts.Player
 
         void OnCollisionEnter2D(Collision2D col)
         {
-            Debug.Log($"Collision detected with {col.gameObject.name}");
+            //Debug.Log($"Collision detected with {col.gameObject.name}");
             if (col.gameObject.tag == "Enemy")
             {
                 var enemyController = col.gameObject.GetComponent<EnemyController>();
@@ -308,7 +308,7 @@ namespace FightShipArena.Assets.Scripts.Player
 
             _SoundManager.PlayExplodeSound();
 
-            Debug.Log($"Destroying object {this.gameObject.name}");
+            //Debug.Log($"Destroying object {this.gameObject.name}");
 
             UnsubscribeToHealthManagerEvents();
 

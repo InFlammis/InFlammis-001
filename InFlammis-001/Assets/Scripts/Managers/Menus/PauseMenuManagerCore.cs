@@ -29,7 +29,7 @@ namespace FightShipArena.Assets.Scripts.Managers.Menus
         /// <inheritdoc/>
         public void OnStart()
         {
-            Debug.Log($"Pause menu opened");
+            //Debug.Log($"Pause menu opened");
         }
 
         /// <inheritdoc/>

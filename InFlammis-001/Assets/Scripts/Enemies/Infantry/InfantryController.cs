@@ -23,7 +23,7 @@ namespace FightShipArena.Assets.Scripts.Enemies.Infantry
         void Awake()
         {
             Messenger = GameObject.FindObjectOfType<Messenger>();
-            _Target = GameObject.GetInstanceID().ToString();
+            _Target = $"{this.GetType().Name}:{ GameObject.GetInstanceID()}";
 
             HealthManager = new HealthManager(this.GetInstanceID().ToString(), InitSettings.InitHealth, InitSettings.InitHealth, false);
 

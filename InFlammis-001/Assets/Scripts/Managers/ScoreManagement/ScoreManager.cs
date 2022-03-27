@@ -52,7 +52,7 @@ namespace FightShipArena.Assets.Scripts.Managers.ScoreManagement
                 }
 
                 _multiplier = value;
-                Debug.Log($"Multiplier set to {Multiplier}");
+                //Debug.Log($"Multiplier set to {Multiplier}");
                 NotifyMultiplierValueChange();
             }
         }
@@ -105,7 +105,7 @@ namespace FightShipArena.Assets.Scripts.Managers.ScoreManagement
         {
             var totScore = score * Multiplier;
             CurrentScore.Value += totScore;
-            Debug.Log($"Score set to {CurrentScore.Value}");
+            //Debug.Log($"Score set to {CurrentScore.Value}");
             NotifyScoreValueChange();
         }
 

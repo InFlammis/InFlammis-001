@@ -22,7 +22,7 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
         void Awake()
         {
             Messenger = GameObject.FindObjectOfType<Messenger>();
-            _Target = GameObject.GetInstanceID().ToString();
+            _Target = $"{this.GetType().Name}:{ GameObject.GetInstanceID()}";
 
             HealthManager = new HealthManager(_Target, InitSettings.InitHealth, InitSettings.InitHealth, false);
 
@@ -86,7 +86,7 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
 
         void OnCollisionEnter2D(Collision2D col)
         {
-            Debug.Log($"Collision detected with {col.gameObject.name}");
+            //Debug.Log($"Collision detected with {col.gameObject.name}");
 
             switch (col.gameObject.tag)
             {
@@ -116,7 +116,7 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
                 return;
             }
 
-            Debug.Log($"Destroying object {this.gameObject.name}");
+            //Debug.Log($"Destroying object {this.gameObject.name}");
 
             _SoundManager.PlayExplodeSound();
 

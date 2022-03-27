@@ -32,7 +32,7 @@ namespace FightShipArena.Assets.Scripts.Managers.Menus
         /// <inheritdoc/>
         public void OnStart()
         {
-            Debug.Log($"Main menu opened");
+            //Debug.Log($"Main menu opened");
         }
 
         /// <inheritdoc/>
