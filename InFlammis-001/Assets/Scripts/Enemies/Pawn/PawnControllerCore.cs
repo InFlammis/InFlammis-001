@@ -2,7 +2,6 @@
 using FightShipArena.Assets.Scripts.Enemies.Pawn.StateMachine;
 using FightShipArena.Assets.Scripts.Managers.HealthManagement;
 using FightShipArena.Assets.Scripts.MessageBroker;
-using FightShipArena.Assets.Scripts.MessageBroker.Player;
 using FightShipArena.Assets.Scripts.Player;
 using UnityEngine;
 

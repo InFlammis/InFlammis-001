@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using FightShipArena.Assets.Scripts.Managers.Levels.StateMachine;
 using FightShipArena.Assets.Scripts.MessageBroker;
-using FightShipArena.Assets.Scripts.MessageBroker.Player;
 using FightShipArena.Assets.Scripts.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;

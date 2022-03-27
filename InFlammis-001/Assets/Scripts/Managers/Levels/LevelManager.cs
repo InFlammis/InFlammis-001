@@ -9,7 +9,6 @@ using FightShipArena.Assets.Scripts.Managers.SceneManagement;
 using FightShipArena.Assets.Scripts.Managers.ScoreManagement;
 using FightShipArena.Assets.Scripts.Managers.SoundManagement;
 using FightShipArena.Assets.Scripts.MessageBroker;
-using FightShipArena.Assets.Scripts.MessageBroker.Player;
 using FightShipArena.Assets.Scripts.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;

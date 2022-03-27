@@ -5,7 +5,6 @@ using FightShipArena.Assets.Scripts.Enemies;
 using FightShipArena.Assets.Scripts.Managers.HealthManagement;
 using FightShipArena.Assets.Scripts.Managers.Levels;
 using FightShipArena.Assets.Scripts.MessageBroker;
-using FightShipArena.Assets.Scripts.MessageBroker.Player;
 using FightShipArena.Assets.Scripts.Weapons;
 using UnityEngine;
 using UnityEngine.Events;

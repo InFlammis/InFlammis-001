@@ -1,32 +1,37 @@
-﻿using FightShipArena.Assets.Scripts.MessageBroker.Player;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace FightShipArena.Assets.Scripts.MessageBroker
 {
     public partial class Messenger : IPlayerEventsPublisher, IPlayerEventsMessenger
     {
-        HasDied IPlayerEventsMessenger.HasDied { get; } = new HasDied();
-        ScoreMultiplierCollected IPlayerEventsMessenger.ScoreMultiplierCollected { get; } = new ScoreMultiplierCollected();
+        [SerializeField] private HasDied _Player_HasDied = new HasDied();
+        [SerializeField] private ScoreMultiplierCollected _Player_ScoreMultiplierCollected;
+        [SerializeField] private HealthLevelChanged _Player_HealthLevelChanged;
 
-        HealthLevelChanged IPlayerEventsMessenger.HealthLevelChanged { get; } = new HealthLevelChanged();
+
+        HasDied IPlayerEventsMessenger.HasDied  => _Player_HasDied;
+        ScoreMultiplierCollected IPlayerEventsMessenger.ScoreMultiplierCollected => _Player_ScoreMultiplierCollected;
+
+        HealthLevelChanged IPlayerEventsMessenger.HealthLevelChanged => _Player_HealthLevelChanged;
 
         void IPlayerEventsPublisher.PublishHealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
         {
-            (this as IPlayerEventsMessenger).HealthLevelChanged.Invoke(publisher, target,healthLevel, maxHealthLevel);
+            _Player_HealthLevelChanged.Invoke(publisher, target,healthLevel, maxHealthLevel);
         }
 
         void IPlayerEventsPublisher.PublishHasDied(object publisher, string target)
         {
-            (this as IPlayerEventsMessenger).HasDied.Invoke(publisher, target);
+            _Player_HasDied.Invoke(publisher, target);
         }
 
         void IPlayerEventsPublisher.PublishScoreMultiplierCollected(object publisher, string target, int scoreMultiplier)
         {
-            (this as IPlayerEventsMessenger).ScoreMultiplierCollected?.Invoke(publisher, target, scoreMultiplier);
+            _Player_ScoreMultiplierCollected?.Invoke(publisher, target, scoreMultiplier);
         }
     }
 }

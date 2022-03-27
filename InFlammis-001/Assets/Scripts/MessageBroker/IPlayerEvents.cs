@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine.Events;
 
-namespace FightShipArena.Assets.Scripts.MessageBroker.Player
+namespace FightShipArena.Assets.Scripts.MessageBroker
 {
     [Serializable] public class ScoreMultiplierCollected : UnityEvent<object, string, int> { }
 
