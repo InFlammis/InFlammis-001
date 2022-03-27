@@ -11,8 +11,7 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
     /// Specialization of a EnemyController for a Pawn enemy type
     /// </summary>
     public class PawnController : 
-        EnemyController,
-        IHealthManagerEventsSubscriber
+        EnemyController
     {
         public Messenger Messenger { get; set; }
 
@@ -35,17 +34,15 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
         public virtual void SubscribeToHealthManagerEvents()
         {
             var messenger = (Messenger as IHealthManagerEventsMessenger);
-            var subscriber = (this as IHealthManagerEventsSubscriber);
-            messenger.HasDied.AddListener(subscriber.HasDied);
-            messenger.HealthLevelChanged.AddListener(subscriber.HealthLevelChanged);
+            messenger.HasDied.AddListener(HealthManagerHasDied);
+            messenger.HealthLevelChanged.AddListener(HealthManagerHealthLevelChanged);
         }
 
         public virtual void UnsubscribeToHealthManagerEvents()
         {
             var messenger = (Messenger as IHealthManagerEventsMessenger);
-            var subscriber = (this as IHealthManagerEventsSubscriber);
-            messenger.HasDied.RemoveListener(subscriber.HasDied);
-            messenger.HealthLevelChanged.RemoveListener(subscriber.HealthLevelChanged);
+            messenger.HasDied.RemoveListener(HealthManagerHasDied);
+            messenger.HealthLevelChanged.RemoveListener(HealthManagerHealthLevelChanged);
         }
 
 
@@ -112,7 +109,7 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
             Core.Move();
         }
 
-        void IHealthManagerEventsSubscriber.HasDied(object publisher, string target)
+        void HealthManagerHasDied(object publisher, string target)
         {
             if (target != _Target)
             {
@@ -132,7 +129,7 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
             ReleasePowerUp();
         }
 
-        void IHealthManagerEventsSubscriber.HealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
+        void HealthManagerHealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
         {
         }
 

@@ -17,8 +17,7 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
     /// based on the condition sets, until completion or the player's death.
     /// </summary>
     [Serializable]
-    public class Wave :
-        IEnemyEventsSubscriber
+    public class Wave
     {
         /// <summary>
         /// Event raised to notify a change in the player's score is requested
@@ -91,7 +90,7 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
         public void Run(OrchestrationManager manager, OrchestrationManager.CancellationToken cancellationToken)
         {
             Messenger = GameObject.FindObjectOfType<Messenger>();
-            (Messenger as IEnemyEventsMessenger).HasDied.AddListener((this as IEnemyEventsSubscriber).HasDied);
+            (Messenger as IEnemyEventsMessenger).HasDied.AddListener(EnemyHasDied);
 
             //RunCancellationToken = cancellationToken;
             manager.StartCoroutine(CoRun(manager, cancellationToken));
@@ -102,7 +101,7 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
         /// </summary>
         public void Stop()
         {
-            (Messenger as IEnemyEventsMessenger).HasDied.RemoveListener((this as IEnemyEventsSubscriber).HasDied);
+            (Messenger as IEnemyEventsMessenger).HasDied.RemoveListener(EnemyHasDied);
         }
 
         /// <summary>
@@ -151,7 +150,7 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
             Status = OrchestrationManager.StatusEnum.Done;
         }
 
-        void IEnemyEventsSubscriber.HasDied(object publisher, string target)
+        void EnemyHasDied(object publisher, string target)
         {
             var enemyController = publisher as IEnemyController;
             SendScore?.Invoke(enemyController.Core.InitSettings.PlayerScoreWhenKilled);

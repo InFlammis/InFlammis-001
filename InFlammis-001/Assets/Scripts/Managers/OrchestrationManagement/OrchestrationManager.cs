@@ -17,8 +17,7 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
     /// </summary>
     public class OrchestrationManager : 
         MyMonoBehaviour, 
-        IOrchestrationManager,
-        ILevelEventsSubscriber
+        IOrchestrationManager
     {
         /// <summary>
         /// Collection of waves of enemies to spawn
@@ -116,12 +115,12 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
             this.SendScore?.Invoke(obj);
         }
 
-        void ILevelEventsSubscriber.GameOver(object publisher, string target)
+        void LevelGameOver(object publisher, string target)
         {
             Stop();
         }
 
-        void ILevelEventsSubscriber.GameStarted(object publisher, string target)
+        void LevelGameStarted(object publisher, string target)
         {
             throw new NotImplementedException();
         }

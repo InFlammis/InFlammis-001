@@ -11,9 +11,7 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
     /// Specialization of a IEnemyControllerCore for a Pawn enemy type
     /// </summary>
     public class PawnControllerCore : 
-        IEnemyControllerCore,
-        IHealthManagerEventsSubscriber,
-        IPlayerEventsSubscriber
+        IEnemyControllerCore
     {
         public Messenger Messenger { get; set; }
 
@@ -71,33 +69,29 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
         private void SubscribeToHealthManagerEvents()
         {
             var messenger = (Messenger as IHealthManagerEventsMessenger);
-            var subscriber = (this as IHealthManagerEventsSubscriber);
-            messenger.HasDied.AddListener(subscriber.HasDied);
-            messenger.HealthLevelChanged.AddListener(subscriber.HealthLevelChanged);
+            messenger.HasDied.AddListener(HealthManagerHasDied);
+            messenger.HealthLevelChanged.AddListener(HealthManagerHealthLevelChanged);
         }
 
         private void UnsubscribeToHealthManagerEvents()
         {
             var messenger = (Messenger as IHealthManagerEventsMessenger);
-            var subscriber = (this as IHealthManagerEventsSubscriber);
-            messenger.HasDied.RemoveListener(subscriber.HasDied);
-            messenger.HealthLevelChanged.RemoveListener(subscriber.HealthLevelChanged);
+            messenger.HasDied.RemoveListener(HealthManagerHasDied);
+            messenger.HealthLevelChanged.RemoveListener(HealthManagerHealthLevelChanged);
         }
 
         private void SubscribeToPlayerEvents()
         {
             var messenger = (Messenger as IPlayerEventsMessenger);
-            var subscriber = (this as IPlayerEventsSubscriber);
 
-            messenger.HasDied.AddListener(subscriber.HasDied);
+            messenger.HasDied.AddListener(PlayerHasDied);
         }
 
         private void UnsubscribeToPlayerEvents()
         {
             var messenger = (Messenger as IPlayerEventsMessenger);
-            var subscriber = (this as IPlayerEventsSubscriber);
 
-            messenger.HasDied.RemoveListener(subscriber.HasDied);
+            messenger.HasDied.RemoveListener(PlayerHasDied);
         }
 
         /// <summary>
@@ -164,7 +158,7 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
             HealthManager.Kill();
         }
 
-        void IHealthManagerEventsSubscriber.HasDied(object publisher, string target)
+        void HealthManagerHasDied(object publisher, string target)
         {
             if(target != _Target)
             {
@@ -178,20 +172,16 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
             (Messenger as IEnemyEventsPublisher).PublishHasDied(this.Parent, $"Pawn,{this.Parent.GameObject.GetInstanceID()}");
         }
 
-        void IHealthManagerEventsSubscriber.HealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
+        void HealthManagerHealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
         {
         }
 
-        void IPlayerEventsSubscriber.HasDied(object publisher, string target)
+        void PlayerHasDied(object publisher, string target)
         {
             ChangeState(_stateFactory.IdleState);
         }
 
-        void IPlayerEventsSubscriber.ScoreMultiplierCollected(object publisher, string target, int scoreMultiplier)
-        {
-        }
-
-        void IPlayerEventsSubscriber.HealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
+        void PlayerScoreMultiplierCollected(object publisher, string target, int scoreMultiplier)
         {
         }
     }

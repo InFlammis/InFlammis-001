@@ -9,10 +9,7 @@ using UnityEngine;
 namespace FightShipArena.Assets.Scripts.Managers.LogManagement
 {
     
-    public interface ILogManager : 
-        ILevelEventsSubscriber,
-        IOrchestrationEventsSubscriber,
-        IEnemyEventsSubscriber
+    public interface ILogManager
     {
     }
 
@@ -114,7 +111,7 @@ namespace FightShipArena.Assets.Scripts.Managers.LogManagement
             }
         }
 
-        void ILevelEventsSubscriber.GameOver(object publisher, string target)
+        void LevelGameOver(object publisher, string target)
         {
             LogEvent(publisher.GetType().Name, target, "GameOver");
         }
@@ -128,12 +125,12 @@ namespace FightShipArena.Assets.Scripts.Managers.LogManagement
 
         }
 
-        void ILevelEventsSubscriber.GameStarted(object publisher, string target)
+        void LevelGameStarted(object publisher, string target)
         {
             LogEvent(publisher.GetType().Name, target, "GameStarted");
         }
 
-        void IEnemyEventsSubscriber.HasDied(object publisher, string target)
+        void EnemyHasDied(object publisher, string target)
         {
             LogEvent(publisher.GetType().Name, target, "HasDied");
         }
@@ -148,17 +145,17 @@ namespace FightShipArena.Assets.Scripts.Managers.LogManagement
             LogEvent(publisher.GetType().Name, target, "HealthLevelChanged");
         }
 
-        void IOrchestrationEventsSubscriber.OrchestrationCancelled(object publisher, string target)
+        void OrchestrationCancelled(object publisher, string target)
         {
             LogEvent(publisher.GetType().Name, target, "OrchestrationCancelled");
         }
 
-        void IOrchestrationEventsSubscriber.OrchestrationComplete(object publisher, string target)
+        void OrchestrationComplete(object publisher, string target)
         {
             LogEvent(publisher.GetType().Name, target, "OrchestrationComplete");
         }
 
-        void IOrchestrationEventsSubscriber.OrchestrationStarted(object publisher, string target)
+        void OrchestrationStarted(object publisher, string target)
         {
             LogEvent(publisher.GetType().Name, target, "OrchestrationStarted");
         }

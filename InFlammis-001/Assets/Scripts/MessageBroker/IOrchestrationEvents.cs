@@ -18,13 +18,6 @@ namespace FightShipArena.Assets.Scripts.MessageBroker
         void PublishOrchestratorComplete(object publisher, string target);
     }
 
-    public interface IOrchestrationEventsSubscriber : IEventSubscriber
-    {
-        void OrchestrationStarted(object publisher, string target);
-        void OrchestrationCancelled(object publisher, string target);
-        void OrchestrationComplete(object publisher, string target);
-    }
-
     public interface IOrchestrationEventsMessenger
     {
         OrchestrationStarted OrchestrationStarted { get; }

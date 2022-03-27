@@ -16,12 +16,6 @@ namespace FightShipArena.Assets.Scripts.MessageBroker
         void PublishGameStarted(object publisher, string target);
     }
 
-    public interface ILevelEventsSubscriber : IEventSubscriber
-    {
-        void GameOver(object publisher, string target);
-        void GameStarted(object publisher, string target);
-    }
-
     public interface ILevelEventsMessenger
     {
         GameOver GameOver { get; }

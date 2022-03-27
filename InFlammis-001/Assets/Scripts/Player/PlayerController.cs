@@ -19,8 +19,7 @@ namespace FightShipArena.Assets.Scripts.Player
     /// </summary>
     public class PlayerController : 
         MyMonoBehaviour, 
-        IPlayerController,
-        IHealthManagerEventsSubscriber
+        IPlayerController
 
     {
         /// <summary>
@@ -199,17 +198,15 @@ namespace FightShipArena.Assets.Scripts.Player
         public virtual void SubscribeToHealthManagerEvents()
         {
             var messenger = (Messenger as IHealthManagerEventsMessenger);
-            var subscriber = (this as IHealthManagerEventsSubscriber);
-            messenger.HasDied.AddListener(subscriber.HasDied);
-            messenger.HealthLevelChanged.AddListener(subscriber.HealthLevelChanged);
+            messenger.HasDied.AddListener(HealthManagerHasDied);
+            messenger.HealthLevelChanged.AddListener(HealthManagerHealthLevelChanged);
         }
 
         public virtual void UnsubscribeToHealthManagerEvents()
         {
             var messenger = (Messenger as IHealthManagerEventsMessenger);
-            var subscriber = (this as IHealthManagerEventsSubscriber);
-            messenger.HasDied.RemoveListener(subscriber.HasDied);
-            messenger.HealthLevelChanged.RemoveListener(subscriber.HealthLevelChanged);
+            messenger.HasDied.RemoveListener(HealthManagerHasDied);
+            messenger.HealthLevelChanged.RemoveListener(HealthManagerHealthLevelChanged);
         }
 
 
@@ -299,12 +296,8 @@ namespace FightShipArena.Assets.Scripts.Player
         /// </summary>
         /// <param name="value">New health level</param>
         /// <param name="maxValue">Max health level</param>
-        private void HealthManager_HealthLevelChanged(int value, int maxValue)
-        {
-            PlayerHealthLevelChanged?.Invoke(value, maxValue);
-        }
 
-        void IHealthManagerEventsSubscriber.HasDied(object publisher, string target)
+        void HealthManagerHasDied(object publisher, string target)
         {
             if(target != null && target != "Player")
             {
@@ -327,7 +320,7 @@ namespace FightShipArena.Assets.Scripts.Player
             Destroy(this.gameObject);
         }
 
-        public void HealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
+        public void HealthManagerHealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
         {
             (Messenger as IPlayerEventsPublisher).PublishHealthLevelChanged(publisher, target, healthLevel, maxHealthLevel);
         }

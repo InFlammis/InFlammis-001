@@ -12,8 +12,7 @@ namespace FightShipArena.Assets.Scripts.Enemies.Infantry
     /// Specialization of a EnemyController for an Infantry enemy type
     /// </summary>
     public class InfantryController : 
-        EnemyController,
-        IHealthManagerEventsSubscriber
+        EnemyController
     {
         public Messenger Messenger { get; set; }
 
@@ -39,17 +38,13 @@ namespace FightShipArena.Assets.Scripts.Enemies.Infantry
         public virtual void SubscribeToHealthManagerEvents()
         {
             var messenger = (Messenger as IHealthManagerEventsMessenger);
-            var subscriber = (this as IHealthManagerEventsSubscriber);
-            messenger.HasDied.AddListener(subscriber.HasDied);
-            messenger.HealthLevelChanged.AddListener(subscriber.HealthLevelChanged);
+            messenger.HasDied.AddListener(HealthManagerHasDied);
         }
 
         public virtual void UnsubscribeToHealthManagerEvents()
         {
             var messenger = (Messenger as IHealthManagerEventsMessenger);
-            var subscriber = (this as IHealthManagerEventsSubscriber);
-            messenger.HasDied.RemoveListener(subscriber.HasDied);
-            messenger.HealthLevelChanged.RemoveListener(subscriber.HealthLevelChanged);
+            messenger.HasDied.RemoveListener(HealthManagerHasDied);
         }
 
 
@@ -137,7 +132,7 @@ namespace FightShipArena.Assets.Scripts.Enemies.Infantry
             }
         }
 
-        void IHealthManagerEventsSubscriber.HasDied(object publisher, string target)
+        void HealthManagerHasDied(object publisher, string target)
         {
             if (target != _Target)
             {
@@ -157,10 +152,6 @@ namespace FightShipArena.Assets.Scripts.Enemies.Infantry
 
             GameObject.Destroy(this.gameObject);
             ReleasePowerUp();
-        }
-
-        void IHealthManagerEventsSubscriber.HealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
-        {
         }
     }
 }

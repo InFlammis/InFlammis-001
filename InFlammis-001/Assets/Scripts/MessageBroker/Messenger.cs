@@ -18,9 +18,4 @@ namespace FightShipArena.Assets.Scripts.MessageBroker
     {
 
     }
-
-    public interface IEventSubscriber
-    {
-        Messenger Messenger { get; }
-    }
 }

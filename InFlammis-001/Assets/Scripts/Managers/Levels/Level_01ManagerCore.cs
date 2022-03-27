@@ -12,9 +12,7 @@ using UnityEngine.InputSystem;
 namespace FightShipArena.Assets.Scripts.Managers.Levels
 {
     public class Level_01ManagerCore : 
-        ILevelManagerCore,
-        IPlayerEventsSubscriber,
-        IOrchestrationEventsSubscriber
+        ILevelManagerCore
     {
         /// <inheritdoc/>
         public IPlayerControllerCore PlayerControllerCore { get; set; }
@@ -47,12 +45,10 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         {
             Messenger = GameObject.FindObjectOfType<Messenger>();
 
-            (Messenger as IOrchestrationEventsMessenger).OrchestrationComplete.AddListener((this as IOrchestrationEventsSubscriber).OrchestrationComplete);
-            (Messenger as IOrchestrationEventsMessenger).OrchestrationStarted.AddListener((this as IOrchestrationEventsSubscriber).OrchestrationStarted);
-            (Messenger as IOrchestrationEventsMessenger).OrchestrationCancelled.AddListener((this as IOrchestrationEventsSubscriber).OrchestrationCancelled);
+            (Messenger as IOrchestrationEventsMessenger).OrchestrationComplete.AddListener(OrchestrationManagerOrchestrationComplete);
 
-            (Messenger as IPlayerEventsMessenger).ScoreMultiplierCollected.AddListener((this as IPlayerEventsSubscriber).ScoreMultiplierCollected);
-            (Messenger as IPlayerEventsMessenger).HasDied.AddListener((this as IPlayerEventsSubscriber).HasDied);
+            (Messenger as IPlayerEventsMessenger).ScoreMultiplierCollected.AddListener(PlayerScoreMultiplierCollected);
+            (Messenger as IPlayerEventsMessenger).HasDied.AddListener(PlayerHasDied);
 
             this.PlayerControllerCore = LevelManager.PlayerControllerCore;
 
@@ -61,12 +57,10 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
 
         public void OnDestroy()
         {
-            (Messenger as IOrchestrationEventsMessenger).OrchestrationComplete.RemoveListener((this as IOrchestrationEventsSubscriber).OrchestrationComplete);
-            (Messenger as IOrchestrationEventsMessenger).OrchestrationStarted.RemoveListener((this as IOrchestrationEventsSubscriber).OrchestrationStarted);
-            (Messenger as IOrchestrationEventsMessenger).OrchestrationCancelled.RemoveListener((this as IOrchestrationEventsSubscriber).OrchestrationCancelled);
+            (Messenger as IOrchestrationEventsMessenger).OrchestrationComplete.RemoveListener(OrchestrationManagerOrchestrationComplete);
 
-            (Messenger as IPlayerEventsMessenger).ScoreMultiplierCollected.RemoveListener((this as IPlayerEventsSubscriber).ScoreMultiplierCollected);
-            (Messenger as IPlayerEventsMessenger).HasDied.RemoveListener((this as IPlayerEventsSubscriber).HasDied);
+            (Messenger as IPlayerEventsMessenger).ScoreMultiplierCollected.RemoveListener(PlayerScoreMultiplierCollected);
+            (Messenger as IPlayerEventsMessenger).HasDied.RemoveListener(PlayerHasDied);
         }
 
         private void StartGame()
@@ -159,29 +153,23 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
             ChangeStateRequestEventHandler(this, new StateMachine.GameOver(_stateConfiguration));
 
         }
-        void IPlayerEventsSubscriber.HasDied(object publisher, string target)
+        void PlayerHasDied(object publisher, string target)
         {
             GameOver();
         }
 
-        void IPlayerEventsSubscriber.ScoreMultiplierCollected(object publisher, string target, int scoreMultiplier)
+        void PlayerScoreMultiplierCollected(object publisher, string target, int scoreMultiplier)
         {
             LevelManager.ScoreManager.AddToMultiplier(scoreMultiplier);
         }
 
-        void IPlayerEventsSubscriber.HealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
+        void PlayerHealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
         {
         }
 
-        void IOrchestrationEventsSubscriber.OrchestrationStarted(object publisher, string target)
-        {
-        }
 
-        void IOrchestrationEventsSubscriber.OrchestrationCancelled(object publisher, string target)
-        {
-        }
 
-        void IOrchestrationEventsSubscriber.OrchestrationComplete(object publisher, string target)
+        void OrchestrationManagerOrchestrationComplete(object publisher, string target)
         {
             Debug.Log("Orchestration complete");
             ChangeStateRequestEventHandler(this, new Win(_stateConfiguration));
