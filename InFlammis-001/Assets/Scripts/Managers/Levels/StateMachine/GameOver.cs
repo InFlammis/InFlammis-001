@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FightShipArena.Assets.Scripts.MessageBroker;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +31,8 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels.StateMachine
         public override void OnEnter()
         {
             base.OnEnter();
-            Configuration.HudManager.SetCentralText("Game Over");
-            Configuration.LevelManagerCore.LevelManager.ScoreManager.AddToHighScore();
+            (Configuration.Messenger as IHudEventsPublisher).PublishSetCentralMessage(this, null, "Game Over");
+
             Configuration.LevelManagerCore.LevelManager.StartCoroutine(CoReturnToMain());
         }
 
@@ -50,7 +51,7 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels.StateMachine
         public override void OnExit()
         {
             base.OnExit();
-            Configuration.HudManager.SetCentralText(String.Empty);
+            (Configuration.Messenger as IHudEventsPublisher).PublishSetCentralMessage(this, null, String.Empty);
         }
     }
 }

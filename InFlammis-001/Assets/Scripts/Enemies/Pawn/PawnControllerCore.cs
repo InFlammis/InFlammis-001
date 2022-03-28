@@ -170,6 +170,7 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
             UnsubscribeToHealthManagerEvents();
 
             (Messenger as IEnemyEventsPublisher).PublishHasDied(this.Parent, $"Pawn,{this.Parent.GameObject.GetInstanceID()}");
+            (Messenger as IEnemyEventsPublisher).PublishPlayerScored(this.Parent, $"Pawn,{this.Parent.GameObject.GetInstanceID()}", InitSettings.PlayerScoreWhenKilled);
         }
 
         void HealthManagerHealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
@@ -179,10 +180,6 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
         void PlayerHasDied(object publisher, string target)
         {
             ChangeState(_stateFactory.IdleState);
-        }
-
-        void PlayerScoreMultiplierCollected(object publisher, string target, int scoreMultiplier)
-        {
         }
     }
 }

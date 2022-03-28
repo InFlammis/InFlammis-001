@@ -2009,6 +2009,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa3bea14be129b149b74a327d032d876, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _Enemy_HasDied:
+    m_PersistentCalls:
+      m_Calls: []
+  _Enemy_PlayerScored:
+    m_PersistentCalls:
+      m_Calls: []
+  _HealthManager_HasDied:
+    m_PersistentCalls:
+      m_Calls: []
+  _HealthManager_HealthLevelChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  _Hud_SetCentralMessage:
+    m_PersistentCalls:
+      m_Calls: []
+  _Level_GameOver:
+    m_PersistentCalls:
+      m_Calls: []
+  _Level_GameStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  _Level_PlayerWins:
+    m_PersistentCalls:
+      m_Calls: []
+  _Orchestration_OrchestrationStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  _Orchestration_OrchestrationCancelled:
+    m_PersistentCalls:
+      m_Calls: []
+  _Orchestration_OrchestrationComplete:
+    m_PersistentCalls:
+      m_Calls: []
   _Player_HasDied:
     m_PersistentCalls:
       m_Calls:
@@ -2048,6 +2081,67 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: FightShipArena.Assets.Scripts.Managers.LogManagement.Logger,
           FightShipArena
         m_MethodName: PlayerHealthLevelChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1455586405}
+        m_TargetAssemblyTypeName: FightShipArena.Assets.Scripts.Managers.HudManagement.HudManager,
+          FightShipArena
+        m_MethodName: SetHealth
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _ScoreManager_ScoreChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1455586405}
+        m_TargetAssemblyTypeName: FightShipArena.Assets.Scripts.Managers.HudManagement.HudManager,
+          FightShipArena
+        m_MethodName: SetScore
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _ScoreManager_MultiplierChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1455586405}
+        m_TargetAssemblyTypeName: FightShipArena.Assets.Scripts.Managers.HudManagement.HudManager,
+          FightShipArena
+        m_MethodName: SetMultiplier
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _ScoreManager_HiScoreChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1455586405}
+        m_TargetAssemblyTypeName: FightShipArena.Assets.Scripts.Managers.HudManagement.HudManager,
+          FightShipArena
+        m_MethodName: SetHiScore
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

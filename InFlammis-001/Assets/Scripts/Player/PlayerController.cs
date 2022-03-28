@@ -239,7 +239,6 @@ namespace FightShipArena.Assets.Scripts.Player
 
         void OnCollisionEnter2D(Collision2D col)
         {
-            //Debug.Log($"Collision detected with {col.gameObject.name}");
             if (col.gameObject.tag == "Enemy")
             {
                 var enemyController = col.gameObject.GetComponent<EnemyController>();

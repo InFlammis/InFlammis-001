@@ -1,5 +1,6 @@
 ﻿using FightShipArena.Assets.Scripts.Managers.HudManagement;
 using FightShipArena.Assets.Scripts.Managers.OrchestrationManagement;
+using FightShipArena.Assets.Scripts.MessageBroker;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels.StateMachine
     /// </summary>
     public class StateConfiguration
     {
+        public readonly Messenger Messenger;
         /// <summary>
         /// Reference to the LevelManagerCore instance
         /// </summary>
@@ -36,16 +38,19 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels.StateMachine
         /// <summary>
         /// Create an instance of the class
         /// </summary>
+        /// <param name="messenger"><see cref="Messenger"/></param>
         /// <param name="levelManagerCore"><see cref="ILevelManagerCore"/></param>
         /// <param name="orchestrationManager"><see cref="IOrchestrationManager"/></param>
         /// <param name="hudManager"><see cref="IHudManager"/></param>
         /// <param name="spawnEnemiesEnabled"><see cref="SpawnEnemiesEnabled"/></param>
         public StateConfiguration(
+            Messenger messenger,
             ILevelManagerCore levelManagerCore,
             IOrchestrationManager orchestrationManager,
             IHudManager hudManager,
             bool spawnEnemiesEnabled = true)
         {
+            Messenger = messenger;
             LevelManagerCore = levelManagerCore;
             OrchestrationManager = orchestrationManager;
             HudManager = hudManager;

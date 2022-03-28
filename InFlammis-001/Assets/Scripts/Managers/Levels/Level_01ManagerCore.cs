@@ -47,7 +47,6 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
 
             (Messenger as IOrchestrationEventsMessenger).OrchestrationComplete.AddListener(OrchestrationManagerOrchestrationComplete);
 
-            (Messenger as IPlayerEventsMessenger).ScoreMultiplierCollected.AddListener(PlayerScoreMultiplierCollected);
             (Messenger as IPlayerEventsMessenger).HasDied.AddListener(PlayerHasDied);
 
             this.PlayerControllerCore = LevelManager.PlayerControllerCore;
@@ -59,7 +58,6 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         {
             (Messenger as IOrchestrationEventsMessenger).OrchestrationComplete.RemoveListener(OrchestrationManagerOrchestrationComplete);
 
-            (Messenger as IPlayerEventsMessenger).ScoreMultiplierCollected.RemoveListener(PlayerScoreMultiplierCollected);
             (Messenger as IPlayerEventsMessenger).HasDied.RemoveListener(PlayerHasDied);
         }
 
@@ -68,6 +66,7 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
             this.PlayerControllerCore.HealthManager.Heal();
 
             _stateConfiguration = new StateConfiguration(
+                messenger: Messenger,
                 levelManagerCore: this,
                 orchestrationManager: this.LevelManager.OrchestrationManager,
                 hudManager: this.LevelManager.HudManager,
@@ -75,7 +74,6 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
             );
 
             ChangeStateRequestEventHandler(this, new WaitForStart(_stateConfiguration));
-            //Debug.Log($"Level started");
 
             (Messenger as ILevelEventsPublisher).PublishGameStarted(this, null);
 
@@ -102,10 +100,6 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         /// <inheritdoc/>
         public void OnAwake() 
         {
-            //LevelManager.OrchestrationManager.SendScore += OrchestrationManager_SendScore;
-            //LevelManager.OrchestrationManager.OrchestrationComplete += OrchestrationManager_OrchestrationComplete;
-
-
             _playerInput = LevelManager.GameObject.GetComponent<PlayerInput>();
         }
 
@@ -158,14 +152,8 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
             GameOver();
         }
 
-        void PlayerScoreMultiplierCollected(object publisher, string target, int scoreMultiplier)
-        {
-            LevelManager.ScoreManager.AddToMultiplier(scoreMultiplier);
-        }
-
         void OrchestrationManagerOrchestrationComplete(object publisher, string target)
         {
-            //Debug.Log("Orchestration complete");
             ChangeStateRequestEventHandler(this, new Win(_stateConfiguration));
         }
     }

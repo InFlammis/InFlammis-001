@@ -43,7 +43,7 @@ namespace FightShipArena.Assets.Scripts.MessageBroker
     /// <summary>
     /// Interface required by the Message Broker to support messages published by a <see cref="IPlayerEventsPublisher"/>
     /// </summary>
-    public interface IPlayerEventsMessenger
+    public interface IPlayerEventsMessenger : IEventMessenger
     {
         /// <summary>
         /// Returns a reference to a delegate of type <see cref="HasDied"/>, to subscribe to.

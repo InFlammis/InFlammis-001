@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace FightShipArena.Assets.Scripts.MessageBroker
 {
     public partial class Messenger : IHealthManagerEventsPublisher, IHealthManagerEventsMessenger
     {
-        HasDied IHealthManagerEventsMessenger.HasDied { get; } = new HasDied();
+        [SerializeField] private HasDied _HealthManager_HasDied = new HasDied();
+        [SerializeField] private HealthLevelChanged _HealthManager_HealthLevelChanged = new HealthLevelChanged();
 
+        HasDied IHealthManagerEventsMessenger.HasDied { get; } = new HasDied();
         HealthLevelChanged IHealthManagerEventsMessenger.HealthLevelChanged { get; } = new HealthLevelChanged();
 
         void IHealthManagerEventsPublisher.PublishHasDied(object publisher, string target)

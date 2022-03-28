@@ -48,5 +48,31 @@ namespace FightShipArena.Assets.Scripts.Managers.HudManagement
         {
             Central.text = text;
         }
+
+        public void SetHiScore(object publisher, string target, int value)
+        {
+            HiScore.text = value.ToString();
+        }
+
+        public void SetScore(object publisher, string target, int value)
+        {
+            Score.text = value.ToString();
+        }
+
+        public void SetMultiplier(object publisher, string target, int value)
+        {
+            Multiplier.text = value.ToString();
+        }
+
+        public void SetHealth(object publisher, string target, int value, int maxValue)
+        {
+            Health.text = value.ToString();
+            Health.color = HealthGradient.Evaluate(value / (float)maxValue);
+        }
+
+        public void SetCentralText(object publisher, string target, string text)
+        {
+            Central.text = text;
+        }
     }
 }

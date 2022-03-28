@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace FightShipArena.Assets.Scripts.MessageBroker
 {
     public partial class Messenger : IEnemyEventsPublisher, IEnemyEventsMessenger
     {
-        HasDied IEnemyEventsMessenger.HasDied { get; } = new HasDied();
+        [SerializeField] private HasDied _Enemy_HasDied = new HasDied();
+        [SerializeField] private PlayerScored _Enemy_PlayerScored = new PlayerScored();
 
+        HasDied IEnemyEventsMessenger.HasDied { get; } = new HasDied();
         PlayerScored IEnemyEventsMessenger.PlayerScored { get; } = new PlayerScored();
 
         void IEnemyEventsPublisher.PublishHasDied(object publisher, string target)

@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace FightShipArena.Assets.Scripts.MessageBroker
 {
     public partial class Messenger : IOrchestrationEventsPublisher, IOrchestrationEventsMessenger
     {
-        OrchestrationStarted IOrchestrationEventsMessenger.OrchestrationStarted { get; } = new OrchestrationStarted();
+        [SerializeField] private OrchestrationStarted _Orchestration_OrchestrationStarted = new OrchestrationStarted();
+        [SerializeField] private OrchestrationCancelled _Orchestration_OrchestrationCancelled = new OrchestrationCancelled();
+        [SerializeField] private OrchestrationComplete _Orchestration_OrchestrationComplete = new OrchestrationComplete();
 
-        OrchestrationCancelled IOrchestrationEventsMessenger.OrchestrationCancelled { get; } = new OrchestrationCancelled();
-
-        OrchestrationComplete IOrchestrationEventsMessenger.OrchestrationComplete { get; } = new OrchestrationComplete();
+        OrchestrationStarted IOrchestrationEventsMessenger.OrchestrationStarted => _Orchestration_OrchestrationStarted;
+        OrchestrationCancelled IOrchestrationEventsMessenger.OrchestrationCancelled => _Orchestration_OrchestrationCancelled;
+        OrchestrationComplete IOrchestrationEventsMessenger.OrchestrationComplete => _Orchestration_OrchestrationComplete;
 
         void IOrchestrationEventsPublisher.PublishOrchestrationCancelled(object publisher, string target)
         {
