@@ -44,21 +44,21 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         /// <inheritdoc/>
         public void OnStart()
         {
-            (Messenger as IOrchestrationEventsMessenger).OrchestrationComplete.AddListener(OrchestrationManagerOrchestrationComplete);
+            //(Messenger as IOrchestrationEventsMessenger).OrchestrationComplete.AddListener(OrchestrationManagerOrchestrationComplete);
 
-            (Messenger as IPlayerEventsMessenger).HasDied.AddListener(PlayerHasDied);
+            //(Messenger as IPlayerEventsMessenger).HasDied.AddListener(PlayerHasDied);
 
             this.PlayerControllerCore = LevelManager.PlayerControllerCore;
 
             StartGame();
         }
 
-        public void OnDestroy()
-        {
-            (Messenger as IOrchestrationEventsMessenger).OrchestrationComplete.RemoveListener(OrchestrationManagerOrchestrationComplete);
+        //public void OnDestroy()
+        //{
+        //    (Messenger as IOrchestrationEventsMessenger).OrchestrationComplete.RemoveListener(OrchestrationManagerOrchestrationComplete);
 
-            (Messenger as IPlayerEventsMessenger).HasDied.RemoveListener(PlayerHasDied);
-        }
+        //    (Messenger as IPlayerEventsMessenger).HasDied.RemoveListener(PlayerHasDied);
+        //}
 
         private void StartGame()
         {
@@ -67,14 +67,10 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
             _stateConfiguration = new StateConfiguration(
                 messenger: Messenger,
                 levelManagerCore: this,
-                orchestrationManager: this.LevelManager.OrchestrationManager,
                 spawnEnemiesEnabled: true
             );
 
             ChangeStateRequestEventHandler(this, new WaitForStart(_stateConfiguration));
-
-            (Messenger as ILevelEventsPublisher).PublishGameStarted(this, null);
-
         }
 
         /// <summary>
@@ -101,13 +97,6 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
             _playerInput = LevelManager.GameObject.GetComponent<PlayerInput>();
         }
 
-        ///// <summary>
-        ///// EventHandler for the SendScore event of the OrchestrationManager
-        ///// </summary>
-        //private void OrchestrationManager_SendScore(int value)
-        //{
-        //    LevelManager.ScoreManager.AddToScore(value);
-        //}
 
         /// <inheritdoc/>
         public void Move(InputAction.CallbackContext context)
@@ -145,12 +134,12 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
             ChangeStateRequestEventHandler(this, new StateMachine.GameOver(_stateConfiguration));
 
         }
-        void PlayerHasDied(object publisher, string target)
+        public void PlayerHasDied(object publisher, string target)
         {
             GameOver();
         }
 
-        void OrchestrationManagerOrchestrationComplete(object publisher, string target)
+        public void OrchestrationManagerOrchestrationComplete(object publisher, string target)
         {
             ChangeStateRequestEventHandler(this, new Win(_stateConfiguration));
         }

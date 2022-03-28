@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FightShipArena.Assets.Scripts.MessageBroker;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,19 +12,21 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
     /// </summary>
     public interface IOrchestrationManager
     {
-        /// <summary>
-        /// Event raised to notify of a change in the player's score
-        /// </summary>
-        event Action<int> SendScore;
+        //IMessenger Messenger { get; }
 
-        /// <summary>
-        /// Start the orchestration
-        /// </summary>
-        void Run();
+        ///// <summary>
+        ///// Event raised to notify of a change in the player's score
+        ///// </summary>
+        //event Action<int> SendScore;
 
-        /// <summary>
-        /// Stop the orchestration
-        /// </summary>
-        void Stop();
+        ///// <summary>
+        ///// Start the orchestration
+        ///// </summary>
+        //void Run(object publisher, string target);
+
+        ///// <summary>
+        ///// Stop the orchestration
+        ///// </summary>
+        //void Stop(object publisher, string target);
     }
 }

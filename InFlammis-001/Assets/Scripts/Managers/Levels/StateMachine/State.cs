@@ -33,7 +33,7 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels.StateMachine
         /// </summary>
         public virtual void OnEnter()
         {
-            Debug.Log($"Entering { GetType().Name} state");
+            //Debug.Log($"Entering { GetType().Name} state");
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels.StateMachine
         /// </summary>
         public virtual void OnExit()
         {
-            Debug.Log($"Exiting { GetType().Name} state");
+            //Debug.Log($"Exiting { GetType().Name} state");
         }
 
     }

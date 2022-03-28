@@ -30,7 +30,7 @@ namespace FightShipArena.Assets.Scripts.MessageBroker
             (this as IOrchestrationEventsMessenger).OrchestrationStarted.Invoke(publisher, target);
         }
 
-        void IOrchestrationEventsPublisher.PublishOrchestratorComplete(object publisher, string target)
+        void IOrchestrationEventsPublisher.PublishOrchestrationComplete(object publisher, string target)
         {
             (this as IOrchestrationEventsMessenger).OrchestrationComplete.Invoke(publisher, target);
         }

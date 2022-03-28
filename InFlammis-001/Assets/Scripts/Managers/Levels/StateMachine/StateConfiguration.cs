@@ -20,10 +20,10 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels.StateMachine
         /// </summary>
         public readonly ILevelManagerCore LevelManagerCore;
 
-        /// <summary>
-        /// Reference to the OrchestrationManager instance
-        /// </summary>
-        public readonly IOrchestrationManager OrchestrationManager;
+        ///// <summary>
+        ///// Reference to the OrchestrationManager instance
+        ///// </summary>
+        //public readonly IOrchestrationManager OrchestrationManager;
 
         /// <summary>
         /// Enable the spawning of enemies
@@ -40,13 +40,13 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels.StateMachine
         public StateConfiguration(
             IMessenger messenger,
             ILevelManagerCore levelManagerCore,
-            IOrchestrationManager orchestrationManager,
+            //IOrchestrationManager orchestrationManager,
             //IHudManager hudManager,
             bool spawnEnemiesEnabled = true)
         {
             Messenger = messenger;
             LevelManagerCore = levelManagerCore;
-            OrchestrationManager = orchestrationManager;
+            //OrchestrationManager = orchestrationManager;
             //HudManager = hudManager;
             SpawnEnemiesEnabled = spawnEnemiesEnabled;
         }

@@ -15,7 +15,7 @@ namespace FightShipArena.Assets.Scripts.MessageBroker.Events
     {
         void PublishOrchestrationStarted(object publisher, string target);
         void PublishOrchestrationCancelled(object publisher, string target);
-        void PublishOrchestratorComplete(object publisher, string target);
+        void PublishOrchestrationComplete(object publisher, string target);
     }
 
     public interface IOrchestrationEventsMessenger

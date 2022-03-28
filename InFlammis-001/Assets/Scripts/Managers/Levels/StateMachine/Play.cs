@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FightShipArena.Assets.Scripts.MessageBroker.Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,8 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels.StateMachine
             Configuration.LevelManagerCore.EnablePlayerInput();
             if (Configuration.SpawnEnemiesEnabled)
             {
-                Configuration.OrchestrationManager.Run();
+                Configuration.Messenger.PublishGameStarted(this, null);
+                //Configuration.OrchestrationManager.Run();
             }
 
         }
@@ -37,7 +39,8 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels.StateMachine
         {
             base.OnExit();
 
-            Configuration.OrchestrationManager.Stop();
+            Configuration.Messenger.PublishGameOver(this, null);
+            //Configuration.OrchestrationManager.Stop();
         }
 
         /// <inheritdoc/>

@@ -31,7 +31,7 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels.StateMachine
         public override void OnEnter()
         {
             base.OnEnter();
-            (Configuration.Messenger as IHudEventsPublisher).PublishSetCentralMessage(this, null, "Game Over");
+            Configuration.Messenger.PublishSetCentralMessage(this, null, "Game Over");
 
             Configuration.LevelManagerCore.LevelManager.StartCoroutine(CoReturnToMain());
         }
@@ -51,7 +51,7 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels.StateMachine
         public override void OnExit()
         {
             base.OnExit();
-            (Configuration.Messenger as IHudEventsPublisher).PublishSetCentralMessage(this, null, String.Empty);
+            Configuration.Messenger.PublishSetCentralMessage(this, null, String.Empty);
         }
     }
 }

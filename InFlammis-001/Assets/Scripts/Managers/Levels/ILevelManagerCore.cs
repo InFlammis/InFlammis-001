@@ -37,8 +37,6 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         /// </summary>
         void OnAwake();
 
-        void OnDestroy();
-
         /// <summary>
         /// Event Handler for a move action
         /// </summary>
@@ -54,5 +52,10 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         /// Disable the responsiveness to the Player input
         /// </summary>
         void EnablePlayerInput();
+
+        void PlayerHasDied(object publisher, string target);
+
+        void OrchestrationManagerOrchestrationComplete(object publisher, string target);
+
     }
 }

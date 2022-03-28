@@ -62,12 +62,12 @@ namespace FightShipArena.Assets.Scripts.Player
             if (context.performed)
             {
                 Core.SetPlayerInput(inputVector);
-                Debug.Log($"Moving {Core.PlayerInput}");
+                //Debug.Log($"Moving {Core.PlayerInput}");
 
             }
             else if (context.canceled)
             {
-                Debug.Log("Not moving");
+                //Debug.Log("Not moving");
                 Core.SetPlayerInput(inputVector);
             }
         }
@@ -80,12 +80,12 @@ namespace FightShipArena.Assets.Scripts.Player
             
             if (context.started)
             {
-                Debug.Log("OnFire started");
+                //Debug.Log("OnFire started");
                 Core.StartFiring();
             }
             else if (context.canceled)
             {
-                Debug.Log("OnFire canceled");
+                //Debug.Log("OnFire canceled");
                 Core.StopFiring();
             }
         }
@@ -97,13 +97,13 @@ namespace FightShipArena.Assets.Scripts.Player
         {
             if (context.started)
             {
-                Debug.Log("OnFireAlt started");
+                //Debug.Log("OnFireAlt started");
                 //Do an action
                 Core.FireAlt();
             }
             else if (context.canceled)
             {
-                Debug.Log("OnFireAlt canceled");
+                //Debug.Log("OnFireAlt canceled");
             }
         }
 
@@ -114,13 +114,13 @@ namespace FightShipArena.Assets.Scripts.Player
         {
             if (context.started)
             {
-                Debug.Log("OnOpenSelectionMenu started");
+                //Debug.Log("OnOpenSelectionMenu started");
                 //Do an action
                 Core.OpenSelectionMenu();
             }
             else if (context.canceled)
             {
-                Debug.Log("OnOpenSelectionMenu canceled");
+                //Debug.Log("OnOpenSelectionMenu canceled");
             }
         }
 

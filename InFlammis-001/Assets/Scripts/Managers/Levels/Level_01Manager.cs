@@ -30,16 +30,11 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
 
         void Awake()
         {
-            OrchestrationManager = GameObject.GetComponent<IOrchestrationManager>();
+            //OrchestrationManager = GameObject.GetComponent<IOrchestrationManager>();
 
             Core = new Level_01ManagerCore(this);
 
             OnAwake();
-        }
-
-        private void OnDestroy()
-        {
-            Core.OnDestroy();
         }
 
         void Start()
@@ -89,5 +84,16 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         {
             ReturnToMainEvent?.Invoke();
         }
+
+        public void PlayerHasDied(object publisher, string target)
+        {
+            Core.PlayerHasDied(publisher, target);
+        }
+
+        public void OrchestrationManagerOrchestrationComplete(object publisher, string target)
+        {
+            Core.OrchestrationManagerOrchestrationComplete(publisher, target);
+        }
+
     }
 }

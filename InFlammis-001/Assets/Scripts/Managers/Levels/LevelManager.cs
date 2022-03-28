@@ -31,8 +31,8 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         /// <inheritdoc/>
         public IPlayerControllerCore PlayerControllerCore { get; set; }
 
-        /// <inheritdoc/>
-        public IOrchestrationManager OrchestrationManager { get; set; }
+        ///// <inheritdoc/>
+        //public IOrchestrationManager OrchestrationManager { get; set; }
 
         /// <inheritdoc/>
         public virtual void Move(InputAction.CallbackContext context){}

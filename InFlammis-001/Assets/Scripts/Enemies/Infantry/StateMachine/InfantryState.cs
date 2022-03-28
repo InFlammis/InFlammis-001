@@ -16,13 +16,13 @@ namespace FightShipArena.Assets.Scripts.Enemies.Infantry.StateMachine
         /// <inheritdoc/>
         public virtual void OnEnter()
         {             
-            Debug.Log($"State {this.GetType().Name}: OnEnter");
+            //Debug.Log($"State {this.GetType().Name}: OnEnter");
         }
 
         /// <inheritdoc/>
         public virtual void OnExit()
         {
-            Debug.Log($"State {this.GetType().Name}: OnExit");
+            //Debug.Log($"State {this.GetType().Name}: OnExit");
         }
 
         /// <inheritdoc/>

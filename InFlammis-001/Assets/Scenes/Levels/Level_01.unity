@@ -562,6 +562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90b17cdf9533b1e42b2fb74bf8228c92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _messenger: {fileID: 2029613971}
   Waves:
   - EnemyTypes:
     - Settings:
@@ -779,11 +780,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Level_GameOver.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Player_HasDied.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Level_PlayerWins.m_PersistentCalls.m_Calls.Array.size
@@ -791,14 +792,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Level_GameStarted.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Enemy_PlayerScored.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Hud_SetCentralMessage.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Level_GameOver.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Level_GameOver.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Player_HasDied.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
@@ -814,6 +827,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1277184056}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Level_GameOver.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1455586408}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Level_PlayerWins.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
@@ -822,7 +839,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1277184056}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Player_HasDied.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1455586403}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Level_GameStarted.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Level_GameStarted.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
@@ -842,11 +867,23 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Level_GameOver.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Level_GameStarted.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1277184056}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Level_GameStarted.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1455586408}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Player_HasDied.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Player_HasDied.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
@@ -858,12 +895,24 @@ PrefabInstance:
       value: LevelGameOver
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Level_GameOver.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: LevelGameOver
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Player_HasDied.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayerHasDied
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Player_HasDied.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: PlayerHasDied
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _ScoreManager_MultiplierChanged.m_PersistentCalls.m_Calls.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Hud_SetCentralMessage.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Level_PlayerWins.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -878,11 +927,23 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Level_GameStarted.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Enemy_PlayerScored.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Hud_SetCentralMessage.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1864138936}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Level_GameStarted.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LevelGameStarted
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Level_GameStarted.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: LevelGameStarted
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
@@ -891,15 +952,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Orchestration_OrchestrationComplete.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _ScoreManager_ScoreChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Hud_SetCentralMessage.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Orchestration_OrchestrationCancelled.m_PersistentCalls.m_Calls.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Hud_SetCentralMessage.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetCentralText
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Player_HealthLevelChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -954,8 +1023,17 @@ PrefabInstance:
       value: FightShipArena.Assets.Scripts.Managers.LogManagement.Logger, FightShipArena
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Level_GameOver.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: FightShipArena.Assets.Scripts.Managers.OrchestrationManagement.OrchestrationManager,
+        FightShipArena
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Player_HasDied.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: FightShipArena.Assets.Scripts.Managers.LogManagement.Logger, FightShipArena
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Player_HasDied.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: FightShipArena.Assets.Scripts.Managers.Levels.Level_01Manager, FightShipArena
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _ScoreManager_HiScoreChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -982,7 +1060,16 @@ PrefabInstance:
       value: FightShipArena.Assets.Scripts.Managers.LogManagement.Logger, FightShipArena
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Level_GameStarted.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: FightShipArena.Assets.Scripts.Managers.OrchestrationManagement.OrchestrationManager,
+        FightShipArena
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Orchestration_OrchestrationComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Orchestration_OrchestrationComplete.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
@@ -1010,6 +1097,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1277184056}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Orchestration_OrchestrationComplete.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1455586403}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Player_ScoreMultiplierCollected.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: PlayerScoreMultiplierCollected
       objectReference: {fileID: 0}
@@ -1018,11 +1109,19 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1277184056}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Hud_SetCentralMessage.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: FightShipArena.Assets.Scripts.Managers.HudManagement.HudManager, FightShipArena
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Orchestration_OrchestrationStarted.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Orchestration_OrchestrationComplete.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Orchestration_OrchestrationComplete.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
@@ -1036,6 +1135,10 @@ PrefabInstance:
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Orchestration_OrchestrationComplete.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OrchestrationComplete
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Orchestration_OrchestrationComplete.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: OrchestrationManagerOrchestrationComplete
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Orchestration_OrchestrationCancelled.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -1070,6 +1173,10 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Level_GameOver.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Orchestration_OrchestrationStarted.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: FightShipArena.Assets.Scripts.Managers.LogManagement.Logger, FightShipArena
       objectReference: {fileID: 0}
@@ -1078,8 +1185,16 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Player_HasDied.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Orchestration_OrchestrationComplete.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: FightShipArena.Assets.Scripts.Managers.LogManagement.Logger, FightShipArena
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Orchestration_OrchestrationComplete.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: FightShipArena.Assets.Scripts.Managers.Levels.Level_01Manager, FightShipArena
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Orchestration_OrchestrationCancelled.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -1087,6 +1202,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Level_GameStarted.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Level_GameStarted.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Hud_SetCentralMessage.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
@@ -1119,6 +1242,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
       propertyPath: _Orchestration_OrchestrationComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}
+      propertyPath: _Orchestration_OrchestrationComplete.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8786310759323626483, guid: 4ea382cb9780cb54b8a835599ecdc1af, type: 3}

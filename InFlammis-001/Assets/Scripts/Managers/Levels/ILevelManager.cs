@@ -34,10 +34,10 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         /// </summary>
         IPlayerControllerCore PlayerControllerCore { get; set; }
 
-        /// <summary>
-        /// Reference to the OrchestrationManager instance
-        /// </summary>
-        IOrchestrationManager OrchestrationManager { get; set; }
+        ///// <summary>
+        ///// Reference to the OrchestrationManager instance
+        ///// </summary>
+        //IOrchestrationManager OrchestrationManager { get; set; }
 
         /// <summary>
         /// Invoked on start
