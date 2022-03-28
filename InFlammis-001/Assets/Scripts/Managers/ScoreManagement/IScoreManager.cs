@@ -1,4 +1,6 @@
-﻿namespace FightShipArena.Assets.Scripts.Managers.ScoreManagement
+﻿using FightShipArena.Assets.Scripts.MessageBroker;
+
+namespace FightShipArena.Assets.Scripts.Managers.ScoreManagement
 {
     /// <summary>
     /// Interface for a score manager.
@@ -7,6 +9,8 @@
     /// </summary>
     public interface IScoreManager : IMyMonoBehaviour
     {
+        IMessenger Messenger { get; }
+
         /// <summary>
         /// Add the current score to the High Score list
         /// </summary>

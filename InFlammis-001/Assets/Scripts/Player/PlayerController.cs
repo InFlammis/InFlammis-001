@@ -21,17 +21,10 @@ namespace FightShipArena.Assets.Scripts.Player
     public class PlayerController : 
         MyMonoBehaviour, 
         IPlayerController
-
     {
-        ///// <summary>
-        ///// Event raised when the player's health level changes
-        ///// </summary>
-        //public UnityEvent<int, int> PlayerHealthLevelChanged;
+        [SerializeField] private Messenger _messenger;
 
-        ///// <summary>
-        ///// Event raised when the player dies
-        ///// </summary>
-        //public UnityEvent PlayerHasDied;
+        public IMessenger Messenger => _messenger;
 
         /// <summary>
         /// Reference to the SoundManager instance
@@ -50,7 +43,6 @@ namespace FightShipArena.Assets.Scripts.Player
         /// <inheritdoc/>
         public WeaponBase[] Weapons { get; protected set; }
 
-        public Messenger Messenger { get; private set; }
 
         private readonly string _Target = "Player";
 
@@ -187,7 +179,6 @@ namespace FightShipArena.Assets.Scripts.Player
         #region Unity methods
         void Awake()
         {
-            Messenger = GameObject.FindObjectOfType<Messenger>();
             HealthManager = new HealthManager(_Target, initSettings.InitHealth, initSettings.InitHealth, false);
 
             SubscribeToHealthManagerEvents();

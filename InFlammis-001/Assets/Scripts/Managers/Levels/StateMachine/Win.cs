@@ -30,7 +30,7 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels.StateMachine
             base.OnEnter();
             (Configuration.Messenger as IHudEventsPublisher).PublishSetCentralMessage(this, null, "You Won!");
             Configuration.LevelManagerCore.DisablePlayerInput();
-            Configuration.LevelManagerCore.LevelManager.ScoreManager.AddToHighScore();
+            //Configuration.LevelManagerCore.LevelManager.ScoreManager.AddToHighScore();
             Configuration.LevelManagerCore.LevelManager.StartCoroutine(CoReturnToMain());
         }
 

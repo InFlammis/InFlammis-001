@@ -100,12 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e146e4676a8ab49b463115838f9464, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerHealthLevelChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  PlayerHasDied:
-    m_PersistentCalls:
-      m_Calls: []
+  _messenger: {fileID: 0}
   ExplosionEffect: {fileID: 5544043527086907277, guid: 123dcdb519cae984fb5b5dffd5fc356f, type: 3}
   initSettings: {fileID: 11400000, guid: 7d3c1c0a8739f7d4c8daf78ae1105488, type: 2}
 --- !u!114 &420153996349222509
@@ -210,19 +205,71 @@ MonoBehaviour:
     m_ActionId: 6968d789-3b4d-42d4-b790-912e82f372f9
     m_ActionName: Test/SpawnPawn[/Keyboard/p]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 420153996349222508}
+        m_TargetAssemblyTypeName: FightShipArena.Assets.Scripts.Player.PlayerController,
+          FightShipArena
+        m_MethodName: OnTurnLeft
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 6e002fbe-34e4-464c-9238-a208ef54c6d5
     m_ActionName: Player/Turn Left[/Keyboard/l,/Keyboard/a]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 420153996349222508}
+        m_TargetAssemblyTypeName: FightShipArena.Assets.Scripts.Player.PlayerController,
+          FightShipArena
+        m_MethodName: OnTurnRight
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 8356ffb9-3d32-4a6d-a4d2-e35283eb52f8
     m_ActionName: Player/Turn Right[/Keyboard/l,/Keyboard/d]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 420153996349222508}
+        m_TargetAssemblyTypeName: FightShipArena.Assets.Scripts.Player.PlayerController,
+          FightShipArena
+        m_MethodName: OnTurnUp
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 7aa41dab-03f5-4357-9557-1514a6897443
     m_ActionName: Player/Turn Up[/Keyboard/l,/Keyboard/w]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 420153996349222508}
+        m_TargetAssemblyTypeName: FightShipArena.Assets.Scripts.Player.PlayerController,
+          FightShipArena
+        m_MethodName: OnTurnDown
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 9f96ccdb-ca9d-40dc-b2d1-d22d987e3ab6
     m_ActionName: Player/Turn Down[/Keyboard/l,/Keyboard/s]
   m_NeverAutoSwitchControlSchemes: 0
@@ -272,15 +319,15 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 100
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &164226963545443079
 MonoBehaviour:
   m_ObjectHideFlags: 0

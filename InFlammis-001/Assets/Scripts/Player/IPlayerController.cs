@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using FightShipArena.Assets.Scripts.Managers.HealthManagement;
+using FightShipArena.Assets.Scripts.MessageBroker;
 using FightShipArena.Assets.Scripts.Weapons;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,6 +12,7 @@ namespace FightShipArena.Assets.Scripts.Player
     /// </summary>
     public interface IPlayerController
     {
+        IMessenger Messenger { get; }
         /// <summary>
         /// The parent GameObject
         /// </summary>

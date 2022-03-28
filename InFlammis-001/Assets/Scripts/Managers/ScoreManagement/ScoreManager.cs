@@ -14,7 +14,7 @@ namespace FightShipArena.Assets.Scripts.Managers.ScoreManagement
     public class ScoreManager : MyMonoBehaviour, IScoreManager
     {
         [SerializeField] private Messenger _messenger;
-        public Messenger Messenger => _messenger;
+        public IMessenger Messenger => _messenger;
 
         /// <summary>
         /// The current score

@@ -23,7 +23,7 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         /// <inheritdoc/>
         public ILevelManager LevelManager { get; set; }
 
-        public Messenger Messenger { get; private set; }
+        public IMessenger Messenger => LevelManager.Messenger;
 
         public bool SpawnEnemiesEnabled = true;
 
@@ -44,8 +44,6 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         /// <inheritdoc/>
         public void OnStart()
         {
-            Messenger = GameObject.FindObjectOfType<Messenger>();
-
             (Messenger as IOrchestrationEventsMessenger).OrchestrationComplete.AddListener(OrchestrationManagerOrchestrationComplete);
 
             (Messenger as IPlayerEventsMessenger).HasDied.AddListener(PlayerHasDied);
@@ -70,7 +68,6 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
                 messenger: Messenger,
                 levelManagerCore: this,
                 orchestrationManager: this.LevelManager.OrchestrationManager,
-                hudManager: this.LevelManager.HudManager,
                 spawnEnemiesEnabled: true
             );
 
@@ -104,13 +101,13 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
             _playerInput = LevelManager.GameObject.GetComponent<PlayerInput>();
         }
 
-        /// <summary>
-        /// EventHandler for the SendScore event of the OrchestrationManager
-        /// </summary>
-        private void OrchestrationManager_SendScore(int value)
-        {
-            LevelManager.ScoreManager.AddToScore(value);
-        }
+        ///// <summary>
+        ///// EventHandler for the SendScore event of the OrchestrationManager
+        ///// </summary>
+        //private void OrchestrationManager_SendScore(int value)
+        //{
+        //    LevelManager.ScoreManager.AddToScore(value);
+        //}
 
         /// <inheritdoc/>
         public void Move(InputAction.CallbackContext context)

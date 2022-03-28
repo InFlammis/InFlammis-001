@@ -39,7 +39,7 @@ namespace FightShipArena.Assets.Scripts.Player
         /// <inheritdoc/>
         public WeaponBase CurrentWeapon { get; set; }
 
-        public Messenger Messenger { get; set; }
+        public IMessenger Messenger => Parent.Messenger;
 
         /// <summary>
         /// Create a new instance of the PlayerController Core
@@ -50,7 +50,6 @@ namespace FightShipArena.Assets.Scripts.Player
             Parent = parent;
             Transform = parent.GameObject.transform;
             RigidBody = parent.GameObject.GetComponent<Rigidbody2D>();
-            Messenger = GameObject.FindObjectOfType<Messenger>();
 
             HealthManager = parent.HealthManager;
 

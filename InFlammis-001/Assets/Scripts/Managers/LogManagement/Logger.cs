@@ -29,11 +29,11 @@ namespace FightShipArena.Assets.Scripts.Managers.LogManagement
         MonoBehaviour,
         ILogManager
     {
-        [SerializeField] private Messenger _messenger;
+        //[SerializeField] private Messenger _messenger;
         [SerializeField] private bool _logEnabled;
         [SerializeField] private Level _filterLevel;
 
-        public Messenger Messenger => _messenger;
+        //public Messenger Messenger => _messenger;
         public bool logEnabled => _logEnabled;
         public Level filterLevel => _filterLevel;
 
@@ -111,7 +111,7 @@ namespace FightShipArena.Assets.Scripts.Managers.LogManagement
             }
         }
 
-        void LevelGameOver(object publisher, string target)
+        public void LevelGameOver(object publisher, string target)
         {
             LogEvent(publisher.GetType().Name, target, "GameOver");
         }
@@ -125,12 +125,12 @@ namespace FightShipArena.Assets.Scripts.Managers.LogManagement
 
         }
 
-        void LevelGameStarted(object publisher, string target)
+        public void LevelGameStarted(object publisher, string target)
         {
             LogEvent(publisher.GetType().Name, target, "GameStarted");
         }
 
-        void EnemyHasDied(object publisher, string target)
+        public void EnemyHasDied(object publisher, string target)
         {
             LogEvent(publisher.GetType().Name, target, "HasDied");
         }
@@ -145,17 +145,17 @@ namespace FightShipArena.Assets.Scripts.Managers.LogManagement
             LogEvent(publisher.GetType().Name, target, "HealthLevelChanged");
         }
 
-        void OrchestrationCancelled(object publisher, string target)
+        public void OrchestrationCancelled(object publisher, string target)
         {
             LogEvent(publisher.GetType().Name, target, "OrchestrationCancelled");
         }
 
-        void OrchestrationComplete(object publisher, string target)
+        public void OrchestrationComplete(object publisher, string target)
         {
             LogEvent(publisher.GetType().Name, target, "OrchestrationComplete");
         }
 
-        void OrchestrationStarted(object publisher, string target)
+        public void OrchestrationStarted(object publisher, string target)
         {
             LogEvent(publisher.GetType().Name, target, "OrchestrationStarted");
         }

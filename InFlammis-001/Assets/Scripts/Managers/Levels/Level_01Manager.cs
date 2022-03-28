@@ -30,7 +30,6 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
 
         void Awake()
         {
-            ScoreManager = GameObject.GetComponent<IScoreManager>();
             OrchestrationManager = GameObject.GetComponent<IOrchestrationManager>();
 
             Core = new Level_01ManagerCore(this);

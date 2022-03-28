@@ -2,6 +2,7 @@
 using FightShipArena.Assets.Scripts.Managers.OrchestrationManagement;
 using FightShipArena.Assets.Scripts.Managers.ScoreManagement;
 using FightShipArena.Assets.Scripts.Managers.SoundManagement;
+using FightShipArena.Assets.Scripts.MessageBroker;
 using FightShipArena.Assets.Scripts.Player;
 using System;
 using System.Collections;
@@ -15,6 +16,7 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
     /// </summary>
     public interface ILevelManager : IMyMonoBehaviour
     {
+
         /// <summary>
         /// Event raised to play a sound
         /// </summary>
@@ -25,25 +27,17 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         /// </summary>
         event Action ReturnToMainEvent;
 
+        IMessenger Messenger { get; }
+
         /// <summary>
         /// Reference to the PlayerControllerCore instance
         /// </summary>
         IPlayerControllerCore PlayerControllerCore { get; set; }
 
         /// <summary>
-        /// Reference to the ScoreManager instance
-        /// </summary>
-        IScoreManager ScoreManager { get; set; }
-
-        /// <summary>
         /// Reference to the OrchestrationManager instance
         /// </summary>
         IOrchestrationManager OrchestrationManager { get; set; }
-
-        /// <summary>
-        /// Reference to the HudManager instance
-        /// </summary>
-        IHudManager HudManager { get; set; }
 
         /// <summary>
         /// Invoked on start

@@ -15,7 +15,7 @@ namespace FightShipArena.Assets.Scripts.Player
         ///// </summary>
         //event System.Action<int> ScoreMultiplierCollected;
 
-        Messenger Messenger { get; }
+        IMessenger Messenger { get; }
 
         /// <summary>
         /// Reference to the IPlayerController parent instance

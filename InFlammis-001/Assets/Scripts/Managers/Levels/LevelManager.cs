@@ -19,6 +19,9 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         SceneManager, 
         ILevelManager
     {
+        [SerializeField] private Messenger _messenger;
+        public IMessenger Messenger => _messenger;
+
         /// <inheritdoc/>
         public abstract event EventHandler<Sound> PlaySoundEvent;
 
@@ -29,13 +32,7 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         public IPlayerControllerCore PlayerControllerCore { get; set; }
 
         /// <inheritdoc/>
-        public IScoreManager ScoreManager { get; set; }
-
-        /// <inheritdoc/>
         public IOrchestrationManager OrchestrationManager { get; set; }
-
-        /// <inheritdoc/>
-        public IHudManager HudManager { get; set; }
 
         /// <inheritdoc/>
         public virtual void Move(InputAction.CallbackContext context){}
@@ -56,12 +53,6 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
             }
 
             this.PlayerControllerCore = player.GetComponent<IPlayerController>().Core;
-
-            this.HudManager = GetComponent<IHudManager>();
-            if(HudManager == null)
-            {
-                Debug.LogError("HudManager not found in LevelManager OnStart");
-            }
         }
 
         /// <inheritdoc/>

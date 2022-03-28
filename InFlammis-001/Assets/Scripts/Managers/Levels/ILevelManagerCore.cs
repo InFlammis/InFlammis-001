@@ -10,7 +10,7 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
     /// </summary>
     public interface ILevelManagerCore
     {
-        Messenger Messenger { get; }
+        IMessenger Messenger { get; }
 
         /// <summary>
         /// Current state of the levelManagerCore
