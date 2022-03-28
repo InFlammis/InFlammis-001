@@ -1,5 +1,6 @@
 ﻿using FightShipArena.Assets.Scripts.Enemies;
 using FightShipArena.Assets.Scripts.MessageBroker;
+using FightShipArena.Assets.Scripts.MessageBroker.Events;
 using System;
 using System.Collections;
 using System.Collections.Generic;

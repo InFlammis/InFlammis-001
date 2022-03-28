@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using FightShipArena.Assets.Scripts.Enemies;
 using FightShipArena.Assets.Scripts.Managers.HealthManagement;
 using FightShipArena.Assets.Scripts.MessageBroker;
+using FightShipArena.Assets.Scripts.MessageBroker.Events;
 using FightShipArena.Assets.Scripts.Weapons;
 using UnityEngine;
 

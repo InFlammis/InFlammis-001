@@ -7,15 +7,7 @@ using UnityEngine;
 
 namespace FightShipArena.Assets.Scripts.MessageBroker
 {
-    public partial class Messenger : MonoBehaviour
+    public partial class Messenger : MonoBehaviour, IMessenger
     {
-    }
-
-    public interface IEventPublisher
-    {
-    }
-    public interface IEventMessenger
-    {
-
     }
 }
