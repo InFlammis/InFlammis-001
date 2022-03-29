@@ -103,11 +103,5 @@ namespace FightShipArena.Assets.Scripts.Player
         /// Turn Down
         /// </summary>
         void TurnDown();
-
-        /// <summary>
-        /// After a Multiplier power-up is collected, add the multiplier value
-        /// </summary>
-        /// <param name="multiplier"></param>
-        void AddMultiplier(int multiplier);
     }
 }

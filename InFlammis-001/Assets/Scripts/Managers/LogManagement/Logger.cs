@@ -29,18 +29,11 @@ namespace FightShipArena.Assets.Scripts.Managers.LogManagement
         MonoBehaviour,
         ILogManager
     {
-        //[SerializeField] private Messenger _messenger;
         [SerializeField] private bool _logEnabled;
         [SerializeField] private Level _filterLevel;
 
-        //public Messenger Messenger => _messenger;
         public bool logEnabled => _logEnabled;
         public Level filterLevel => _filterLevel;
-
-        void Start()
-        {
-
-        }
 
         public bool IsLogTypeAllowed(Level logType)
         {

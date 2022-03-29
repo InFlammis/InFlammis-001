@@ -29,9 +29,7 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels.StateMachine
             if (Configuration.SpawnEnemiesEnabled)
             {
                 Configuration.Messenger.PublishGameStarted(this, null);
-                //Configuration.OrchestrationManager.Run();
             }
-
         }
 
         /// <inheritdoc/>
@@ -40,7 +38,6 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels.StateMachine
             base.OnExit();
 
             Configuration.Messenger.PublishGameOver(this, null);
-            //Configuration.OrchestrationManager.Stop();
         }
 
         /// <inheritdoc/>

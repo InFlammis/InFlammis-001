@@ -1,7 +1,4 @@
-﻿using FightShipArena.Assets.Scripts.Managers.HudManagement;
-using FightShipArena.Assets.Scripts.Managers.OrchestrationManagement;
-using FightShipArena.Assets.Scripts.Managers.ScoreManagement;
-using FightShipArena.Assets.Scripts.Managers.SoundManagement;
+﻿using FightShipArena.Assets.Scripts.Managers.SoundManagement;
 using FightShipArena.Assets.Scripts.MessageBroker;
 using FightShipArena.Assets.Scripts.Player;
 using System;
@@ -33,11 +30,6 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         /// Reference to the PlayerControllerCore instance
         /// </summary>
         IPlayerControllerCore PlayerControllerCore { get; set; }
-
-        ///// <summary>
-        ///// Reference to the OrchestrationManager instance
-        ///// </summary>
-        //IOrchestrationManager OrchestrationManager { get; set; }
 
         /// <summary>
         /// Invoked on start

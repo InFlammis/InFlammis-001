@@ -13,12 +13,10 @@ namespace FightShipArena.Assets.Scripts.MessageBroker
     public partial class Messenger
     {
         [SerializeField] private HasDied _Player_HasDied = new HasDied();
-        [SerializeField] private ScoreMultiplierCollected _Player_ScoreMultiplierCollected;
         [SerializeField] private HealthLevelChanged _Player_HealthLevelChanged;
 
 
         HasDied IPlayerEventsMessenger.HasDied  => _Player_HasDied;
-        ScoreMultiplierCollected IPlayerEventsMessenger.ScoreMultiplierCollected => _Player_ScoreMultiplierCollected;
 
         HealthLevelChanged IPlayerEventsMessenger.HealthLevelChanged => _Player_HealthLevelChanged;
 
@@ -30,11 +28,6 @@ namespace FightShipArena.Assets.Scripts.MessageBroker
         void IPlayerEventsPublisher.PublishHasDied(object publisher, string target)
         {
             _Player_HasDied.Invoke(publisher, target);
-        }
-
-        void IPlayerEventsPublisher.PublishScoreMultiplierCollected(object publisher, string target, int scoreMultiplier)
-        {
-            _Player_ScoreMultiplierCollected?.Invoke(publisher, target, scoreMultiplier);
         }
     }
 }

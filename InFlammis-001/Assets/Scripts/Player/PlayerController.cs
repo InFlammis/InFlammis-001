@@ -318,5 +318,16 @@ namespace FightShipArena.Assets.Scripts.Player
 
             (Messenger as IPlayerEventsPublisher).PublishHealthLevelChanged(publisher, target, healthLevel, maxHealthLevel);
         }
+
+        public void HealthChargerCollected(object publisher, string target, int health)
+        {
+            if (target != null && target != _Target)
+            {
+                return;
+            }
+
+            this.HealthManager.Heal(health);
+
+        }
     }
 }

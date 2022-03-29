@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FightShipArena.Assets.Scripts.Managers.Levels.StateMachine;
+﻿using FightShipArena.Assets.Scripts.Managers.Levels.StateMachine;
 using FightShipArena.Assets.Scripts.MessageBroker;
 using FightShipArena.Assets.Scripts.MessageBroker.Events;
 using FightShipArena.Assets.Scripts.Player;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace FightShipArena.Assets.Scripts.Managers.Levels
@@ -38,27 +32,15 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         public Level_01ManagerCore(ILevelManager levelManager)
         {
             LevelManager = levelManager;
-
         }
 
         /// <inheritdoc/>
         public void OnStart()
         {
-            //(Messenger as IOrchestrationEventsMessenger).OrchestrationComplete.AddListener(OrchestrationManagerOrchestrationComplete);
-
-            //(Messenger as IPlayerEventsMessenger).HasDied.AddListener(PlayerHasDied);
-
             this.PlayerControllerCore = LevelManager.PlayerControllerCore;
 
             StartGame();
         }
-
-        //public void OnDestroy()
-        //{
-        //    (Messenger as IOrchestrationEventsMessenger).OrchestrationComplete.RemoveListener(OrchestrationManagerOrchestrationComplete);
-
-        //    (Messenger as IPlayerEventsMessenger).HasDied.RemoveListener(PlayerHasDied);
-        //}
 
         private void StartGame()
         {

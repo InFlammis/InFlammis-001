@@ -1,18 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FightShipArena.Assets.Scripts.Managers.OrchestrationManagement;
-using FightShipArena.Assets.Scripts.Managers.ScoreManagement;
 using FightShipArena.Assets.Scripts.Managers.SoundManagement;
-using FightShipArena.Assets.Scripts.Player;
-using UnityEngine;
-using UnityEngine.Animations;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 namespace FightShipArena.Assets.Scripts.Managers.Levels
 {
@@ -30,8 +18,6 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
 
         void Awake()
         {
-            //OrchestrationManager = GameObject.GetComponent<IOrchestrationManager>();
-
             Core = new Level_01ManagerCore(this);
 
             OnAwake();

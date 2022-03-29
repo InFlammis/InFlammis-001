@@ -46,45 +46,42 @@ namespace FightShipArena.Assets.Scripts.Managers.ScoreManagement
             }
         }
 
-        void Awake()
-        {
-            (Messenger as IPlayerEventsMessenger).ScoreMultiplierCollected.AddListener(PlayerScoreMultiplierCollected);
-            (Messenger as IEnemyEventsMessenger).PlayerScored.AddListener(EnemyPlayerScored);
-            (Messenger as ILevelEventsMessenger).GameOver.AddListener(LevelGameOver);
-            (Messenger as ILevelEventsMessenger).GameStarted.AddListener(LevelGameStarted);
-            (Messenger as ILevelEventsMessenger).PlayerWins.AddListener(LevelPlayerWins);
-        }
-
         void Start()
         {
             NotifyHighScoreValue();
         }
 
-        private void LevelPlayerWins(object publisher, string target)
+        #region UnityEvent Handlers
+
+        public void LevelPlayerWins(object publisher, string target)
         {
             AddToHighScore();
         }
 
-        private void LevelGameStarted(object publisher, string target)
+        public void LevelGameStarted(object publisher, string target)
         {
             ResetCurrentScore();
             ResetMultiplier();
         }
 
-        private void LevelGameOver(object publisher, string target)
+        public void LevelGameOver(object publisher, string target)
         {
             AddToHighScore();
         }
 
-        private void EnemyPlayerScored(object publisher, string target, int value)
+        public void EnemyPlayerScored(object publisher, string target, int value)
         {
             AddToScore(value);
         }
 
-        private void PlayerScoreMultiplierCollected(object publisher, string target, int value)
+        public void PowerUpScoreMultiplierCollected(object publisher, string target, int value)
         {
             AddToMultiplier(value);
         }
+
+        #endregion
+
+        #region UnityEvent Emitters
 
         private void NotifyHighScoreValue()
         {
@@ -107,8 +104,9 @@ namespace FightShipArena.Assets.Scripts.Managers.ScoreManagement
             (Messenger as IScoreManagerEventsMessenger).MultiplierChanged.Invoke(this, null, _multiplier);
         }
 
-        /// <inheritdoc/>
-        public void AddToHighScore()
+        #endregion
+
+        protected void AddToHighScore()
         {
             if (CurrentScore.Value == 0)
             {
@@ -120,35 +118,30 @@ namespace FightShipArena.Assets.Scripts.Managers.ScoreManagement
             NotifyHighScoreValue();
         }
 
-        /// <inheritdoc/>
-        public void AddToScore(int score)
+        protected void AddToScore(int score)
         {
             var totScore = score * Multiplier;
             CurrentScore.Value += totScore;
             NotifyScoreValue();
         }
 
-        /// <inheritdoc/>
-        public void AddToMultiplier(int multiplier)
+        protected void AddToMultiplier(int multiplier)
         {
             Multiplier += multiplier;
         }
 
-        /// <inheritdoc/>
-        public void ResetMultiplier()
+        protected void ResetMultiplier()
         {
             Multiplier = 1;
         }
 
-        /// <inheritdoc/>
-        public void ResetCurrentScore()
+        protected void ResetCurrentScore()
         {
             CurrentScore = new Score();
             NotifyScoreValue();
         }
 
-        /// <inheritdoc/>
-        public void ResetHighScore()
+        protected void ResetHighScore()
         {
             HighScores.HighScores.Clear();
             var hiScoreValue = HighScores.HighScores.OrderByDescending(x => x.Value).Select(x => x.Value).FirstOrDefault();

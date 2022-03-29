@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 namespace FightShipArena.Assets.Scripts.MessageBroker.Events
 {
-    [Serializable] public class ScoreMultiplierCollected : UnityEvent<object, string, int> { }
+    //[Serializable] public class ScoreMultiplierChanged : UnityEvent<object, string, int> { }
 
     /// <summary>
     /// Interface required for a Player Events Publisher.
@@ -21,13 +21,13 @@ namespace FightShipArena.Assets.Scripts.MessageBroker.Events
         /// <param name="target">Target of the message.</param>
         void PublishHasDied(object publisher, string target);
 
-        /// <summary>
-        /// Publish an event of type <see cref="ScoreMultiplierCollected"/>.
-        /// </summary>
-        /// <param name="publisher">Publisher of the message.</param>
-        /// <param name="target">Target of the message.</param>
-        /// <param name="scoreMultiplier">Damage received.</param>
-        void PublishScoreMultiplierCollected(object publisher, string target, int scoreMultiplier);
+        ///// <summary>
+        ///// Publish an event of type <see cref="ScoreMultiplierChanged"/>.
+        ///// </summary>
+        ///// <param name="publisher">Publisher of the message.</param>
+        ///// <param name="target">Target of the message.</param>
+        ///// <param name="scoreMultiplier">Damage received.</param>
+        //void PublishScoreMultiplierChanged(object publisher, string target, int scoreMultiplier);
 
         /// <summary>
         /// Publish an event of type <see cref="HealthLevelChanged"/>
@@ -55,10 +55,10 @@ namespace FightShipArena.Assets.Scripts.MessageBroker.Events
         ///// </summary>
         //DamageReceived ReceivedDamage { get; }
 
-        /// <summary>
-        /// Returns a reference to a delegate of type <see cref="ScoreMultiplierCollected"/>, to subscribe to.
-        /// </summary>
-        ScoreMultiplierCollected ScoreMultiplierCollected { get; }
+        ///// <summary>
+        ///// Returns a reference to a delegate of type <see cref="ScoreMultiplierChanged"/>, to subscribe to.
+        ///// </summary>
+        //ScoreMultiplierChanged ScoreMultiplierChanged { get; }
 
         /// <summary>
         /// Returns a reference to a delegate of type <see cref="ReceivedDamage"/>, to subscribe to.

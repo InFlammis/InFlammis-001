@@ -58,8 +58,6 @@ namespace FightShipArena.Assets.Scripts.Player
             CurrentWeapon = Weapons[0];
         }
 
-
-
         /// <inheritdoc/>
         public void SetPlayerInput(Vector2 playerInput)
         {
@@ -161,22 +159,6 @@ namespace FightShipArena.Assets.Scripts.Player
             }
 
             Transform.rotation = quaternion;
-        }
-
-        /// <inheritdoc/>
-        public void AddMultiplier(int multiplier)
-        {
-            //ScoreMultiplierCollected?.Invoke(multiplier);
-            (Messenger as IPlayerEventsMessenger).ScoreMultiplierCollected?.Invoke(this, null, multiplier);
-        }
-
-        /// <summary>
-        /// EventHandler invoked when the player collides with a power-up
-        /// </summary>
-        /// <param name="powerUp">Power-up which the player is colliding with</param>
-        public void HandleCollisionWithPowerUp(PowerUps.PowerUpBase powerUp)
-        {
-
         }
 
     }

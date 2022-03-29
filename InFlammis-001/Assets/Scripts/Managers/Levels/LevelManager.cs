@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FightShipArena.Assets.Scripts.Managers.HudManagement;
-using FightShipArena.Assets.Scripts.Managers.OrchestrationManagement;
-using FightShipArena.Assets.Scripts.Managers.SceneManagement;
-using FightShipArena.Assets.Scripts.Managers.ScoreManagement;
+﻿using FightShipArena.Assets.Scripts.Managers.SceneManagement;
 using FightShipArena.Assets.Scripts.Managers.SoundManagement;
 using FightShipArena.Assets.Scripts.MessageBroker;
 using FightShipArena.Assets.Scripts.Player;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,9 +23,6 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
 
         /// <inheritdoc/>
         public IPlayerControllerCore PlayerControllerCore { get; set; }
-
-        ///// <inheritdoc/>
-        //public IOrchestrationManager OrchestrationManager { get; set; }
 
         /// <inheritdoc/>
         public virtual void Move(InputAction.CallbackContext context){}
