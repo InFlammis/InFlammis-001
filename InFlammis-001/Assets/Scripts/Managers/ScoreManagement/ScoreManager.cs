@@ -91,17 +91,17 @@ namespace FightShipArena.Assets.Scripts.Managers.ScoreManagement
             {
                 highScoreValue = highScore.Value;
             }
-            (Messenger as IScoreManagerEventsMessenger).HiScoreChanged.Invoke(this, null, highScoreValue);
+            Messenger.PublishHiScoreChanged(this, null, highScoreValue);
         }
 
         private void NotifyScoreValue()
         {
-            (Messenger as IScoreManagerEventsMessenger).ScoreChanged.Invoke(this, null, CurrentScore.Value);
+            Messenger.PublishScoreChanged(this, null, CurrentScore.Value);
         }
 
         private void NotifyMultiplierValue()
         {
-            (Messenger as IScoreManagerEventsMessenger).MultiplierChanged.Invoke(this, null, _multiplier);
+            Messenger.PublishMultiplierChanged(this, null, _multiplier);
         }
 
         #endregion

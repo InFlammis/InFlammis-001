@@ -15,17 +15,17 @@ namespace FightShipArena.Assets.Scripts.MessageBroker
         [SerializeField] private HasDied _Enemy_HasDied = new HasDied();
         [SerializeField] private PlayerScored _Enemy_PlayerScored = new PlayerScored();
 
-        HasDied IEnemyEventsMessenger.HasDied { get; } = new HasDied();
-        PlayerScored IEnemyEventsMessenger.PlayerScored { get; } = new PlayerScored();
+        HasDied IEnemyEventsMessenger.HasDied => _Enemy_HasDied;
+        PlayerScored IEnemyEventsMessenger.PlayerScored => _Enemy_PlayerScored;
 
         void IEnemyEventsPublisher.PublishHasDied(object publisher, string target)
         {
-            (this as IEnemyEventsMessenger).HasDied.Invoke(publisher, target);
+            _Enemy_HasDied.Invoke(publisher, target);
         }
 
         void IEnemyEventsPublisher.PublishPlayerScored(object publisher, string target, int score)
         {
-            (this as IEnemyEventsMessenger).PlayerScored.Invoke(publisher, target, score);
+            _Enemy_PlayerScored.Invoke(publisher, target, score);
         }
     }
 }

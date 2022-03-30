@@ -11,8 +11,7 @@ using UnityEngine;
 namespace FightShipArena.Assets.Scripts.Managers.HealthManagement
 {
     public class HealthManager : 
-        IHealthManager,
-        IHealthManagerEventsPublisher
+        IHealthManager
     {
         /// <inheritdoc/>
         public int MaxHealth { get; set; }
@@ -44,7 +43,7 @@ namespace FightShipArena.Assets.Scripts.Managers.HealthManagement
         public bool IsDead { get; protected set;
         }
 
-        public Messenger Messenger { get; private set; }
+        public IMessenger Messenger { get; private set; }
 
         /// <inheritdoc/>
         public void Heal(int byValue)
@@ -88,12 +87,12 @@ namespace FightShipArena.Assets.Scripts.Managers.HealthManagement
 
         public void PublishHasDied(object publisher, string target)
         {
-            (Messenger as IHealthManagerEventsMessenger).HasDied?.Invoke(this, target);
+            (Messenger as IHealthManagerEventsPublisher).PublishHasDied(this, target);
         }
 
         public void PublishHealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
         {
-            (Messenger as IHealthManagerEventsMessenger).HealthLevelChanged?.Invoke(this, target, healthLevel, maxHealthLevel);
+            (Messenger as IHealthManagerEventsPublisher).PublishHealthLevelChanged(this, target, healthLevel, maxHealthLevel);
         }
 
         private string _Target;

@@ -22,17 +22,17 @@ namespace FightShipArena.Assets.Scripts.MessageBroker
 
         void IOrchestrationEventsPublisher.PublishOrchestrationCancelled(object publisher, string target)
         {
-            (this as IOrchestrationEventsMessenger).OrchestrationCancelled.Invoke(publisher, target);
+            _Orchestration_OrchestrationCancelled.Invoke(publisher, target);
         }
 
         void IOrchestrationEventsPublisher.PublishOrchestrationStarted(object publisher, string target)
         {
-            (this as IOrchestrationEventsMessenger).OrchestrationStarted.Invoke(publisher, target);
+            _Orchestration_OrchestrationStarted.Invoke(publisher, target);
         }
 
         void IOrchestrationEventsPublisher.PublishOrchestrationComplete(object publisher, string target)
         {
-            (this as IOrchestrationEventsMessenger).OrchestrationComplete.Invoke(publisher, target);
+            _Orchestration_OrchestrationComplete.Invoke(publisher, target);
         }
     }
 }

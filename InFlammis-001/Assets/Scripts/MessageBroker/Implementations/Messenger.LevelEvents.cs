@@ -22,17 +22,17 @@ namespace FightShipArena.Assets.Scripts.MessageBroker
 
         void ILevelEventsPublisher.PublishGameOver(object publisher, string target)
         {
-            (this as ILevelEventsMessenger).GameOver.Invoke(publisher, target);
+            _Level_GameOver.Invoke(publisher, target);
         }
 
         void ILevelEventsPublisher.PublishGameStarted(object publisher, string target)
         {
-            (this as ILevelEventsMessenger).GameStarted.Invoke(publisher, target);
+            _Level_GameStarted.Invoke(publisher, target);
         }
 
         void ILevelEventsPublisher.PublishPlayerWins(object publisher, string target)
         {
-            (this as ILevelEventsMessenger).PlayerWins.Invoke(publisher, target);
+            _Level_PlayerWins.Invoke(publisher, target);
         }
     }
 }

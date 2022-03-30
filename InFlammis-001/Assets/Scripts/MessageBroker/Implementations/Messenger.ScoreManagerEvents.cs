@@ -24,17 +24,17 @@ namespace FightShipArena.Assets.Scripts.MessageBroker
 
         void IScoreManagerEventsPublisher.PublishHiScoreChanged(object publisher, string target, int hiScore)
         {
-            (this as IScoreManagerEventsMessenger).HiScoreChanged.Invoke(publisher, target, hiScore);
+            _ScoreManager_HiScoreChanged.Invoke(publisher, target, hiScore);
         }
 
         void IScoreManagerEventsPublisher.PublishMultiplierChanged(object publisher, string target, int multiplier)
         {
-            (this as IScoreManagerEventsMessenger).MultiplierChanged.Invoke(publisher, target, multiplier);
+            _ScoreManager_MultiplierChanged.Invoke(publisher, target, multiplier);
         }
 
         void IScoreManagerEventsPublisher.PublishScoreChanged(object publisher, string target, int score)
         {
-            (this as IScoreManagerEventsMessenger).ScoreChanged.Invoke(publisher, target, score);
+            _ScoreManager_ScoreChanged.Invoke(publisher, target, score);
         }
     }
 }

@@ -193,6 +193,7 @@ namespace FightShipArena.Assets.Scripts.Enemies.Infantry
             UnsubscribeToHealthManagerEvents();
 
             (Messenger as IEnemyEventsPublisher).PublishHasDied(this.Parent, $"Infantry,{this.Parent.GameObject.GetInstanceID()}");
+            (Messenger as IEnemyEventsPublisher).PublishPlayerScored(this.Parent, $"Infantry,{this.Parent.GameObject.GetInstanceID()}", InitSettings.PlayerScoreWhenKilled);
         }
 
         void HealthManagerHealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)

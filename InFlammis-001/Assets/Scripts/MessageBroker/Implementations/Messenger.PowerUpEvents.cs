@@ -23,11 +23,11 @@ namespace FightShipArena.Assets.Scripts.MessageBroker
 
         void IHealthChargerEventsPublisher.PublishHealthCollected(object publisher, string target, int health)
         {
-            (this as IHealthChargerEventsMessenger).HealthCollected.Invoke(publisher, target, health);
+            _PowerUp_HealthCollected.Invoke(publisher, target, health);
         }
         void IScoreMultiplierEventsPublisher.PublishScoreMultiplierCollected(object publisher, string target, int multiplier)
         {
-            (this as IScoreMultiplierEventsMessenger).MultiplierCollected.Invoke(publisher, target, multiplier);
+            _PowerUp_MultiplierCollected.Invoke(publisher, target, multiplier);
         }
 
     }

@@ -15,17 +15,17 @@ namespace FightShipArena.Assets.Scripts.MessageBroker
         [SerializeField] private HasDied _HealthManager_HasDied = new HasDied();
         [SerializeField] private HealthLevelChanged _HealthManager_HealthLevelChanged = new HealthLevelChanged();
 
-        HasDied IHealthManagerEventsMessenger.HasDied { get; } = new HasDied();
-        HealthLevelChanged IHealthManagerEventsMessenger.HealthLevelChanged { get; } = new HealthLevelChanged();
+        HasDied IHealthManagerEventsMessenger.HasDied => _HealthManager_HasDied;
+        HealthLevelChanged IHealthManagerEventsMessenger.HealthLevelChanged => _HealthManager_HealthLevelChanged;
 
         void IHealthManagerEventsPublisher.PublishHasDied(object publisher, string target)
         {
-            (this as IHealthManagerEventsMessenger).HasDied.Invoke(publisher, target);
+            _HealthManager_HasDied.Invoke(publisher, target);
         }
 
         void IHealthManagerEventsPublisher.PublishHealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
         {
-            (this as IHealthManagerEventsMessenger).HealthLevelChanged.Invoke(publisher, target, healthLevel, maxHealthLevel);
+            _HealthManager_HealthLevelChanged.Invoke(publisher, target, healthLevel, maxHealthLevel);
         }
     }
 }

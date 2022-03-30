@@ -112,7 +112,7 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
 
         private void GameOver()
         {
-            (Messenger as ILevelEventsMessenger).GameOver.Invoke(this, null);
+            Messenger.PublishGameOver(this, null);
             ChangeStateRequestEventHandler(this, new StateMachine.GameOver(_stateConfiguration));
 
         }

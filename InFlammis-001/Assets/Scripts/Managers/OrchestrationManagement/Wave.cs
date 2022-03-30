@@ -115,11 +115,7 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
 
             while (TotEnemiesSpawned < TotEnemiesToSpawn)
             {
-                Debug.Log($"DelayBetweenSpawns Waiting for seconds  {DelayBetweenSpawns}");
-
                 yield return new WaitForSeconds(DelayBetweenSpawns);
-
-                Debug.Log($"WaitUntil CurrentSimultaneousEnemiesSpawned < MaxSimultaneousEnemiesSpawned {CurrentSimultaneousEnemiesSpawned < MaxSimultaneousEnemiesSpawned}");
 
                 yield return new WaitUntil(() => CurrentSimultaneousEnemiesSpawned < MaxSimultaneousEnemiesSpawned || cancellationToken.Cancel == true);
 
