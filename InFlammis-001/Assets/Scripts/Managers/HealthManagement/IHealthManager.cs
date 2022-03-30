@@ -7,15 +7,15 @@ namespace FightShipArena.Assets.Scripts.Managers.HealthManagement
     /// </summary>
     public interface IHealthManager
     {
-        /// <summary>
-        /// Event raised when the character Health level changes
-        /// </summary>
-        event Action<int, int> HealthLevelChanged;
+        ///// <summary>
+        ///// Event raised when the character Health level changes
+        ///// </summary>
+        //event Action<int, int> HealthLevelChanged;
 
-        /// <summary>
-        /// Event raised when the character dies
-        /// </summary>
-        event Action HasDied;
+        ///// <summary>
+        ///// Event raised when the character dies
+        ///// </summary>
+        //event Action HasDied;
 
         /// <summary>
         /// Max health of the character

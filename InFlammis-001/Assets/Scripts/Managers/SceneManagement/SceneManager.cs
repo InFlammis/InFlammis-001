@@ -12,7 +12,6 @@ namespace FightShipArena.Assets.Scripts.Managers.SceneManagement
     {
         void Start()
         {
-            Debug.Log("Scene started");
         }
 
         /// <summary>

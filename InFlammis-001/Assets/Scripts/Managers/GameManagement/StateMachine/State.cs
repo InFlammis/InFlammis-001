@@ -94,7 +94,7 @@ namespace FightShipArena.Assets.Scripts.Managers.GameManagement.StateMachine
         /// </summary>
         public virtual void OnEnter()
         {
-            Debug.Log($"State {this.GetType().Name}: OnEnter");
+            //Debug.Log($"State {this.GetType().Name}: OnEnter");
             StateState = StateStateEnum.InStack;
 
             SceneManagerWrapper.SceneLoaded += SceneLoaded;
@@ -106,7 +106,7 @@ namespace FightShipArena.Assets.Scripts.Managers.GameManagement.StateMachine
         /// </summary>
         public virtual void OnExit()
         {
-            Debug.Log($"State {this.GetType().Name}: OnExit");
+            //Debug.Log($"State {this.GetType().Name}: OnExit");
             StateState = StateStateEnum.NotInStack;
 
             SceneManagerWrapper.SceneLoaded -= SceneLoaded;
@@ -118,7 +118,7 @@ namespace FightShipArena.Assets.Scripts.Managers.GameManagement.StateMachine
         /// </summary>
         public virtual void OnActivate()
         {
-            Debug.Log($"State {this.GetType().Name}: OnActivate");
+            //Debug.Log($"State {this.GetType().Name}: OnActivate");
             StateState = StateStateEnum.Activated;
         }
 
@@ -127,7 +127,7 @@ namespace FightShipArena.Assets.Scripts.Managers.GameManagement.StateMachine
         /// </summary>
         public virtual void OnDeactivate()
         {
-            Debug.Log($"State {this.GetType().Name}: OnDeactivate");
+            //Debug.Log($"State {this.GetType().Name}: OnDeactivate");
             StateState = StateStateEnum.InStack;
         }
 
@@ -138,7 +138,7 @@ namespace FightShipArena.Assets.Scripts.Managers.GameManagement.StateMachine
         /// <param name="loadSceneMode">The load mode</param>
         public virtual void SceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
-            Debug.Log($"State {this.GetType().Name}: SceneLoaded: {scene.name}");
+            //Debug.Log($"State {this.GetType().Name}: SceneLoaded: {scene.name}");
 
         }
 
@@ -148,7 +148,7 @@ namespace FightShipArena.Assets.Scripts.Managers.GameManagement.StateMachine
         /// <param name="scene"></param>
         public virtual void SceneUnloaded(Scene scene)
         {
-            Debug.Log($"State {this.GetType().Name}: SceneUnloaded: {scene.name}");
+            //Debug.Log($"State {this.GetType().Name}: SceneUnloaded: {scene.name}");
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace FightShipArena.Assets.Scripts.Managers.GameManagement.StateMachine
         /// </summary>
         public virtual void PauseResumeGame()
         {
-            Debug.Log($"State {this.GetType().Name}: Pause/Resume game");
+            //Debug.Log($"State {this.GetType().Name}: Pause/Resume game");
         }
     }
 

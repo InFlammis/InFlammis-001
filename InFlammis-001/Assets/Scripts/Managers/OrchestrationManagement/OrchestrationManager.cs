@@ -1,4 +1,6 @@
 ﻿using FightShipArena.Assets.Scripts.Managers.OrchestrationManagement;
+using FightShipArena.Assets.Scripts.MessageBroker;
+using FightShipArena.Assets.Scripts.MessageBroker.Events;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,8 +16,13 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
     /// Coordinates a sequence of spawns of enemies in spawn points.
     /// The OrchestrationManager contains a list of <see cref="Wave"/>, executed in sequence.
     /// </summary>
-    public class OrchestrationManager : MyMonoBehaviour, IOrchestrationManager
+    public class OrchestrationManager : 
+        MyMonoBehaviour, 
+        IOrchestrationManager
     {
+        [SerializeField] private Messenger _messenger;
+        public IMessenger Messenger => _messenger;
+
         /// <summary>
         /// Collection of waves of enemies to spawn
         /// </summary>
@@ -26,11 +33,8 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
         /// </summary>
         private CancellationToken RunCancellationToken;
 
-        /// <inheritdoc/>
-        public event Action<int> SendScore;
-
-        /// <inheritdoc/>
-        public event Action OrchestrationComplete;
+        ///// <inheritdoc/>
+        //public event Action<int> SendScore;
 
         /// <summary>
         /// Delay between two consecutive waves
@@ -51,19 +55,6 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
         /// Status of the Orchestration
         /// </summary>
         public StatusEnum Status { get; private set; } = StatusEnum.NotStarted;
-        
-        /// <inheritdoc/>
-        public void Run()
-        {
-            RunCancellationToken = new CancellationToken();
-            StartCoroutine(CoRun(RunCancellationToken));
-        }
-
-        /// <inheritdoc/>
-        public void Stop()
-        {
-            RunCancellationToken.Cancel = true; ;
-        }
 
         /// <summary>
         /// CoRoutine that manages the execution
@@ -72,13 +63,19 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
         /// <returns></returns>
         public IEnumerator CoRun(CancellationToken cancellationToken)
         {
+            Messenger.PublishOrchestrationStarted(this, null);
+
             Status = StatusEnum.Running;
 
             yield return new WaitForSeconds(DelayBeforeStart);
             foreach(var wave in Waves)
             {
-                wave.SendScore += Wave_SendScore;
-                wave.Run(this);
+                if(cancellationToken.Cancel == true)
+                {
+                    Messenger.PublishOrchestrationCancelled(this, null);
+                    yield break;
+                }
+                wave.Run(this, cancellationToken);
 
                 yield return new WaitUntil(() => wave.Status == StatusEnum.Done);
 
@@ -88,16 +85,19 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
             yield return new WaitForSeconds(DelayAfterEnd);
 
             Status = StatusEnum.Done;
-            OrchestrationComplete?.Invoke();
+
+            Messenger.PublishOrchestrationComplete(this, null);
         }
 
-        /// <summary>
-        /// EventHandler for the event SendScore of a Wave
-        /// </summary>
-        /// <param name="obj"></param>
-        private void Wave_SendScore(int obj)
+        public void LevelGameOver(object publisher, string target)
         {
-            this.SendScore?.Invoke(obj);
+            RunCancellationToken.Cancel = true; ;
+        }
+
+        public void LevelGameStarted(object publisher, string target)
+        {
+            RunCancellationToken = new CancellationToken();
+            StartCoroutine(CoRun(RunCancellationToken));
         }
 
         /// <summary>

@@ -4,6 +4,8 @@ using System.Linq;
 using FightShipArena.Assets.Scripts.Enemies;
 using FightShipArena.Assets.Scripts.Managers.HealthManagement;
 using FightShipArena.Assets.Scripts.Managers.Levels;
+using FightShipArena.Assets.Scripts.MessageBroker;
+using FightShipArena.Assets.Scripts.MessageBroker.Events;
 using FightShipArena.Assets.Scripts.Weapons;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,17 +18,13 @@ namespace FightShipArena.Assets.Scripts.Player
     /// Controller for the player.
     /// Implements the Core pattern. The core logic of the Controller is actually contained in the Core instance.
     /// </summary>
-    public class PlayerController : MyMonoBehaviour, IPlayerController
+    public class PlayerController : 
+        MyMonoBehaviour, 
+        IPlayerController
     {
-        /// <summary>
-        /// Event raised when the player's health level changes
-        /// </summary>
-        public UnityEvent<int, int> PlayerHealthLevelChanged;
+        [SerializeField] private Messenger _messenger;
 
-        /// <summary>
-        /// Event raised when the player dies
-        /// </summary>
-        public UnityEvent PlayerHasDied;
+        public IMessenger Messenger => _messenger;
 
         /// <summary>
         /// Reference to the SoundManager instance
@@ -45,6 +43,9 @@ namespace FightShipArena.Assets.Scripts.Player
         /// <inheritdoc/>
         public WeaponBase[] Weapons { get; protected set; }
 
+
+        private readonly string _Target = "Player";
+
         [SerializeField]
         private GameObject ExplosionEffect;
 
@@ -61,12 +62,12 @@ namespace FightShipArena.Assets.Scripts.Player
             if (context.performed)
             {
                 Core.SetPlayerInput(inputVector);
-                Debug.Log($"Moving {Core.PlayerInput}");
+                //Debug.Log($"Moving {Core.PlayerInput}");
 
             }
             else if (context.canceled)
             {
-                Debug.Log("Not moving");
+                //Debug.Log("Not moving");
                 Core.SetPlayerInput(inputVector);
             }
         }
@@ -79,12 +80,12 @@ namespace FightShipArena.Assets.Scripts.Player
             
             if (context.started)
             {
-                Debug.Log("OnFire started");
+                //Debug.Log("OnFire started");
                 Core.StartFiring();
             }
             else if (context.canceled)
             {
-                Debug.Log("OnFire canceled");
+                //Debug.Log("OnFire canceled");
                 Core.StopFiring();
             }
         }
@@ -96,13 +97,13 @@ namespace FightShipArena.Assets.Scripts.Player
         {
             if (context.started)
             {
-                Debug.Log("OnFireAlt started");
+                //Debug.Log("OnFireAlt started");
                 //Do an action
                 Core.FireAlt();
             }
             else if (context.canceled)
             {
-                Debug.Log("OnFireAlt canceled");
+                //Debug.Log("OnFireAlt canceled");
             }
         }
 
@@ -113,13 +114,13 @@ namespace FightShipArena.Assets.Scripts.Player
         {
             if (context.started)
             {
-                Debug.Log("OnOpenSelectionMenu started");
+                //Debug.Log("OnOpenSelectionMenu started");
                 //Do an action
                 Core.OpenSelectionMenu();
             }
             else if (context.canceled)
             {
-                Debug.Log("OnOpenSelectionMenu canceled");
+                //Debug.Log("OnOpenSelectionMenu canceled");
             }
         }
 
@@ -129,7 +130,7 @@ namespace FightShipArena.Assets.Scripts.Player
             if (context.performed)
             {
                 Core.TurnLeft();
-                Debug.Log($"Turning {Core.PlayerInput}");
+                //Debug.Log($"Turning {Core.PlayerInput}");
             }
             else if (context.canceled)
             {
@@ -142,7 +143,7 @@ namespace FightShipArena.Assets.Scripts.Player
             if (context.performed)
             {
                 Core.TurnRight();
-                Debug.Log($"Turning {Core.PlayerInput}");
+                //Debug.Log($"Turning {Core.PlayerInput}");
             }
             else if (context.canceled)
             {
@@ -155,7 +156,7 @@ namespace FightShipArena.Assets.Scripts.Player
             if (context.performed)
             {
                 Core.TurnUp();
-                Debug.Log($"Turning {Core.PlayerInput}");
+                //Debug.Log($"Turning {Core.PlayerInput}");
             }
             else if (context.canceled)
             {
@@ -168,7 +169,7 @@ namespace FightShipArena.Assets.Scripts.Player
             if (context.performed)
             {
                 Core.TurnDown();
-                Debug.Log($"Turning {Core.PlayerInput}");
+                //Debug.Log($"Turning {Core.PlayerInput}");
             }
             else if (context.canceled)
             {
@@ -178,14 +179,28 @@ namespace FightShipArena.Assets.Scripts.Player
         #region Unity methods
         void Awake()
         {
-            HealthManager = new HealthManager(initSettings.InitHealth, initSettings.InitHealth, false);
-            HealthManager.HasDied += HealthManager_HasDied;
-            HealthManager.HealthLevelChanged += HealthManager_HealthLevelChanged;
+            HealthManager = new HealthManager(_Target, initSettings.InitHealth, initSettings.InitHealth, false);
 
+            SubscribeToHealthManagerEvents();
             CheckWeaponsConfiguration();
 
             Core = new PlayerControllerCore(this);
         }
+
+        public virtual void SubscribeToHealthManagerEvents()
+        {
+            var messenger = (Messenger as IHealthManagerEventsMessenger);
+            messenger.HasDied.AddListener(HealthManagerHasDied);
+            messenger.HealthLevelChanged.AddListener(HealthManagerHealthLevelChanged);
+        }
+
+        public virtual void UnsubscribeToHealthManagerEvents()
+        {
+            var messenger = (Messenger as IHealthManagerEventsMessenger);
+            messenger.HasDied.RemoveListener(HealthManagerHasDied);
+            messenger.HealthLevelChanged.RemoveListener(HealthManagerHealthLevelChanged);
+        }
+
 
         void Start()
         {
@@ -216,7 +231,6 @@ namespace FightShipArena.Assets.Scripts.Player
 
         void OnCollisionEnter2D(Collision2D col)
         {
-            Debug.Log($"Collision detected with {col.gameObject.name}");
             if (col.gameObject.tag == "Enemy")
             {
                 var enemyController = col.gameObject.GetComponent<EnemyController>();
@@ -273,28 +287,46 @@ namespace FightShipArena.Assets.Scripts.Player
         /// </summary>
         /// <param name="value">New health level</param>
         /// <param name="maxValue">Max health level</param>
-        private void HealthManager_HealthLevelChanged(int value, int maxValue)
-        {
-            PlayerHealthLevelChanged?.Invoke(value, maxValue);
-        }
 
-        /// <summary>
-        /// EventHandler for a HasDied event raised by the HealthManager
-        /// </summary>
-        private void HealthManager_HasDied()
+        void HealthManagerHasDied(object publisher, string target)
         {
-            PlayerHasDied?.Invoke();
+            if(target != null && target != _Target)
+            {
+                return;
+            }
+
+            (Messenger as IPlayerEventsPublisher).PublishHasDied(this, null);
 
             _SoundManager.PlayExplodeSound();
 
-            Debug.Log($"Destroying object {this.gameObject.name}");
+            UnsubscribeToHealthManagerEvents();
 
             var eeInstance = Instantiate(this.ExplosionEffect, this.gameObject.transform);
             eeInstance.transform.SetParent(null);
-            
+
             Destroy(eeInstance, 4);
 
             Destroy(this.gameObject);
+        }
+
+        public void HealthManagerHealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
+        {
+            if (target != null && target != _Target)
+            {
+                return;
+            }
+
+            (Messenger as IPlayerEventsPublisher).PublishHealthLevelChanged(publisher, target, healthLevel, maxHealthLevel);
+        }
+
+        public void HealthChargerCollected(object publisher, string target, int health)
+        {
+            if (target != null && target != _Target)
+            {
+                return;
+            }
+
+            this.HealthManager.Heal(health);
 
         }
     }

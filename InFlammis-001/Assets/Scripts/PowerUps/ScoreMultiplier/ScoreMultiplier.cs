@@ -19,9 +19,13 @@ namespace FightShipArena.Assets.Scripts.PowerUps.ScoreMultiplier
         /// <param name="collision"></param>
         void OnTriggerEnter2D(UnityEngine.Collider2D collision)
         {
-            var playerGo = collision.gameObject;
-            var playerController = playerGo.GetComponent<PlayerController>();
-            playerController.Core.AddMultiplier((int)InitSettings.Value);
+            //if(collision.gameObject != null && collision.gameObject.tag != "Player")
+            //{
+            //    return;
+            //}
+
+            Messenger.PublishScoreMultiplierCollected(this, "Player", (int)InitSettings.Value);
+
             GameObject.Destroy(this.GameObject);
         }
     }

@@ -25,7 +25,7 @@ namespace FightShipArena.Assets.Scripts.Managers.Menus
         /// <inheritdoc/>
         public void OnStart()
         {
-            Debug.Log($"Credits menu opened");
+            //Debug.Log($"Credits menu opened");
         }
 
         /// <inheritdoc/>

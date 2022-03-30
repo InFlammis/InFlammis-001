@@ -1,8 +1,7 @@
-﻿using System;
+﻿using FightShipArena.Assets.Scripts.MessageBroker;
+using System;
 using System.Collections;
 using UnityEngine;
-using Random = System.Random;
-using Time = UnityEngine.Time;
 
 namespace FightShipArena.Assets.Scripts.PowerUps
 {
@@ -21,6 +20,9 @@ namespace FightShipArena.Assets.Scripts.PowerUps
         /// </summary>
         public PowerUpSettings InitSettings;
 
+        [SerializeField] Messenger _Messenger;
+        public IMessenger Messenger => _Messenger;
+
         void Awake()
         {
             if (InitSettings == null)
@@ -36,6 +38,11 @@ namespace FightShipArena.Assets.Scripts.PowerUps
 
             StartCoroutine(FloatAround());
             StartCoroutine(StartCountdown());
+        }
+
+        private void Start()
+        {
+            _Messenger = GameObject.FindObjectOfType<Messenger>();
         }
 
         /// <summary>

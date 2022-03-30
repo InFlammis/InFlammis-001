@@ -12,11 +12,6 @@ namespace FightShipArena.Assets.Scripts.Enemies
     public interface IEnemyControllerCore
     {
         /// <summary>
-        /// Event raised when the enemy dies
-        /// </summary>
-        event Action<IEnemyControllerCore> HasDied;
-
-        /// <summary>
         /// Reference to the Player controller core
         /// </summary>
         IPlayerControllerCore PlayerControllerCore { get; set; }

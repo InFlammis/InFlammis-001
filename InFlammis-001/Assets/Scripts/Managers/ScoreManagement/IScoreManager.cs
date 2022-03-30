@@ -1,4 +1,6 @@
-﻿namespace FightShipArena.Assets.Scripts.Managers.ScoreManagement
+﻿using FightShipArena.Assets.Scripts.MessageBroker;
+
+namespace FightShipArena.Assets.Scripts.Managers.ScoreManagement
 {
     /// <summary>
     /// Interface for a score manager.
@@ -7,36 +9,17 @@
     /// </summary>
     public interface IScoreManager : IMyMonoBehaviour
     {
-        /// <summary>
-        /// Add the current score to the High Score list
-        /// </summary>
-        void AddToHighScore();
+        IMessenger Messenger { get; }
 
-        /// <summary>
-        /// Add a score to the current score
-        /// </summary>
-        /// <param name="score">Score to add</param>
-        void AddToScore(int score);
+        void LevelPlayerWins(object publisher, string target);
 
-        /// <summary>
-        /// Add a value to the current score multiplier
-        /// </summary>
-        /// <param name="multiplier">Multiplier value to add</param>
-        void AddToMultiplier(int multiplier);
+        void LevelGameStarted(object publisher, string target);
 
-        /// <summary>
-        /// Reset the multiplier value to 1
-        /// </summary>
-        void ResetMultiplier();
+        void LevelGameOver(object publisher, string target);
 
-        /// <summary>
-        /// Reset the current score to 0
-        /// </summary>
-        void ResetCurrentScore();
+        void EnemyPlayerScored(object publisher, string target, int value);
 
-        /// <summary>
-        /// Clear the list of High scores
-        /// </summary>
-        void ResetHighScore();
+        void PowerUpScoreMultiplierCollected(object publisher, string target, int value);
+
     }
 }

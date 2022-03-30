@@ -1,4 +1,6 @@
 ﻿using FightShipArena.Assets.Scripts.Enemies;
+using FightShipArena.Assets.Scripts.MessageBroker;
+using FightShipArena.Assets.Scripts.MessageBroker.Events;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,10 +20,6 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
     [Serializable]
     public class Wave
     {
-        /// <summary>
-        /// Event raised to notify a change in the player's score is requested
-        /// </summary>
-        public event Action<int> SendScore;
 
         /// <summary>
         /// Collection of enemy types spawn in the wave
@@ -73,21 +71,25 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
         /// </summary>
         [HideInInspector] public int TotEnemiesKilled;
 
-        private OrchestrationManager.CancellationToken RunCancellationToken;
+        //private OrchestrationManager.CancellationToken RunCancellationToken;
 
         /// <summary>
         /// Status of the execution
         /// </summary>
         public OrchestrationManager.StatusEnum Status { get; private set; } = OrchestrationManager.StatusEnum.NotStarted;
 
+        public IMessenger Messenger { get; private set; }
+
         /// <summary>
         /// Start the execution of the Wave
         /// </summary>
         /// <param name="manager"></param>
-        public void Run(OrchestrationManager manager)
+        public void Run(OrchestrationManager manager, OrchestrationManager.CancellationToken cancellationToken)
         {
-            RunCancellationToken = new OrchestrationManager.CancellationToken();
-            manager.StartCoroutine(CoRun(manager, RunCancellationToken));
+            Messenger = GameObject.FindObjectOfType<Messenger>();
+            (Messenger as IEnemyEventsMessenger).HasDied.AddListener(EnemyHasDied);
+
+            manager.StartCoroutine(CoRun(manager, cancellationToken));
         }
 
         /// <summary>
@@ -95,8 +97,7 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
         /// </summary>
         public void Stop()
         {
-            RunCancellationToken.Cancel = true;
-
+            (Messenger as IEnemyEventsMessenger).HasDied.RemoveListener(EnemyHasDied);
         }
 
         /// <summary>
@@ -116,11 +117,12 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
             {
                 yield return new WaitForSeconds(DelayBetweenSpawns);
 
-                yield return new WaitUntil(() => CurrentSimultaneousEnemiesSpawned < MaxSimultaneousEnemiesSpawned);
+                yield return new WaitUntil(() => CurrentSimultaneousEnemiesSpawned < MaxSimultaneousEnemiesSpawned || cancellationToken.Cancel == true);
 
                 if(cancellationToken?.Cancel == true)
                 {
-                    yield break;
+                    Debug.Log("Wave cancelled");
+                    break;
                 }
 
                 var nextEnemy = EnemyTypes.Where(x=>x.CurrentlySpawned < x.Settings.MaxNumOfSimultaneousSpawns).OrderBy(x => x.TotalSpawned / (float)x.Settings.NumToSpawn).FirstOrDefault();
@@ -133,31 +135,24 @@ namespace FightShipArena.Assets.Scripts.Managers.OrchestrationManagement
                 var nextEnemySpawn = GameObject.Instantiate(nextEnemy.Settings.EnemyType, spawnPoint.transform.position, Quaternion.identity);
                 UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(nextEnemySpawn, UnityEngine.SceneManagement.SceneManager.GetSceneAt(1));
 
-                var nextEnemyManager = nextEnemySpawn.GetComponent<IEnemyController>();
-                nextEnemyManager.Core.HasDied += Enemy_HasDied;
-
                 nextEnemy.TotalSpawned++;
                 nextEnemy.CurrentlySpawned++;
                 TotEnemiesSpawned++;
             }
 
+            Debug.Log($"DelayAfterEnd Waiting for seconds {DelayAfterEnd}");
             yield return new WaitForSeconds(DelayAfterEnd);
 
-            yield return new WaitUntil(() => TotEnemiesKilled == TotEnemiesToSpawn);
+            yield return new WaitUntil(() => TotEnemiesKilled == TotEnemiesToSpawn || cancellationToken.Cancel == true);
 
             Status = OrchestrationManager.StatusEnum.Done;
         }
 
-        /// <summary>
-        /// EventHandler invoked when the player has died
-        /// </summary>
-        /// <param name="enemyControllerCore"></param>
-        private void Enemy_HasDied(IEnemyControllerCore enemyControllerCore)
+        void EnemyHasDied(object publisher, string target)
         {
-            SendScore?.Invoke(enemyControllerCore.InitSettings.PlayerScoreWhenKilled);
+            var enemyController = publisher as IEnemyController;
 
-            enemyControllerCore.HasDied -= Enemy_HasDied;
-            var enemyType = EnemyTypes.Single(x => x.Settings.EnemyTypeEnum == enemyControllerCore.Parent.InitSettings.EnemyType);
+            var enemyType = EnemyTypes.Single(x => x.Settings.EnemyTypeEnum == enemyController.InitSettings.EnemyType);
             enemyType.CurrentlySpawned--;
             TotEnemiesKilled++;
         }

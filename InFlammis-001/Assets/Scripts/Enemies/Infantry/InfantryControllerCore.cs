@@ -3,6 +3,8 @@ using System.Collections;
 using System.Linq;
 using FightShipArena.Assets.Scripts.Enemies.Infantry.StateMachine;
 using FightShipArena.Assets.Scripts.Managers.HealthManagement;
+using FightShipArena.Assets.Scripts.MessageBroker;
+using FightShipArena.Assets.Scripts.MessageBroker.Events;
 using FightShipArena.Assets.Scripts.Player;
 using FightShipArena.Assets.Scripts.Weapons;
 using UnityEngine;
@@ -13,10 +15,12 @@ namespace FightShipArena.Assets.Scripts.Enemies.Infantry
     /// <summary>
     /// Specialization of a IEnemyControllerCore for an Infantry enemy type
     /// </summary>
-    public class InfantryControllerCore : IEnemyControllerCore
+    public class InfantryControllerCore : 
+        IEnemyControllerCore
     {
-        /// <inheritdoc/>
-        public event Action<IEnemyControllerCore> HasDied;
+        public Messenger Messenger { get; set; }
+
+        private string _Target;
 
         /// <inheritdoc/>
         public IPlayerControllerCore PlayerControllerCore { get; set; }
@@ -64,13 +68,17 @@ namespace FightShipArena.Assets.Scripts.Enemies.Infantry
         /// <param name="settings">The initial settings</param>
         public InfantryControllerCore(IEnemyController parent, IHealthManager healthManager, EnemySettings settings)
         {
-            //State = EnemyState.Idle;
+            this.Messenger = GameObject.FindObjectOfType<Messenger>();
             Parent = parent;
             Transform = parent.GameObject.transform;
             Rigidbody = parent.GameObject.GetComponent<Rigidbody2D>();
+            _Target = $"{this.Parent.GetType().Name}:{ parent.GameObject.GetInstanceID() }";
+
             HealthManager = healthManager;
-            HealthManager.HasDied += HealthManager_HasDied;
-            HealthManager.HealthLevelChanged += HealthManager_HealthLevelChanged;
+
+            SubscribeToHealthManagerEvents();
+
+            SubscribeToPlayerEvents();
 
             InitSettings = settings;
             Weapons = parent.Weapons.Select(x => x.GetComponent<WeaponBase>()).ToArray();
@@ -80,28 +88,32 @@ namespace FightShipArena.Assets.Scripts.Enemies.Infantry
             CurrentState = _stateFactory.IdleState;
         }
 
-        /// <summary>
-        /// EventHandler for the HasDied event of the player
-        /// </summary>
-        private void Player_HasDied()
+        private void SubscribeToHealthManagerEvents()
         {
-            ChangeState(_stateFactory.IdleState);
+            var messenger = (Messenger as IHealthManagerEventsMessenger);
+            messenger.HasDied.AddListener(HealthManagerHasDied);
+            messenger.HealthLevelChanged.AddListener(HealthManagerHealthLevelChanged);
         }
 
-        /// <summary>
-        /// EventHandler for the HealthLevelChanged event of the HealthManager
-        /// </summary>
-        /// <param name="value">The new health level</param>
-        /// <param name="maxValue">The maximum health level</param>
-        private void HealthManager_HealthLevelChanged(int value, int maxValue) { }
-
-        /// <summary>
-        /// EventHandler for the HasDied event of the HealthManager
-        /// </summary>
-        private void HealthManager_HasDied()
+        private void UnsubscribeToHealthManagerEvents()
         {
-            ChangeState(_stateFactory.IdleState);
-            HasDied?.Invoke(this);
+            var messenger = (Messenger as IHealthManagerEventsMessenger);
+            messenger.HasDied.RemoveListener(HealthManagerHasDied);
+            messenger.HealthLevelChanged.RemoveListener(HealthManagerHealthLevelChanged);
+        }
+
+        private void SubscribeToPlayerEvents()
+        {
+            var messenger = (Messenger as IPlayerEventsMessenger);
+
+            messenger.HasDied.AddListener(PlayerHasDied);
+        }
+
+        private void UnsubscribeToPlayerEvents()
+        {
+            var messenger = (Messenger as IPlayerEventsMessenger);
+
+            messenger.HasDied.RemoveListener(PlayerHasDied);
         }
 
         /// <summary>
@@ -128,7 +140,6 @@ namespace FightShipArena.Assets.Scripts.Enemies.Infantry
         {
             if(PlayerControllerCore != null)
             {
-                PlayerControllerCore.HealthManager.HasDied += Player_HasDied;
                 ChangeState(_stateFactory.SeekState);
             }
             else
@@ -167,6 +178,31 @@ namespace FightShipArena.Assets.Scripts.Enemies.Infantry
         private void CurrentStateOnChangeState(IInfantryState state)
         {
             ChangeState(state);
+        }
+
+        void HealthManagerHasDied(object publisher, string target)
+        {
+            if (target != _Target)
+            {
+                return;
+            }
+
+            ChangeState(_stateFactory.IdleState);
+
+            UnsubscribeToPlayerEvents();
+            UnsubscribeToHealthManagerEvents();
+
+            (Messenger as IEnemyEventsPublisher).PublishHasDied(this.Parent, $"Infantry,{this.Parent.GameObject.GetInstanceID()}");
+            (Messenger as IEnemyEventsPublisher).PublishPlayerScored(this.Parent, $"Infantry,{this.Parent.GameObject.GetInstanceID()}", InitSettings.PlayerScoreWhenKilled);
+        }
+
+        void HealthManagerHealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
+        {
+        }
+
+        void PlayerHasDied(object publisher, string target)
+        {
+            ChangeState(_stateFactory.IdleState);
         }
     }
 }

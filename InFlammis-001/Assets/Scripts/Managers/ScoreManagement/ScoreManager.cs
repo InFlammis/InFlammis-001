@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FightShipArena.Assets.Scripts.MessageBroker;
+using FightShipArena.Assets.Scripts.MessageBroker.Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,20 +13,8 @@ namespace FightShipArena.Assets.Scripts.Managers.ScoreManagement
     /// </summary>
     public class ScoreManager : MyMonoBehaviour, IScoreManager
     {
-        /// <summary>
-        /// Event raised when the current score changes
-        /// </summary>
-        public UnityEvent<int> ScoreChanged;
-
-        /// <summary>
-        /// Event raised when the current multiplier changes
-        /// </summary>
-        public UnityEvent<int> MultiplierChanged;
-
-        /// <summary>
-        /// Event raised when the current hi-score changes
-        /// </summary>
-        public UnityEvent<int> HiScoreChanged;
+        [SerializeField] private Messenger _messenger;
+        public IMessenger Messenger => _messenger;
 
         /// <summary>
         /// The current score
@@ -52,20 +42,48 @@ namespace FightShipArena.Assets.Scripts.Managers.ScoreManagement
                 }
 
                 _multiplier = value;
-                Debug.Log($"Multiplier set to {Multiplier}");
-                NotifyMultiplierValueChange();
+                NotifyMultiplierValue();
             }
         }
 
         void Start()
         {
-            ResetCurrentScore();
-            ResetMultiplier();
-            NotifyHighScoreValueChange();
-
+            NotifyHighScoreValue();
         }
 
-        private void NotifyHighScoreValueChange()
+        #region UnityEvent Handlers
+
+        public void LevelPlayerWins(object publisher, string target)
+        {
+            AddToHighScore();
+        }
+
+        public void LevelGameStarted(object publisher, string target)
+        {
+            ResetCurrentScore();
+            ResetMultiplier();
+        }
+
+        public void LevelGameOver(object publisher, string target)
+        {
+            AddToHighScore();
+        }
+
+        public void EnemyPlayerScored(object publisher, string target, int value)
+        {
+            AddToScore(value);
+        }
+
+        public void PowerUpScoreMultiplierCollected(object publisher, string target, int value)
+        {
+            AddToMultiplier(value);
+        }
+
+        #endregion
+
+        #region UnityEvent Emitters
+
+        private void NotifyHighScoreValue()
         {
             var highScore = HighScores.HighScores.OrderByDescending(x => x.Value).FirstOrDefault();
             int highScoreValue = 0;
@@ -73,22 +91,22 @@ namespace FightShipArena.Assets.Scripts.Managers.ScoreManagement
             {
                 highScoreValue = highScore.Value;
             }
-
-            HiScoreChanged.Invoke(highScoreValue);
+            Messenger.PublishHiScoreChanged(this, null, highScoreValue);
         }
 
-        private void NotifyScoreValueChange()
+        private void NotifyScoreValue()
         {
-            ScoreChanged?.Invoke(CurrentScore.Value);
+            Messenger.PublishScoreChanged(this, null, CurrentScore.Value);
         }
 
-        private void NotifyMultiplierValueChange()
+        private void NotifyMultiplierValue()
         {
-            MultiplierChanged?.Invoke(Multiplier);
+            Messenger.PublishMultiplierChanged(this, null, _multiplier);
         }
 
-        /// <inheritdoc/>
-        public void AddToHighScore()
+        #endregion
+
+        protected void AddToHighScore()
         {
             if (CurrentScore.Value == 0)
             {
@@ -97,44 +115,37 @@ namespace FightShipArena.Assets.Scripts.Managers.ScoreManagement
             CurrentScore.Date = DateTime.Now.ToString("s");
             CurrentScore.Name = "DDR";
             HighScores.HighScores.Add(CurrentScore);
-            NotifyHighScoreValueChange();
+            NotifyHighScoreValue();
         }
 
-        /// <inheritdoc/>
-        public void AddToScore(int score)
+        protected void AddToScore(int score)
         {
             var totScore = score * Multiplier;
             CurrentScore.Value += totScore;
-            Debug.Log($"Score set to {CurrentScore.Value}");
-            NotifyScoreValueChange();
+            NotifyScoreValue();
         }
 
-        /// <inheritdoc/>
-        public void AddToMultiplier(int multiplier)
+        protected void AddToMultiplier(int multiplier)
         {
             Multiplier += multiplier;
         }
 
-        /// <inheritdoc/>
-        public void ResetMultiplier()
+        protected void ResetMultiplier()
         {
             Multiplier = 1;
         }
 
-        /// <inheritdoc/>
-        public void ResetCurrentScore()
+        protected void ResetCurrentScore()
         {
             CurrentScore = new Score();
-            NotifyScoreValueChange();
-
+            NotifyScoreValue();
         }
 
-        /// <inheritdoc/>
-        public void ResetHighScore()
+        protected void ResetHighScore()
         {
             HighScores.HighScores.Clear();
-            HiScoreChanged?.Invoke(HighScores.HighScores.OrderByDescending(x => x.Value).Select(x => x.Value).FirstOrDefault());
-
+            var hiScoreValue = HighScores.HighScores.OrderByDescending(x => x.Value).Select(x => x.Value).FirstOrDefault();
+            (Messenger as IScoreManagerEventsMessenger).HiScoreChanged.Invoke(this, null, hiScoreValue);
         }
     }
 }

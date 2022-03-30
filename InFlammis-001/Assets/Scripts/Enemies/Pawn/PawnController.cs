@@ -1,6 +1,8 @@
 ﻿using System;
 using FightShipArena.Assets.Scripts.Managers.HealthManagement;
 using FightShipArena.Assets.Scripts.Managers.Levels;
+using FightShipArena.Assets.Scripts.MessageBroker;
+using FightShipArena.Assets.Scripts.MessageBroker.Events;
 using FightShipArena.Assets.Scripts.Player;
 using UnityEngine;
 
@@ -9,47 +11,44 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
     /// <summary>
     /// Specialization of a EnemyController for a Pawn enemy type
     /// </summary>
-    public class PawnController : EnemyController
+    public class PawnController : 
+        EnemyController
     {
+        public Messenger Messenger { get; set; }
 
-        /// <summary>
-        /// Event handler for a HealthLevelChanged event from the HealthManager. Invoked when the enemy loses energy.
-        /// </summary>
-        /// <param name="value">New health level</param>
-        /// <param name="maxValue">Max value of health</param>
-        private void HealthManager_HealthLevelChanged(int value, int maxValue)
-        {
-        }
-
-        /// <summary>
-        /// Event handler for a HasDied event from the HealthManager. Invoked when the enemy dies.
-        /// </summary>
-        private void HealthManager_HasDied()
-        {
-            Debug.Log($"Destroying object {this.gameObject.name}");
-
-            _SoundManager.PlayExplodeSound();
-
-            var eeInstance = Instantiate(this.ExplosionEffect, this.gameObject.transform);
-            eeInstance.transform.SetParent(null);
-
-            GameObject.Destroy(this.gameObject);
-            ReleasePowerUp();
-        }
+        private string _Target;
 
         #region Unity methods
 
         void Awake()
         {
-            HealthManager = new HealthManager(InitSettings.InitHealth, InitSettings.InitHealth, false);
-            HealthManager.HasDied += HealthManager_HasDied;
-            HealthManager.HealthLevelChanged += HealthManager_HealthLevelChanged;
+            Messenger = GameObject.FindObjectOfType<Messenger>();
+            _Target = $"{this.GetType().Name}:{ GameObject.GetInstanceID()}";
+
+            HealthManager = new HealthManager(_Target, InitSettings.InitHealth, InitSettings.InitHealth, false);
+
+            SubscribeToHealthManagerEvents();
+
             Core = new PawnControllerCore(this, HealthManager, InitSettings);
         }
 
+        public virtual void SubscribeToHealthManagerEvents()
+        {
+            var messenger = (Messenger as IHealthManagerEventsMessenger);
+            messenger.HasDied.AddListener(HealthManagerHasDied);
+            messenger.HealthLevelChanged.AddListener(HealthManagerHealthLevelChanged);
+        }
+
+        public virtual void UnsubscribeToHealthManagerEvents()
+        {
+            var messenger = (Messenger as IHealthManagerEventsMessenger);
+            messenger.HasDied.RemoveListener(HealthManagerHasDied);
+            messenger.HealthLevelChanged.RemoveListener(HealthManagerHealthLevelChanged);
+        }
+
+
         void Start()
         {
-
             var sceneManagerGO = GameObject.FindGameObjectWithTag("SceneManager");
             var sceneManager = sceneManagerGO?.GetComponent<LevelManager>();
 
@@ -88,7 +87,7 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
 
         void OnCollisionEnter2D(Collision2D col)
         {
-            Debug.Log($"Collision detected with {col.gameObject.name}");
+            //Debug.Log($"Collision detected with {col.gameObject.name}");
 
             switch (col.gameObject.tag)
             {
@@ -108,10 +107,31 @@ namespace FightShipArena.Assets.Scripts.Enemies.Pawn
 
         private void FixedUpdate()
         {
-            //if (Time.frameCount % InitSettings.UpdateEveryXFrames != 0)
-            //    return;
-
             Core.Move();
+        }
+
+        void HealthManagerHasDied(object publisher, string target)
+        {
+            if (target != _Target)
+            {
+                return;
+            }
+
+            //Debug.Log($"Destroying object {this.gameObject.name}");
+
+            _SoundManager.PlayExplodeSound();
+
+            UnsubscribeToHealthManagerEvents();
+
+            var eeInstance = Instantiate(this.ExplosionEffect, this.gameObject.transform);
+            eeInstance.transform.SetParent(null);
+
+            GameObject.Destroy(this.gameObject);
+            ReleasePowerUp();
+        }
+
+        void HealthManagerHealthLevelChanged(object publisher, string target, int healthLevel, int maxHealthLevel)
+        {
         }
 
         #endregion

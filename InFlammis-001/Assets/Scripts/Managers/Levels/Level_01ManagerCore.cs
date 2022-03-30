@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FightShipArena.Assets.Scripts.Managers.Levels.StateMachine;
+﻿using FightShipArena.Assets.Scripts.Managers.Levels.StateMachine;
+using FightShipArena.Assets.Scripts.MessageBroker;
+using FightShipArena.Assets.Scripts.MessageBroker.Events;
 using FightShipArena.Assets.Scripts.Player;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace FightShipArena.Assets.Scripts.Managers.Levels
 {
-    public class Level_01ManagerCore : ILevelManagerCore
+    public class Level_01ManagerCore : 
+        ILevelManagerCore
     {
         /// <inheritdoc/>
         public IPlayerControllerCore PlayerControllerCore { get; set; }
@@ -19,6 +16,8 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         public State CurrentState { get; private set; }
         /// <inheritdoc/>
         public ILevelManager LevelManager { get; set; }
+
+        public IMessenger Messenger => LevelManager.Messenger;
 
         public bool SpawnEnemiesEnabled = true;
 
@@ -33,37 +32,27 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         public Level_01ManagerCore(ILevelManager levelManager)
         {
             LevelManager = levelManager;
-
         }
 
         /// <inheritdoc/>
         public void OnStart()
         {
             this.PlayerControllerCore = LevelManager.PlayerControllerCore;
-            this.PlayerControllerCore.HealthManager.HasDied += PlayerHasDied;
-            this.PlayerControllerCore.ScoreMultiplierCollected += PlayerControllerCore_ScoreMultiplierCollected;
 
-            Debug.Log($"Level started");
+            StartGame();
+        }
 
+        private void StartGame()
+        {
             this.PlayerControllerCore.HealthManager.Heal();
 
             _stateConfiguration = new StateConfiguration(
+                messenger: Messenger,
                 levelManagerCore: this,
-                orchestrationManager: this.LevelManager.OrchestrationManager,
-                hudManager: this.LevelManager.HudManager,
                 spawnEnemiesEnabled: true
             );
 
             ChangeStateRequestEventHandler(this, new WaitForStart(_stateConfiguration));
-        }
-
-        /// <summary>
-        /// EventHandler for the ScoreMultiplierCollected event of the PlayerControllerCore
-        /// </summary>
-        /// <param name="value"></param>
-        private void PlayerControllerCore_ScoreMultiplierCollected(int value)
-        {
-            LevelManager.ScoreManager.AddToMultiplier(value);
         }
 
         /// <summary>
@@ -85,38 +74,11 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         }
 
         /// <inheritdoc/>
-        private void PlayerHasDied()
-        {
-            ChangeStateRequestEventHandler(this, new GameOver(_stateConfiguration));
-        }
-
-        /// <inheritdoc/>
         public void OnAwake() 
         {
-            LevelManager.OrchestrationManager.SendScore += OrchestrationManager_SendScore;
-            LevelManager.OrchestrationManager.OrchestrationComplete += OrchestrationManager_OrchestrationComplete;
-
             _playerInput = LevelManager.GameObject.GetComponent<PlayerInput>();
         }
 
-        /// <summary>
-        /// EventHandler for the OrchestrationComplete event of the OrchestrationManager
-        /// </summary>
-        private void OrchestrationManager_OrchestrationComplete()
-        {
-            Debug.Log("Orchestration complete");
-            //LevelManager.ScoreManager.AddToHighScore();
-            ChangeStateRequestEventHandler(this, new Win(_stateConfiguration));
-
-        }
-
-        /// <summary>
-        /// EventHandler for the SendScore event of the OrchestrationManager
-        /// </summary>
-        private void OrchestrationManager_SendScore(int value)
-        {
-            LevelManager.ScoreManager.AddToScore(value);
-        }
 
         /// <inheritdoc/>
         public void Move(InputAction.CallbackContext context)
@@ -125,13 +87,13 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
             {
 
                 case InputActionPhase.Started:
-                    Debug.Log($"{context.action} Started");
+                    //Debug.Log($"{context.action} Started");
                     break;
                 case InputActionPhase.Performed:
-                    Debug.Log($"{context.action} Performed");
+                    //Debug.Log($"{context.action} Performed");
                     break;
                 case InputActionPhase.Canceled:
-                    Debug.Log($"{context.action} Cancelled");
+                    //Debug.Log($"{context.action} Cancelled");
                     break;
             }
         }
@@ -146,6 +108,22 @@ namespace FightShipArena.Assets.Scripts.Managers.Levels
         public void EnablePlayerInput()
         {
             _playerInput.enabled = true;
+        }
+
+        private void GameOver()
+        {
+            Messenger.PublishGameOver(this, null);
+            ChangeStateRequestEventHandler(this, new StateMachine.GameOver(_stateConfiguration));
+
+        }
+        public void PlayerHasDied(object publisher, string target)
+        {
+            GameOver();
+        }
+
+        public void OrchestrationManagerOrchestrationComplete(object publisher, string target)
+        {
+            ChangeStateRequestEventHandler(this, new Win(_stateConfiguration));
         }
     }
 }
