@@ -62,14 +62,32 @@ namespace FightShipArena.Assets.Scripts.Player
             if (context.performed)
             {
                 Core.SetPlayerInput(inputVector);
-                //Debug.Log($"Moving {Core.PlayerInput}");
+                Debug.Log($"Moving {inputVector}");
 
             }
             else if (context.canceled)
             {
-                //Debug.Log("Not moving");
+                Debug.Log("Not moving");
                 Core.SetPlayerInput(inputVector);
             }
+        }
+
+        public void OnRotate(InputAction.CallbackContext context)
+        {
+            var inputVector = context.ReadValue<Vector2>();
+
+            if (context.performed)
+            {
+                //Core.SetPlayerInput(inputVector);
+                Debug.Log($"Rotating {inputVector}");
+
+            }
+            else if (context.canceled)
+            {
+                Debug.Log("Not rotating");
+                //Core.SetPlayerInput(inputVector);
+            }
+
         }
 
         /// <inheritdoc/>

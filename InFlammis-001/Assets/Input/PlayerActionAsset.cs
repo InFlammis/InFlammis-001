@@ -29,71 +29,26 @@ public partial class @PlayerActionAsset : IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Move"",
-                    ""type"": ""Button"",
-                    ""id"": ""c8b67a6c-a20e-4dd8-be3b-bb55d19275e9"",
-                    ""expectedControlType"": ""Button"",
+                    ""type"": ""Value"",
+                    ""id"": ""6deb7306-06f5-4257-bd57-58c884408b92"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""90bfc391-b51e-4852-a39a-1d79a39dc05d"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Fire"",
                     ""type"": ""Button"",
-                    ""id"": ""e445d392-53b8-4722-98e9-c281156f1111"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Fire Alt"",
-                    ""type"": ""Button"",
-                    ""id"": ""586b2380-7d8d-4f54-8ae0-b90f661c5cc4"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Open Selection Menu"",
-                    ""type"": ""Button"",
-                    ""id"": ""852733ef-7290-4c41-b1bd-81d5abd10e3e"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Turn Left"",
-                    ""type"": ""Button"",
-                    ""id"": ""6e002fbe-34e4-464c-9238-a208ef54c6d5"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Turn Right"",
-                    ""type"": ""Button"",
-                    ""id"": ""8356ffb9-3d32-4a6d-a4d2-e35283eb52f8"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Turn Up"",
-                    ""type"": ""Button"",
-                    ""id"": ""7aa41dab-03f5-4357-9557-1514a6897443"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Turn Down"",
-                    ""type"": ""Button"",
-                    ""id"": ""9f96ccdb-ca9d-40dc-b2d1-d22d987e3ab6"",
+                    ""id"": ""bd47bf42-33b7-47db-8cec-f9e0a3a6b337"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -102,41 +57,63 @@ public partial class @PlayerActionAsset : IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": """",
-                    ""id"": ""a84fcb23-6935-4731-afb2-0577b20935bd"",
-                    ""path"": ""<Keyboard>/k"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Fire Alt"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""041d530e-81ed-4001-8812-e96b275e9bd4"",
-                    ""path"": ""<Keyboard>/l"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Open Selection Menu"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""97cdd805-75bc-4ac3-9042-5eed151d7e03"",
-                    ""path"": ""<Keyboard>/j"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
                     ""name"": ""WASD"",
-                    ""id"": ""6c9705d5-9dca-4bf4-aee4-48d267df0204"",
+                    ""id"": ""3e0b53d6-75f9-4be9-8842-257042110922"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""0c387269-5362-41d7-998f-4a80e0551311"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""79de45ef-18b9-49db-b6af-925fba8e511e"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""51426d2c-fde0-45ca-8097-a2f89864183c"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""2476baf0-f508-4aad-bb32-5a1d7cd84817"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Left Stick"",
+                    ""id"": ""7bb41806-82cf-49ca-96d1-ffa6d0df55bb"",
                     ""path"": ""2DVector(mode=2)"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -147,179 +124,135 @@ public partial class @PlayerActionAsset : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""72bed6e2-0016-42d6-9d5b-35f1c51517af"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""id"": ""2a4e0615-1b78-40ac-9b4c-d87304af3e3d"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""088c17d4-4e02-4796-b5b5-b69e0ba68cca"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""id"": ""46e75fd1-7fbc-483b-99f2-b8cb862b7368"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""1b6fdd75-76c8-4ba9-a15b-415697168eed"",
-                    ""path"": ""<Keyboard>/a"",
+                    ""id"": ""10eabd88-c1b2-4ebc-a256-a9c9e417931b"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""40411201-6020-41ab-b020-50a7081d3e8d"",
-                    ""path"": ""<Keyboard>/d"",
+                    ""id"": ""37f31175-6fe8-428d-acd4-3f83a6d8d8b7"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""Button With One Modifier"",
-                    ""id"": ""7b83072b-687a-4563-b999-9e0ca0057489"",
-                    ""path"": ""ButtonWithOneModifier"",
+                    ""name"": ""2D Vector"",
+                    ""id"": ""020b424f-b9a4-446c-bca9-0c28a7ad4aab"",
+                    ""path"": ""2DVector(mode=2)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Turn Left"",
+                    ""action"": ""Rotate"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""modifier"",
-                    ""id"": ""dbae14f4-7c00-49a0-8589-1d549f0dfcd9"",
-                    ""path"": ""<Keyboard>/l"",
+                    ""name"": ""up"",
+                    ""id"": ""fc1102ec-7eae-41c8-b29a-0809e4bb8602"",
+                    ""path"": ""<Gamepad>/rightStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Turn Left"",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""button"",
-                    ""id"": ""e7f2986f-7d0b-42ac-b661-224080dffd2e"",
-                    ""path"": ""<Keyboard>/a"",
+                    ""name"": ""down"",
+                    ""id"": ""f8dc0b62-b5da-477d-8145-51c30c934c0e"",
+                    ""path"": ""<Gamepad>/rightStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Turn Left"",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""Button With One Modifier"",
-                    ""id"": ""07544bb2-807d-4a78-897c-f5b51568a11f"",
-                    ""path"": ""ButtonWithOneModifier"",
+                    ""name"": ""left"",
+                    ""id"": ""03b12add-5625-41cc-9a1b-095ed409ac5a"",
+                    ""path"": ""<Gamepad>/rightStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Turn Right"",
-                    ""isComposite"": true,
+                    ""groups"": ""Controller"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""dc301b15-4dad-41cb-93c6-2cf3c91ca568"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d24a5a81-b5de-4e5c-a7d6-6b39088e6e8d"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard Mouse"",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""modifier"",
-                    ""id"": ""b0bbee40-4322-48aa-9040-0c8a50fe50dc"",
-                    ""path"": ""<Keyboard>/l"",
+                    ""name"": """",
+                    ""id"": ""8a0c7f37-0561-4782-bc2b-0c5a5dcf556f"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Turn Right"",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Fire"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""button"",
-                    ""id"": ""0926fdd9-6dac-4247-bd2f-e730cc63ca2d"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Turn Right"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Button With One Modifier"",
-                    ""id"": ""b1fc86c0-7b3c-4e0d-8b2b-c04955750b51"",
-                    ""path"": ""ButtonWithOneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Turn Up"",
-                    ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""modifier"",
-                    ""id"": ""5ded0678-824d-47fa-94e8-43c022085c9f"",
-                    ""path"": ""<Keyboard>/l"",
+                    ""name"": """",
+                    ""id"": ""e32bc750-7741-4c26-8513-626c49d22f44"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Turn Up"",
+                    ""groups"": ""Keyboard Mouse;Controller"",
+                    ""action"": ""Fire"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""button"",
-                    ""id"": ""82481071-b819-4926-b8e3-c3a62134c79d"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Turn Up"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Button With One Modifier"",
-                    ""id"": ""3c97f6d3-0c96-4cb2-ac8d-1613b62a1d9d"",
-                    ""path"": ""ButtonWithOneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Turn Down"",
-                    ""isComposite"": true,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""0c44abca-af04-4b9e-ac8d-84ca38e1c0ca"",
-                    ""path"": ""<Keyboard>/l"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Turn Down"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""button"",
-                    ""id"": ""708c0361-482a-4a53-be9f-6dc7bb4ab9ef"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Turn Down"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -380,18 +313,41 @@ public partial class @PlayerActionAsset : IInputActionCollection2, IDisposable
             ]
         }
     ],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""Controller"",
+            ""bindingGroup"": ""Controller"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Keyboard Mouse"",
+            ""bindingGroup"": ""Keyboard Mouse"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<Mouse>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        }
+    ]
 }");
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        m_Player_Rotate = m_Player.FindAction("Rotate", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
-        m_Player_FireAlt = m_Player.FindAction("Fire Alt", throwIfNotFound: true);
-        m_Player_OpenSelectionMenu = m_Player.FindAction("Open Selection Menu", throwIfNotFound: true);
-        m_Player_TurnLeft = m_Player.FindAction("Turn Left", throwIfNotFound: true);
-        m_Player_TurnRight = m_Player.FindAction("Turn Right", throwIfNotFound: true);
-        m_Player_TurnUp = m_Player.FindAction("Turn Up", throwIfNotFound: true);
-        m_Player_TurnDown = m_Player.FindAction("Turn Down", throwIfNotFound: true);
         // GameManager
         m_GameManager = asset.FindActionMap("GameManager", throwIfNotFound: true);
         m_GameManager_PauseResume = m_GameManager.FindAction("PauseResume", throwIfNotFound: true);
@@ -458,25 +414,15 @@ public partial class @PlayerActionAsset : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Move;
+    private readonly InputAction m_Player_Rotate;
     private readonly InputAction m_Player_Fire;
-    private readonly InputAction m_Player_FireAlt;
-    private readonly InputAction m_Player_OpenSelectionMenu;
-    private readonly InputAction m_Player_TurnLeft;
-    private readonly InputAction m_Player_TurnRight;
-    private readonly InputAction m_Player_TurnUp;
-    private readonly InputAction m_Player_TurnDown;
     public struct PlayerActions
     {
         private @PlayerActionAsset m_Wrapper;
         public PlayerActions(@PlayerActionAsset wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
+        public InputAction @Rotate => m_Wrapper.m_Player_Rotate;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
-        public InputAction @FireAlt => m_Wrapper.m_Player_FireAlt;
-        public InputAction @OpenSelectionMenu => m_Wrapper.m_Player_OpenSelectionMenu;
-        public InputAction @TurnLeft => m_Wrapper.m_Player_TurnLeft;
-        public InputAction @TurnRight => m_Wrapper.m_Player_TurnRight;
-        public InputAction @TurnUp => m_Wrapper.m_Player_TurnUp;
-        public InputAction @TurnDown => m_Wrapper.m_Player_TurnDown;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -489,27 +435,12 @@ public partial class @PlayerActionAsset : IInputActionCollection2, IDisposable
                 @Move.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
+                @Rotate.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotate;
+                @Rotate.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotate;
+                @Rotate.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotate;
                 @Fire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                 @Fire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                 @Fire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
-                @FireAlt.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFireAlt;
-                @FireAlt.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFireAlt;
-                @FireAlt.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFireAlt;
-                @OpenSelectionMenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenSelectionMenu;
-                @OpenSelectionMenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenSelectionMenu;
-                @OpenSelectionMenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenSelectionMenu;
-                @TurnLeft.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTurnLeft;
-                @TurnLeft.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTurnLeft;
-                @TurnLeft.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTurnLeft;
-                @TurnRight.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTurnRight;
-                @TurnRight.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTurnRight;
-                @TurnRight.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTurnRight;
-                @TurnUp.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTurnUp;
-                @TurnUp.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTurnUp;
-                @TurnUp.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTurnUp;
-                @TurnDown.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTurnDown;
-                @TurnDown.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTurnDown;
-                @TurnDown.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTurnDown;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -517,27 +448,12 @@ public partial class @PlayerActionAsset : IInputActionCollection2, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Rotate.started += instance.OnRotate;
+                @Rotate.performed += instance.OnRotate;
+                @Rotate.canceled += instance.OnRotate;
                 @Fire.started += instance.OnFire;
                 @Fire.performed += instance.OnFire;
                 @Fire.canceled += instance.OnFire;
-                @FireAlt.started += instance.OnFireAlt;
-                @FireAlt.performed += instance.OnFireAlt;
-                @FireAlt.canceled += instance.OnFireAlt;
-                @OpenSelectionMenu.started += instance.OnOpenSelectionMenu;
-                @OpenSelectionMenu.performed += instance.OnOpenSelectionMenu;
-                @OpenSelectionMenu.canceled += instance.OnOpenSelectionMenu;
-                @TurnLeft.started += instance.OnTurnLeft;
-                @TurnLeft.performed += instance.OnTurnLeft;
-                @TurnLeft.canceled += instance.OnTurnLeft;
-                @TurnRight.started += instance.OnTurnRight;
-                @TurnRight.performed += instance.OnTurnRight;
-                @TurnRight.canceled += instance.OnTurnRight;
-                @TurnUp.started += instance.OnTurnUp;
-                @TurnUp.performed += instance.OnTurnUp;
-                @TurnUp.canceled += instance.OnTurnUp;
-                @TurnDown.started += instance.OnTurnDown;
-                @TurnDown.performed += instance.OnTurnDown;
-                @TurnDown.canceled += instance.OnTurnDown;
             }
         }
     }
@@ -608,16 +524,29 @@ public partial class @PlayerActionAsset : IInputActionCollection2, IDisposable
         }
     }
     public TestActions @Test => new TestActions(this);
+    private int m_ControllerSchemeIndex = -1;
+    public InputControlScheme ControllerScheme
+    {
+        get
+        {
+            if (m_ControllerSchemeIndex == -1) m_ControllerSchemeIndex = asset.FindControlSchemeIndex("Controller");
+            return asset.controlSchemes[m_ControllerSchemeIndex];
+        }
+    }
+    private int m_KeyboardMouseSchemeIndex = -1;
+    public InputControlScheme KeyboardMouseScheme
+    {
+        get
+        {
+            if (m_KeyboardMouseSchemeIndex == -1) m_KeyboardMouseSchemeIndex = asset.FindControlSchemeIndex("Keyboard Mouse");
+            return asset.controlSchemes[m_KeyboardMouseSchemeIndex];
+        }
+    }
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnRotate(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
-        void OnFireAlt(InputAction.CallbackContext context);
-        void OnOpenSelectionMenu(InputAction.CallbackContext context);
-        void OnTurnLeft(InputAction.CallbackContext context);
-        void OnTurnRight(InputAction.CallbackContext context);
-        void OnTurnUp(InputAction.CallbackContext context);
-        void OnTurnDown(InputAction.CallbackContext context);
     }
     public interface IGameManagerActions
     {
