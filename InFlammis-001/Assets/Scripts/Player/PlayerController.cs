@@ -78,14 +78,14 @@ namespace FightShipArena.Assets.Scripts.Player
 
             if (context.performed)
             {
-                //Core.SetPlayerInput(inputVector);
+                Core.Rotate(inputVector);
                 Debug.Log($"Rotating {inputVector}");
 
             }
             else if (context.canceled)
             {
                 Debug.Log("Not rotating");
-                //Core.SetPlayerInput(inputVector);
+                Core.Rotate(inputVector);
             }
 
         }
@@ -195,8 +195,18 @@ namespace FightShipArena.Assets.Scripts.Player
         }
 
         #region Unity methods
+
+        private InputAction leftMouseClick;
+
+        private void LeftMouseClicked()
+        {
+            print("LeftMouseClicked");
+        }
         void Awake()
         {
+            leftMouseClick = new InputAction(binding: "<Mouse>/leftButton");
+            leftMouseClick.performed += ctx => LeftMouseClicked();
+            leftMouseClick.Enable();
             HealthManager = new HealthManager(_Target, initSettings.InitHealth, initSettings.InitHealth, false);
 
             SubscribeToHealthManagerEvents();

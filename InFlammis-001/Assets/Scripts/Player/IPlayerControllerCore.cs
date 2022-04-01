@@ -83,6 +83,7 @@ namespace FightShipArena.Assets.Scripts.Player
         /// </summary>
         /// <param name="enemyController">Enemy which the player is colliding with</param>
         void HandleCollisionWithEnemy(IEnemyControllerCore enemyController);
+        void Rotate(Vector2 inputVector);
 
         /// <summary>
         /// Turn left

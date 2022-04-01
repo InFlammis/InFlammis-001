@@ -83,6 +83,15 @@ namespace FightShipArena.Assets.Scripts.Player
             }
         }
 
+        public void Rotate(Vector2 inputVector)
+        {
+            float angle = Mathf.Atan2(inputVector.y, inputVector.x) - Mathf.PI / 2;
+            
+            var rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
+            ((MonoBehaviour)Parent).StartCoroutine(DoRotatePlayer(rotation));
+        }
+
+
         /// <inheritdoc/>
         public void StartFiring()
         {
@@ -150,7 +159,7 @@ namespace FightShipArena.Assets.Scripts.Player
         private IEnumerator DoRotatePlayer(Quaternion quaternion)
         {
             float tolerance = 0.95f;
-            float rotationSpeed = 0.1f;
+            float rotationSpeed = 0.01f;
 
             while ( Mathf.Abs(Quaternion.Dot(Transform.rotation, quaternion) ) < tolerance)
             {
