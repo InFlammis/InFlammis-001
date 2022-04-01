@@ -113,8 +113,8 @@ public partial class @PlayerActionAsset : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Left Stick"",
-                    ""id"": ""7bb41806-82cf-49ca-96d1-ffa6d0df55bb"",
-                    ""path"": ""2DVector(mode=2)"",
+                    ""id"": ""b93688e8-893d-4ba2-8e3a-01ddbd4e99e0"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -124,50 +124,50 @@ public partial class @PlayerActionAsset : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""2a4e0615-1b78-40ac-9b4c-d87304af3e3d"",
+                    ""id"": ""fccedff1-1ee4-4ed1-acd5-a78f8c646427"",
                     ""path"": ""<Gamepad>/leftStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Controller"",
+                    ""groups"": ""Default"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""46e75fd1-7fbc-483b-99f2-b8cb862b7368"",
+                    ""id"": ""ea06e1d9-08ca-4d80-8602-3a6a41a21511"",
                     ""path"": ""<Gamepad>/leftStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Controller"",
+                    ""groups"": ""Default"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""10eabd88-c1b2-4ebc-a256-a9c9e417931b"",
+                    ""id"": ""d29f0941-c089-4de2-ae8c-2a4f61c03c99"",
                     ""path"": ""<Gamepad>/leftStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Controller"",
+                    ""groups"": ""Default"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""37f31175-6fe8-428d-acd4-3f83a6d8d8b7"",
+                    ""id"": ""6ed7d769-7fee-4438-b0c6-fc7da0159871"",
                     ""path"": ""<Gamepad>/leftStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Controller"",
+                    ""groups"": ""Default"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""2D Vector"",
+                    ""name"": ""Right Stick"",
                     ""id"": ""020b424f-b9a4-446c-bca9-0c28a7ad4aab"",
                     ""path"": ""2DVector(mode=2)"",
                     ""interactions"": """",
@@ -183,7 +183,7 @@ public partial class @PlayerActionAsset : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Controller"",
+                    ""groups"": ""Default"",
                     ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -194,7 +194,7 @@ public partial class @PlayerActionAsset : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Controller"",
+                    ""groups"": ""Default"",
                     ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -205,7 +205,7 @@ public partial class @PlayerActionAsset : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Controller"",
+                    ""groups"": ""Default"",
                     ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -216,21 +216,10 @@ public partial class @PlayerActionAsset : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Controller"",
+                    ""groups"": ""Default"",
                     ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d24a5a81-b5de-4e5c-a7d6-6b39088e6e8d"",
-                    ""path"": ""<Keyboard>/j"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard Mouse"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -238,7 +227,7 @@ public partial class @PlayerActionAsset : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Controller"",
+                    ""groups"": ""Default"",
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -249,7 +238,18 @@ public partial class @PlayerActionAsset : IInputActionCollection2, IDisposable
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Keyboard Mouse;Controller"",
+                    ""groups"": ""Default"",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d24a5a81-b5de-4e5c-a7d6-6b39088e6e8d"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Default"",
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -315,19 +315,8 @@ public partial class @PlayerActionAsset : IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": [
         {
-            ""name"": ""Controller"",
-            ""bindingGroup"": ""Controller"",
-            ""devices"": [
-                {
-                    ""devicePath"": ""<Gamepad>"",
-                    ""isOptional"": true,
-                    ""isOR"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Keyboard Mouse"",
-            ""bindingGroup"": ""Keyboard Mouse"",
+            ""name"": ""Default"",
+            ""bindingGroup"": ""Default"",
             ""devices"": [
                 {
                     ""devicePath"": ""<Keyboard>"",
@@ -337,6 +326,11 @@ public partial class @PlayerActionAsset : IInputActionCollection2, IDisposable
                 {
                     ""devicePath"": ""<Mouse>"",
                     ""isOptional"": false,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": true,
                     ""isOR"": false
                 }
             ]
@@ -524,22 +518,13 @@ public partial class @PlayerActionAsset : IInputActionCollection2, IDisposable
         }
     }
     public TestActions @Test => new TestActions(this);
-    private int m_ControllerSchemeIndex = -1;
-    public InputControlScheme ControllerScheme
+    private int m_DefaultSchemeIndex = -1;
+    public InputControlScheme DefaultScheme
     {
         get
         {
-            if (m_ControllerSchemeIndex == -1) m_ControllerSchemeIndex = asset.FindControlSchemeIndex("Controller");
-            return asset.controlSchemes[m_ControllerSchemeIndex];
-        }
-    }
-    private int m_KeyboardMouseSchemeIndex = -1;
-    public InputControlScheme KeyboardMouseScheme
-    {
-        get
-        {
-            if (m_KeyboardMouseSchemeIndex == -1) m_KeyboardMouseSchemeIndex = asset.FindControlSchemeIndex("Keyboard Mouse");
-            return asset.controlSchemes[m_KeyboardMouseSchemeIndex];
+            if (m_DefaultSchemeIndex == -1) m_DefaultSchemeIndex = asset.FindControlSchemeIndex("Default");
+            return asset.controlSchemes[m_DefaultSchemeIndex];
         }
     }
     public interface IPlayerActions

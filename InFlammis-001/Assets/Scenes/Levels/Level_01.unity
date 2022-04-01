@@ -192,7 +192,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 420153996349222509, guid: 6d2ebf83af878014f91c5f20df03c4fb, type: 3}
       propertyPath: m_DefaultActionMap
-      value: 44f90167-0916-4871-be60-6edbac0b6845
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 420153996349222509, guid: 6d2ebf83af878014f91c5f20df03c4fb, type: 3}
       propertyPath: m_DefaultControlScheme
